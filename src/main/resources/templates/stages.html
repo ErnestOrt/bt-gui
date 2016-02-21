@@ -1,0 +1,248 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>BikeTeam Profile</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+
+<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
+<link th:href="@{/css/bootstrap-responsive.min.css}" rel="stylesheet"/>
+<link href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,600" rel="stylesheet"/>
+<link th:href="@{/css/font-awesome.css}" rel="stylesheet"/>
+<link th:href="@{/css/style.css}" rel="stylesheet"/>
+<link th:href="@{/css/pages/dashboard.css}" rel="stylesheet"/>
+
+
+</head>
+<body>
+	<div class="navbar navbar-fixed-top">
+		<div class="navbar-inner">
+			<div class="container">
+				<a class="btn btn-navbar" data-toggle="collapse"
+					data-target=".nav-collapse"><span class="icon-bar"></span><span
+					class="icon-bar"></span><span class="icon-bar"></span> </a><a
+					class="brand" href="index.html">Teambike</a>
+				<div class="nav-collapse">
+					<ul class="nav pull-right">
+						<li class="dropdown"><a href="#" class="dropdown-toggle"
+							data-toggle="dropdown"> Ernest Ortuño <b class="caret"></b></a>
+
+							<ul class="dropdown-menu">
+								<li><a href="javascript:;">Profile</a></li>
+								<li><a href="javascript:;">Logout</a></li>
+							</ul></li>
+					</ul>
+				</div>
+			</div>
+			<!--/.nav-collapse -->
+		</div>
+		<!-- /container -->
+	</div>
+	<!-- /navbar-inner -->
+	
+	<!-- /navbar -->
+	<div class="subnavbar">
+
+		<!-- /subnavbar-inner -->
+	</div>
+	<!-- /subnavbar -->
+	<div class="main">
+  <div class="main-inner">
+    <div class="container">
+      <div class="row">
+        <div class="span6">
+           <div class="widget">
+            <div class="widget-header"> <i class="icon-picture"></i>
+              <h3> Next Stage: Barcelona-Collserolla-Barcelona</h3>
+            </div>
+            <!-- /widget-header -->
+            <div class="widget-content">
+              <canvas id="area-chart1" class="chart-holder" height="250" width="538"> </canvas>
+               <div id="big_stats" class="cf">
+                    <div class="stat"> <i class="icon-group"></i> <span class="value">14</span> Memebers </div>
+                    <!-- .stat -->
+                    
+                   
+                    
+                    <div class="stat"> <i class="icon-road"></i> <span class="value">80</span> Km </div>
+                    <!-- .stat -->
+                    
+                    
+                  </div>
+            
+            </div>
+            <!-- /widget-content --> 
+          </div>
+           <div class="widget">
+            <div class="widget-header"> <i class="icon-picture"></i>
+              <h3> Next Stage: Barcelona-Collserolla-Barcelona</h3>
+            </div>
+            <!-- /widget-header -->
+            <div class="widget-content">
+              <canvas id="area-chart2" class="chart-holder" height="250" width="538"> </canvas>
+              <div id="big_stats" class="cf">
+                    <div class="stat"> <i class="icon-group"></i> <span class="value">18</span> Memebers </div>
+                    <!-- .stat -->
+                    
+                   
+                    
+                    <div class="stat"> <i class="icon-road"></i> <span class="value">90</span> Km </div>
+                    <!-- .stat -->
+                    
+                    
+                  </div>
+            </div>
+            <!-- /widget-content --> 
+          </div>
+        </div>
+        <!-- /span6 -->
+        <div class="span6">
+           <div class="widget">
+            <div class="widget-header"> <i class="icon-bookmark"></i>
+              <h3>What to see</h3>
+            </div>
+            <!-- /widget-header -->
+            <div class="widget-content">
+		          <div class="shortcuts"> 
+					<a href="./dashboard" class="shortcut"><i class="shortcut-icon icon-globe"></i><span class="shortcut-label">Team</span></a>
+	                <a href="./profile" class="shortcut"><i class="shortcut-icon icon-user"></i><span class="shortcut-label">Profile</span></a>
+	                <a href="./stages" class="shortcut shortcut-active"><i class="shortcut-icon icon-picture"></i><span class="shortcut-label">Stages</span></a>
+	                <a href="./members" class="shortcut"><i class="shortcut-icon icon-group"></i> <span class="shortcut-label">Members</span></a>
+	              </div>
+              <!-- /shortcuts --> 
+            </div>
+          </div>
+
+           <div class="widget">
+            <div class="widget-header"> <i class="icon-picture"></i>
+              <h3> Next Stage: Barcelona-Collserolla-Barcelona</h3>
+            </div>
+            <!-- /widget-header -->
+            <div class="widget-content">
+              <canvas id="area-chart3" class="chart-holder" height="250" width="538"> </canvas>
+               <div id="big_stats" class="cf">
+                    <div class="stat"> <i class="icon-group"></i> <span class="value">23</span> Memebers </div>
+                    <!-- .stat -->
+                    
+                   
+                    
+                    <div class="stat"> <i class="icon-road"></i> <span class="value">82</span> Km </div>
+                    <!-- .stat -->
+                    
+                    
+                  </div>
+            </div>
+            </div>
+            <!-- /widget-content --> 
+          </div>
+
+          <!-- /widget -->
+        </div>
+        <!-- /span6 --> 
+      </div>
+      <!-- /row --> 
+    </div>
+    <!-- /container --> 
+  </div>
+  <!-- /main-inner --> 
+
+    	<!-- /main -->
+	<div class="extra">
+		<div class="extra-inner">
+			<div class="container">
+				<div class="row">
+					<div class="span3">
+						<h4>Support</h4>
+						<ul>
+							<li><a href="javascript:;">Frequently Asked Questions</a></li>
+							<li><a href="javascript:;">Ask a Question</a></li>
+							<li><a href="javascript:;">Video Tutorial</a></li>
+							<li><a href="javascript:;">Feedback</a></li>
+						</ul>
+					</div>
+					<!-- /span3 -->
+
+					<!-- /span3 -->
+				</div>
+				<!-- /row -->
+			</div>
+			<!-- /container -->
+		</div>
+		<!-- /extra-inner -->
+	</div>
+	<!-- /extra -->
+	<div class="footer">
+		<div class="footer-inner">
+			<div class="container">
+				<div class="row">
+					<div class="span12"> &copy; 2016 BikeTeam</div>
+					<!-- /span12 -->
+				</div>
+				<!-- /row -->
+			</div>
+			<!-- /container -->
+		</div>
+		<!-- /footer-inner -->
+	</div>
+	<!-- /footer -->
+	<!-- Le javascript
+================================================== -->
+	<!-- Placed at the end of the document so the pages load faster -->
+	<script th:src="@{/js/jquery-1.7.2.min.js}"></script>
+	<script th:src="@{/js/excanvas.min.js}"></script>
+	<script th:src="@{/js/chart.min.js}" type="text/javascript"></script>
+	<script th:src="@{/js/bootstrap.js}"></script>
+	<script th:src="@{/js/base.js}"></script>
+
+    <script>
+    var lineChartData1 = {
+            labels: ["1", "10", "20", "30", "40", "50", "60","80","100"],
+            datasets: [
+				{
+				    fillColor: "rgba(151,187,205,0.5)",
+				    strokeColor: "rgba(151,187,205,1)",
+				    pointColor: "rgba(151,187,205,1)",
+				    pointStrokeColor: "#fff",
+				    data: [28, 32, 35, 42, 41, 43, 50, 53, 33]
+				}
+			]
+
+        }
+
+        var lineChartData2 = {
+            labels: ["1", "10", "20", "30", "40", "50", "60","80","100"],
+            datasets: [
+        {
+            fillColor: "rgba(151,187,205,0.5)",
+            strokeColor: "rgba(151,187,205,1)",
+            pointColor: "rgba(151,187,205,1)",
+            pointStrokeColor: "#fff",
+            data: [48, 32, 35, 32, 35, 43, 45, 45, 52]
+        }
+      ]
+
+        }
+
+        var lineChartData3 = {
+            labels: ["1", "10", "20", "30", "40", "50", "60","80","100"],
+            datasets: [
+        {
+            fillColor: "rgba(151,187,205,0.5)",
+            strokeColor: "rgba(151,187,205,1)",
+            pointColor: "rgba(151,187,205,1)",
+            pointStrokeColor: "#fff",
+            data: [2, 5, 5, 4, 6, 7, 12, 8, 5]
+        }
+      ]
+
+        }
+
+        new Chart(document.getElementById("area-chart1").getContext("2d")).Line(lineChartData1);
+        new Chart(document.getElementById("area-chart2").getContext("2d")).Line(lineChartData2);
+        new Chart(document.getElementById("area-chart3").getContext("2d")).Line(lineChartData3);
+
+  </script>
+</body>
+</html>

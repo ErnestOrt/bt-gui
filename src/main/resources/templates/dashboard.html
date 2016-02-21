@@ -228,15 +228,10 @@
 							<!-- /widget-header -->
 							<div class="widget-content">
 								<div class="shortcuts">
-									<a href="javascript:;" class="shortcut shortcut-active"><i
-										class="shortcut-icon icon-globe"></i><span
-										class="shortcut-label">Team</span></a> <a href="javascript:;"
-										class="shortcut"><i class="shortcut-icon icon-user"></i><span
-										class="shortcut-label">Profile</span></a> <a href="javascript:;"
-										class="shortcut"><i class="shortcut-icon icon-picture"></i><span
-										class="shortcut-label">Statges</span></a> <a href="javascript:;"
-										class="shortcut"><i class="shortcut-icon icon-group"></i>
-										<span class="shortcut-label">Members</span></a>
+									<a href="./dashboard;" class="shortcut shortcut-active"><i class="shortcut-icon icon-globe"></i><span class="shortcut-label">Team</span></a>
+					                <a href="./profile" class="shortcut"><i class="shortcut-icon icon-user"></i><span class="shortcut-label">Profile</span></a>
+					                <a href="./stages" class="shortcut"><i class="shortcut-icon icon-picture"></i><span class="shortcut-label">Statges</span></a>
+					                <a href="./members" class="shortcut"><i class="shortcut-icon icon-group"></i> <span class="shortcut-label">Members</span></a>
 								</div>
 								<!-- /shortcuts -->
 							</div>
@@ -442,8 +437,8 @@
 	<script th:src="@{/js/bootstrap.js}"></script>
 	<script language="javascript" type="text/javascript" th:src="@{/js/full-calendar/fullcalendar.min.js}"></script>
 
-	<script src="js/base.js"></script>
-	<script>
+	<script th:src="@{/js/base.js}"></script>
+		<script>
 		var lineChartData = {
 			labels : [ "1", "10", "20", "30", "40", "50", "60", "80", "100" ],
 			datasets : [ {
