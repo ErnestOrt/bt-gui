@@ -1,10 +1,15 @@
 package org.ernest.applications.bt.gui.services;
 
+import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
+import org.ernest.applications.bt.db.manager.users.ct.UpdateAddBikeInput;
 import org.ernest.applications.bt.db.manager.users.ct.UpdateDescriptionInput;
 import org.ernest.applications.bt.db.manager.users.ct.UpdateNameInput;
+import org.ernest.applications.bt.db.manager.users.ct.UpdateRemoveBikeInput;
 import org.ernest.applications.bt.db.manager.users.ct.UpdateStatisticsInput;
+import org.ernest.applications.bt.db.manager.users.ct.entities.Bike;
 import org.ernest.applications.bt.db.manager.users.ct.entities.Statistics;
 import org.ernest.applications.bt.db.manager.users.ct.entities.User;
 import org.ernest.applications.bt.gui.dtos.StatisticsDto;
@@ -28,7 +33,7 @@ public class ProfileDataServiceImpl implements ProfileDataService{
 		userDto.setDescription(user.getDescription() == null ? "description..." : user.getDescription());
 		userDto.setStatistics(buildStatisticsDto(user.getStatistics()));
 		userDto.setBikesList(user.getBikesList().stream()
-												.map(bike -> new BikeDto(bike.getId(), bike.getName(), bike.getImage()))
+												.map(bike -> new BikeDto(bike.getId(), bike.getName()))
 												.collect(Collectors.toList()));
 		return userDto;
 	}
@@ -70,6 +75,31 @@ public class ProfileDataServiceImpl implements ProfileDataService{
 		
 		new RestTemplate().postForObject("http://localhost:9999/update/statistics", updateStatisticsInput, String.class);
 	}
+	
+	@Override
+	public void addBike(String userId, String name) {
+		UpdateAddBikeInput updateAddBikeInput = new UpdateAddBikeInput();
+		updateAddBikeInput.setUserId(userId);
+		Bike bike = new Bike();
+		bike.setName(name);
+		bike.setId(UUID.randomUUID().toString());
+		updateAddBikeInput.setBike(bike);
+		
+		new RestTemplate().postForObject("http://localhost:9999/update/addbike", updateAddBikeInput, String.class);
+	}
+	
+	@Override
+	public void deleteBikes(String userId, List<String> bikesIds) {
+		
+		bikesIds.forEach(bikesId -> {
+			UpdateRemoveBikeInput updateRemoveBikeInput = new UpdateRemoveBikeInput();
+			updateRemoveBikeInput.setUserId(userId);
+			updateRemoveBikeInput.setBikeId(bikesId);
+			
+			new RestTemplate().postForObject("http://localhost:9999/update/removebike", updateRemoveBikeInput, String.class);
+		});
+		
+	}
 
 	private int validateSkill(int skillValue) {
 		
@@ -89,7 +119,5 @@ public class ProfileDataServiceImpl implements ProfileDataService{
 		statisticsDto.setSprint(statistics == null ? 0 : statistics.getSprint());
 		
 		return statisticsDto;
-	}
-
-	
+	}	
 }

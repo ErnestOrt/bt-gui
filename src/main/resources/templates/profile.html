@@ -53,6 +53,21 @@
             <div class="container">
                 <div class="row">
                     <div class="span6">
+                    	<div class="widget">
+				            <div class="widget-header"> <i class="icon-bookmark"></i>
+				              <h3>What to see</h3>
+				            </div>
+				            <!-- /widget-header -->
+				             <div class="widget-content">
+				              <div class="shortcuts"> 
+								<a href="./dashboard" class="shortcut"><i class="shortcut-icon icon-globe"></i><span class="shortcut-label">Team</span></a>
+				                <a href="./profile" class="shortcut shortcut-active"><i class="shortcut-icon icon-user"></i><span class="shortcut-label">Profile</span></a>
+				                <a href="./stages" class="shortcut"><i class="shortcut-icon icon-picture"></i><span class="shortcut-label">Stages</span></a>
+				                <a href="./members" class="shortcut"><i class="shortcut-icon icon-group"></i> <span class="shortcut-label">Members</span></a>
+				              </div>
+				              <!-- /shortcuts --> 
+				            </div>
+				          </div>
                        <div class="widget">
 							<div class="widget-header">
 								<i class="icon-bar-chart"></i>
@@ -99,12 +114,54 @@
                             <div class="widget-header">
                                 <i class="icon-bar-chart"></i>
                                 <h3>Bikes</h3>
+                                <a href="#modal-add-bike" role="button" class="btn" data-toggle="modal">Add</a>
+                               
+								<!-- Modal -->
+								<div id="modal-add-bike" class="modal hide fade" tabindex="-1"
+									role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+										<h3 id="myModalLabel">Add Bike</h3>
+									</div>
+									<div class="modal-body">
+										<div class="control-group">											
+											<label class="control-label" for="name">Bike Name</label>
+											<div class="controls">
+												<input type="text" class="span4" id="input-bike-name"></input>
+											</div>				
+										</div>
+									</div>
+									<div class="modal-footer">
+										<button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+										<button class="btn btn-primary" onclick="addBike()">Add</button>
+									</div>									
+								</div>
+								
+								<a href="#modal-remove-bike" role="button" class="btn btn-danger" data-toggle="modal">Delete</a>
+								<div id="modal-remove-bike" class="modal hide fade" tabindex="-1"
+									role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+										<h3 id="myModalLabel">Delete Bike/s</h3>
+									</div>
+									<div class="modal-body">
+										<div th:each="bike : ${bikes}" class="control-group">
+											<div class="checkbox">
+											<input type="checkbox" name="input-delete-bike" th:value="${bike.id}"/>
+											  <label th:text="${bike.name}"></label>
+											</div>
+										</div>
+									</div>
+									<div class="modal-footer">
+										<button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+										<button class="btn btn-danger" onclick="deleteBikes()">Delete</button>
+									</div>
+								</div>
                             </div>
+                         
                             <!-- /widget-header -->
-                            <div class="widget-content">
-                               <h1>Cronos 2566</h1>
-                               <img th:src="@{/img/bike.jpg}" width="300"/>
-                                <!-- /line-chart -->
+                            <div th:each="bike : ${bikes}" class="widget-content">
+                               <h1 th:text="${bike.name}"></h1> 
                             </div>
                             <!-- /widget-content -->
                         </div>
@@ -113,21 +170,7 @@
                     <!-- /span6 -->
                     <div class="span6">
 
-                      <div class="widget">
-			            <div class="widget-header"> <i class="icon-bookmark"></i>
-			              <h3>What to see</h3>
-			            </div>
-			            <!-- /widget-header -->
-			             <div class="widget-content">
-			              <div class="shortcuts"> 
-							<a href="./dashboard" class="shortcut"><i class="shortcut-icon icon-globe"></i><span class="shortcut-label">Team</span></a>
-			                <a href="./profile" class="shortcut shortcut-active"><i class="shortcut-icon icon-user"></i><span class="shortcut-label">Profile</span></a>
-			                <a href="./stages" class="shortcut"><i class="shortcut-icon icon-picture"></i><span class="shortcut-label">Stages</span></a>
-			                <a href="./members" class="shortcut"><i class="shortcut-icon icon-group"></i> <span class="shortcut-label">Members</span></a>
-			              </div>
-			              <!-- /shortcuts --> 
-			            </div>
-			          </div>
+                      
                        
                         <!-- /widget -->
                         <div class="widget">
@@ -270,10 +313,28 @@
 
     <script th:inline="javascript">
     
+    function deleteBikes(){
+    	
+    	var bikes = [];
+    	
+    	$('input[name=input-delete-bike]:checked').each(function(){
+    		bikes.push($(this).attr("value"));
+    	});
+
+    	if(bikes.length > 0){
+    		$.ajax({
+    		    url : "/profile/deltebikes",
+    		    type: "POST",
+    		    data : {ids: bikes.toString()},
+    		    success: function(data, textStatus, jqXHR) { location.reload(); }
+    		});	
+    	}
+    }
+    
     function savePersonalInformation(){
     	if($("#input-name").val() != '' || $("#input-description").val() != ''){
     		$.ajax({
-    		    url : "/savepersonalinformation",
+    		    url : "/profile/savepersonalinformation",
     		    type: "POST",
     		    data : {name: $("#input-name").val(), description: $("#input-description").val()},
     		    success: function(data, textStatus, jqXHR) { location.reload(); }
@@ -284,7 +345,7 @@
     function saveSkills(){
 
    		$.ajax({
-   		    url : "/saveskills",
+   		    url : "/profile/saveskills",
    		    type: "POST",
    		    data : {resistence: $("#input-resistence").val(),
 	   		    	sprint: $("#input-sprint").val(),
@@ -295,8 +356,19 @@
    		    success: function(data, textStatus, jqXHR) { location.reload(); }
    		});
     }
+    
+    function addBike(){
+    	if($("#input-name").val() != ''){
+    		$.ajax({
+       		    url : "/profile/addbike",
+       		    type: "POST",
+       		    data : {name: $("#input-bike-name").val()},
+       		    success: function(data, textStatus, jqXHR) { location.reload(); }
+       		});
+    	}
+    }
        
-
+    
 
 
         var barChartData = {
@@ -312,7 +384,7 @@
 
         }
 
-var myLine = new Chart(document.getElementById("bar-chart").getContext("2d")).Bar(barChartData);
+	var myLine = new Chart(document.getElementById("bar-chart").getContext("2d")).Bar(barChartData);
 
         /*<![CDATA[*/
             var resistence = /*[[${statistics.resistence}]]*/;
