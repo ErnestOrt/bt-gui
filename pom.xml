@@ -28,6 +28,11 @@
 			<artifactId>bt-manager-users-ct</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
+		<dependency>
+			<groupId>org.ernest.applications</groupId>
+			<artifactId>bt-manager-teams-ct</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
 
 	<build>

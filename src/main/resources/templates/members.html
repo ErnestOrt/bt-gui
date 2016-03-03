@@ -53,59 +53,7 @@
             <div class="container">
                 <div class="row">
                     <div class="span6">
-                      <div class="widget">
-                            <div class="widget-header">
-                                <i class="icon-bar-chart"></i>
-                                <h3>Ernest Ortuño</h3>
-                            </div>
-                            <!-- /widget-header -->
-                            <div class="widget-content">
-                                <canvas id="line-chart1" class="chart-holder" width="538" height="250">
-                                </canvas>
-                                <!-- /-chart -->
-                               <div id="big_stats" class="cf">
-                                  <div class="stat"> <i class="icon-picture"></i> <span class="value">5</span> Statges </div>
-                                  <!-- .stat -->
-                                  
-                                 
-                                  
-                                  <div class="stat"> <i class="icon-road"></i> <span class="value">280</span> Km </div>
-                                  <!-- .stat -->
-                                  
-                                  
-                                </div>
-                            </div>
-                            <!-- /widget-content -->
-                        </div>
-                        <div class="widget">
-                            <div class="widget-header">
-                                <i class="icon-bar-chart"></i>
-                                <h3>Veronica Vizcaino</h3>
-                            </div>
-                            <!-- /widget-header -->
-                            <div class="widget-content">
-                                <canvas id="line-chart2" class="chart-holder" width="538" height="250">
-                                </canvas>
-                                <div id="big_stats" class="cf">
-                                  <div class="stat"> <i class="icon-picture"></i> <span class="value">5</span> Statges </div>
-                                  <!-- .stat -->
-                                  
-                                 
-                                  
-                                  <div class="stat"> <i class="icon-road"></i> <span class="value">280</span> Km </div>
-                                  <!-- .stat -->
-                                  
-                                  
-                                </div>
-                                <!-- /-chart -->
-                            </div>
-                            <!-- /widget-content -->
-                        </div>
-                    </div>
-                    <!-- /span6 -->
-                    <div class="span6">
-
-                      <div class="widget">
+                       <div class="widget">
                           <div class="widget-header"> <i class="icon-bookmark"></i>
                             <h3>What to see</h3>
                           </div>
@@ -120,29 +68,20 @@
                             <!-- /shortcuts --> 
                           </div>
                         </div>
-                       
+                    </div>
+                    <!-- /span6 -->
+                    <div class="span6">
+                    
                         <!-- /widget -->
-                        <div class="widget">
+                        <div class="widget" th:each="member : ${members}">
                             <div class="widget-header">
                                 <i class="icon-bar-chart"></i>
-                                <h3>Kike</h3>
+                                <h3 th:text="${member.name}"></h3>
                             </div>
                             <!-- /widget-header -->
                             <div class="widget-content">
-                                <canvas id="line-chart3" class="chart-holder" width="538" height="250">
+                                <canvas th:id="'radar-chart-' + ${member.id}" class="chart-holder" width="538" height="250">
                                 </canvas>
-                                <div id="big_stats" class="cf">
-                                  <div class="stat"> <i class="icon-picture"></i> <span class="value">5</span> Statges </div>
-                                  <!-- .stat -->
-                                  
-                                 
-                                  
-                                  <div class="stat"> <i class="icon-road"></i> <span class="value">280</span> Km </div>
-                                  <!-- .stat -->
-                                  
-                                  
-                                </div>
-                                <!-- /-chart -->
                             </div>
                             <!-- /widget-content -->
                         </div>
@@ -207,88 +146,60 @@
 	<script th:src="@{/js/bootstrap.js}"></script>
 	<script th:src="@{/js/base.js}"></script>
 
-    <script>
-    var chartData1 = [
-                     {
-                         value: Math.random(),
-                         color: "#D97041"
-                     },
-                     {
-                         value: Math.random(),
-                         color: "#C7604C"
-                     },
-                     {
-                         value: Math.random(),
-                         color: "#21323D"
-                     },
-                     {
-                         value: Math.random(),
-                         color: "#9D9B7F"
-                     },
-                     {
-                         value: Math.random(),
-                         color: "#7D4F6D"
-                     },
-                     {
-                         value: Math.random(),
-                         color: "#584A5E"
-                     }
-                   ];
-    var chartData3 = [
-                      {
-                          value: Math.random(),
-                          color: "#D97041"
-                      },
-                      {
-                          value: Math.random(),
-                          color: "#C7604C"
-                      },
-                      {
-                          value: Math.random(),
-                          color: "#21323D"
-                      },
-                      {
-                          value: Math.random(),
-                          color: "#9D9B7F"
-                      },
-                      {
-                          value: Math.random(),
-                          color: "#7D4F6D"
-                      },
-                      {
-                          value: Math.random(),
-                          color: "#584A5E"
-                      }
-                    ];
-    var chartData2 = [
-                      {
-                          value: Math.random(),
-                          color: "#D97041"
-                      },
-                      {
-                          value: Math.random(),
-                          color: "#C7604C"
-                      },
-                      {
-                          value: Math.random(),
-                          color: "#21323D"
-                      },
-                      {
-                          value: Math.random(),
-                          color: "#9D9B7F"
-                      },
-                      {
-                          value: Math.random(),
-                          color: "#7D4F6D"
-                      },
-                      {
-                          value: Math.random(),
-                          color: "#584A5E"
-                      }
-                    ];
-      var myPolarArea = new Chart(document.getElementById("line-chart1").getContext("2d")).PolarArea(chartData1);
-      new Chart(document.getElementById("line-chart2").getContext("2d")).PolarArea(chartData2);
-      new Chart(document.getElementById("line-chart3").getContext("2d")).PolarArea(chartData3);
+    <script th:inline="javascript">
+    
+    var resistence;
+    var sprint;
+    var montain;
+    var flat;
+    var btt;
+    var road;    
+    
+    var data
+    
+    
+    /*<![CDATA[*/
+
+    var membersList = [[${members}]]
+    for (i = 0; i < membersList.length; i++) {
+    	 resistence = membersList[i].statistics.resistence;
+         sprint = membersList[i].statistics.sprint;
+         montain = membersList[i].statistics.montain;
+         flat = membersList[i].statistics.flat;
+         btt = membersList[i].statistics.btt;
+         road = membersList[i].statistics.road;   
+    	
+    	
+         data = {
+         	    labels: ["Resistence", "Sprint", "Montain", "Flat", "BTT", "Road"],
+         	    datasets: [
+     				{
+     				    label: "My First dataset",
+     				    fillColor: "rgba(255,255,255,0)",
+     				    strokeColor: "rgba(255,255,255,0)",
+     				    pointColor: "rgba(255,255,255,0)",
+     				    pointStrokeColor: "#FFFFFF",
+     				    pointHighlightFill: "#FFFFFF",
+     				    pointHighlightStroke: "rgba(255,255,255,0)",
+     				    data: [0, 2, 4, 6, 8, 10]
+     				},
+         	        {
+         	            label: "My Second dataset",
+         	            fillColor: "rgba(151,187,205,0.2)",
+         	            strokeColor: "rgba(151,187,205,1)",
+         	            pointColor: "rgba(151,187,205,1)",
+         	            pointStrokeColor: "#fff",
+         	            pointHighlightFill: "#fff",
+         	            pointHighlightStroke: "rgba(151,187,205,1)",
+         	            data: [resistence, sprint, montain, flat, btt, road]
+         	        }
+         	    ]
+         	};
+    	
+         new Chart(document.getElementById("radar-chart-" + membersList[i].id).getContext("2d")).Radar(data);
+    }
+    
+    /*]]>*/
 
   </script>
 </body>

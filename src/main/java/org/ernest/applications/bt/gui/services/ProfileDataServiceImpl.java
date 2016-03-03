@@ -12,9 +12,9 @@ import org.ernest.applications.bt.db.manager.users.ct.UpdateStatisticsInput;
 import org.ernest.applications.bt.db.manager.users.ct.entities.Bike;
 import org.ernest.applications.bt.db.manager.users.ct.entities.Statistics;
 import org.ernest.applications.bt.db.manager.users.ct.entities.User;
-import org.ernest.applications.bt.gui.dtos.StatisticsDto;
-import org.ernest.applications.bt.gui.dtos.UserDto;
 import org.ernest.applications.bt.gui.dtos.BikeDto;
+import org.ernest.applications.bt.gui.dtos.UserDto;
+import org.ernest.applications.bt.gui.dtos.utils.DtosUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
@@ -31,7 +31,7 @@ public class ProfileDataServiceImpl implements ProfileDataService{
 		UserDto userDto = new UserDto();
 		userDto.setName(user.getName() == null ? "name..." : user.getName());
 		userDto.setDescription(user.getDescription() == null ? "description..." : user.getDescription());
-		userDto.setStatistics(buildStatisticsDto(user.getStatistics()));
+		userDto.setStatistics(DtosUtils.buildStatisticsDto(user.getStatistics()));
 		userDto.setBikesList(user.getBikesList().stream()
 												.map(bike -> new BikeDto(bike.getId(), bike.getName()))
 												.collect(Collectors.toList()));
@@ -106,18 +106,5 @@ public class ProfileDataServiceImpl implements ProfileDataService{
 		skillValue = skillValue < MINIMUM_SKILL_VALUE ? MINIMUM_SKILL_VALUE : skillValue;
 		skillValue = skillValue > MAXIMUM_SKILL_VALUE ? MAXIMUM_SKILL_VALUE : skillValue;
 		return skillValue;
-	}
-
-	private StatisticsDto buildStatisticsDto(Statistics statistics) {
-		StatisticsDto statisticsDto = new StatisticsDto();
-		
-		statisticsDto.setBtt(statistics == null ? 0 : statistics.getBtt());
-		statisticsDto.setFlat(statistics == null ? 0 : statistics.getFlat());
-		statisticsDto.setMontain(statistics == null ? 0 : statistics.getMontain());
-		statisticsDto.setResistence(statistics == null ? 0 : statistics.getResistence());
-		statisticsDto.setRoad(statistics == null ? 0 : statistics.getRoad());
-		statisticsDto.setSprint(statistics == null ? 0 : statistics.getSprint());
-		
-		return statisticsDto;
 	}	
 }
