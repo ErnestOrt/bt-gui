@@ -10,6 +10,9 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<java.version>1.8</java.version>
+		<ct.users.version>0.0.1-SNAPSHOT</ct.users.version>
+		<ct.teams.version>0.0.1-SNAPSHOT</ct.teams.version>
+		<ct.stages.version>0.0.1-SNAPSHOT</ct.stages.version>
 	</properties>
 
 	<parent>
@@ -26,12 +29,17 @@
 		<dependency>
 			<groupId>org.ernest.applications</groupId>
 			<artifactId>bt-manager-users-ct</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>${ct.users.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.ernest.applications</groupId>
 			<artifactId>bt-manager-teams-ct</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>${ct.teams.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.ernest.applications</groupId>
+			<artifactId>bt-manager-stages-ct</artifactId>
+			<version>${ct.stages.version}</version>
 		</dependency>
 	</dependencies>
 

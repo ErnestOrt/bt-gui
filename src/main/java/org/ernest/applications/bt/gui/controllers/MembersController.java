@@ -22,5 +22,4 @@ public class MembersController {
 		model.addAttribute("members", membersDataService.getMembers(teamIdStatic).getMembers());
 		return "members";
 	}
-
 }

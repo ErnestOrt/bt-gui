@@ -53,87 +53,35 @@
     <div class="container">
       <div class="row">
         <div class="span6">
-           <div class="widget">
-            <div class="widget-header"> <i class="icon-picture"></i>
-              <h3> Next Stage: Barcelona-Collserolla-Barcelona</h3>
-            </div>
-            <!-- /widget-header -->
-            <div class="widget-content">
-              <canvas id="area-chart1" class="chart-holder" height="250" width="538"> </canvas>
-               <div id="big_stats" class="cf">
-                    <div class="stat"> <i class="icon-group"></i> <span class="value">14</span> Memebers </div>
-                    <!-- .stat -->
-                    
-                   
-                    
-                    <div class="stat"> <i class="icon-road"></i> <span class="value">80</span> Km </div>
-                    <!-- .stat -->
-                    
-                    
-                  </div>
-            
-            </div>
-            <!-- /widget-content --> 
-          </div>
-           <div class="widget">
-            <div class="widget-header"> <i class="icon-picture"></i>
-              <h3> Next Stage: Barcelona-Collserolla-Barcelona</h3>
-            </div>
-            <!-- /widget-header -->
-            <div class="widget-content">
-              <canvas id="area-chart2" class="chart-holder" height="250" width="538"> </canvas>
-              <div id="big_stats" class="cf">
-                    <div class="stat"> <i class="icon-group"></i> <span class="value">18</span> Memebers </div>
-                    <!-- .stat -->
-                    
-                   
-                    
-                    <div class="stat"> <i class="icon-road"></i> <span class="value">90</span> Km </div>
-                    <!-- .stat -->
-                    
-                    
-                  </div>
-            </div>
-            <!-- /widget-content --> 
-          </div>
-        </div>
-        <!-- /span6 -->
-        <div class="span6">
-           <div class="widget">
-            <div class="widget-header"> <i class="icon-bookmark"></i>
-              <h3>What to see</h3>
-            </div>
-            <!-- /widget-header -->
-            <div class="widget-content">
+			<div class="widget">
+	            <div class="widget-header"> <i class="icon-bookmark"></i>
+	              <h3>What to see</h3>
+	            </div>
+	            <!-- /widget-header -->
+	            <div class="widget-content">
 		          <div class="shortcuts"> 
 					<a href="./dashboard" class="shortcut"><i class="shortcut-icon icon-globe"></i><span class="shortcut-label">Team</span></a>
 	                <a href="./profile" class="shortcut"><i class="shortcut-icon icon-user"></i><span class="shortcut-label">Profile</span></a>
 	                <a href="./stages" class="shortcut shortcut-active"><i class="shortcut-icon icon-picture"></i><span class="shortcut-label">Stages</span></a>
 	                <a href="./members" class="shortcut"><i class="shortcut-icon icon-group"></i> <span class="shortcut-label">Members</span></a>
 	              </div>
-              <!-- /shortcuts --> 
-            </div>
-          </div>
-
-           <div class="widget">
+	              <!-- /shortcuts --> 
+	            </div>
+	          </div>
+        </div>
+        <!-- /span6 -->
+        <div class="span6">
+           <div class="widget" th:each="stage : ${stages}">
             <div class="widget-header"> <i class="icon-picture"></i>
-              <h3> Next Stage: Barcelona-Collserolla-Barcelona</h3>
+              <h3 th:text="${stage.name}"></h3>
             </div>
             <!-- /widget-header -->
             <div class="widget-content">
-              <canvas id="area-chart3" class="chart-holder" height="250" width="538"> </canvas>
+               <canvas th:id="'area-chart-' + ${stage.id}" class="chart-holder" height="250" width="538"> </canvas>
                <div id="big_stats" class="cf">
-                    <div class="stat"> <i class="icon-group"></i> <span class="value">23</span> Memebers </div>
-                    <!-- .stat -->
-                    
-                   
-                    
-                    <div class="stat"> <i class="icon-road"></i> <span class="value">82</span> Km </div>
-                    <!-- .stat -->
-                    
-                    
-                  </div>
-            </div>
+                 <div class="stat"> <i class="icon-group"></i> <span class="value"></span> Memebers </div>
+                 <div class="stat"> <i class="icon-road"></i> <span class="value" th:text="${stage.kilomitersTotal}"></span> Km </div>
+               </div>
             </div>
             <!-- /widget-content --> 
           </div>
@@ -147,6 +95,8 @@
     <!-- /container --> 
   </div>
   <!-- /main-inner --> 
+</div>
+<!-- /main -->
 
     	<!-- /main -->
 	<div class="extra">
@@ -196,53 +146,52 @@
 	<script th:src="@{/js/bootstrap.js}"></script>
 	<script th:src="@{/js/base.js}"></script>
 
-    <script>
-    var lineChartData1 = {
-            labels: ["1", "10", "20", "30", "40", "50", "60","80","100"],
-            datasets: [
-				{
-				    fillColor: "rgba(151,187,205,0.5)",
-				    strokeColor: "rgba(151,187,205,1)",
-				    pointColor: "rgba(151,187,205,1)",
-				    pointStrokeColor: "#fff",
-				    data: [28, 32, 35, 42, 41, 43, 50, 53, 33]
-				}
-			]
+    <script th:inline="javascript">
+    
+    /*<![CDATA[*/
+	var lineChartData
+	var valuesStage =[];
+	var valuesBackground =[];
+	var count = 0;
+    var stagesList = [[${stages}]]
+    for (i = 0; i < stagesList.length; i++) {
+    	valuesBackground.push(0);
+    	valuesBackground.push(1000);
+    	Object.keys(stagesList[i].altitudeByKilomiter).forEach(function(key) {
+    			valuesStage.push(stagesList[i].altitudeByKilomiter[key]);
+	    	  if(count>=2){
+	    		  valuesBackground.push(0);
+	    	  }
+	    	  count ++;
+	    	});
+    	
+    	lineChartData = {
+                labels:  Object.keys(stagesList[i].altitudeByKilomiter),
+                datasets: [
+					{
+					    fillColor: "rgba(255,255,255,0)",
+     				    strokeColor: "rgba(255,255,255,0)",
+     				    pointColor: "rgba(255,255,255,0)",
+     				    pointStrokeColor: "#FFFFFF",
+     				    pointHighlightFill: "#FFFFFF",
+     				    pointHighlightStroke: "rgba(255,255,255,0)",
+					    data: valuesBackground
+					},
+    				{
+    				    fillColor: "rgba(151,187,205,0.5)",
+    				    strokeColor: "rgba(151,187,205,1)",
+    				    pointColor: "rgba(151,187,205,1)",
+    				    pointStrokeColor: "#fff",
+    				    data: valuesStage
+    				}
+    			]
 
-        }
-
-        var lineChartData2 = {
-            labels: ["1", "10", "20", "30", "40", "50", "60","80","100"],
-            datasets: [
-        {
-            fillColor: "rgba(151,187,205,0.5)",
-            strokeColor: "rgba(151,187,205,1)",
-            pointColor: "rgba(151,187,205,1)",
-            pointStrokeColor: "#fff",
-            data: [48, 32, 35, 32, 35, 43, 45, 45, 52]
-        }
-      ]
-
-        }
-
-        var lineChartData3 = {
-            labels: ["1", "10", "20", "30", "40", "50", "60","80","100"],
-            datasets: [
-        {
-            fillColor: "rgba(151,187,205,0.5)",
-            strokeColor: "rgba(151,187,205,1)",
-            pointColor: "rgba(151,187,205,1)",
-            pointStrokeColor: "#fff",
-            data: [2, 5, 5, 4, 6, 7, 12, 8, 5]
-        }
-      ]
-
-        }
-
-        new Chart(document.getElementById("area-chart1").getContext("2d")).Line(lineChartData1);
-        new Chart(document.getElementById("area-chart2").getContext("2d")).Line(lineChartData2);
-        new Chart(document.getElementById("area-chart3").getContext("2d")).Line(lineChartData3);
-
+            }
+    	new Chart(document.getElementById("area-chart-" + stagesList[i].id).getContext("2d")).Line(lineChartData);
+    }
+    
+	/*]]>*/
+	
   </script>
 </body>
 </html>
