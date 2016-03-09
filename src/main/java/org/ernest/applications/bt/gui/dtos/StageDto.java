@@ -12,12 +12,12 @@ public class StageDto {
 	private String name;
 	private Date date;
 	private int kilomitersTotal;
-	private Map<Integer, Integer> altitudeByKilomiter;
+	private Map<Double, Double> altitudeByKilomiter;
 	private Set<String> joinedMembers;
 	
 	public StageDto(){
 		joinedMembers = new HashSet<String>();
-		altitudeByKilomiter = new HashMap<Integer, Integer>();
+		altitudeByKilomiter = new HashMap<Double, Double>();
 	}
 	public String getId() {
 		return id;
@@ -49,10 +49,10 @@ public class StageDto {
 	public void setKilomitersTotal(int kilomitersTotal) {
 		this.kilomitersTotal = kilomitersTotal;
 	}
-	public Map<Integer, Integer> getAltitudeByKilomiter() {
+	public Map<Double, Double> getAltitudeByKilomiter() {
 		return altitudeByKilomiter;
 	}
-	public void setAltitudeByKilomiter(Map<Integer, Integer> altitudeByKilomiter) {
+	public void setAltitudeByKilomiter(Map<Double, Double> altitudeByKilomiter) {
 		this.altitudeByKilomiter = altitudeByKilomiter;
 	}
 }
