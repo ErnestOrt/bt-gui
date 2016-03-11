@@ -4,6 +4,7 @@ import java.util.Comparator;
 import java.util.Date;
 
 import org.ernest.applications.bt.gui.entities.StageDto;
+import org.ernest.applications.bt.gui.entities.StagePointDto;
 import org.ernest.applications.bt.gui.entities.TeamDto;
 import org.ernest.applications.bt.gui.services.TeamDataService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +41,23 @@ public class DashboardController {
 														  .sorted(Comparator.comparing(StageDto::getDate))
 														  .filter(stage -> stage.getDate().compareTo(new Date()) >= 0)
 														  .findFirst()
-														  .get());
+														  .orElse(buildEmptyStage()));
 		return "dashboard";
+	}
+
+	private StageDto buildEmptyStage() {
+		StageDto stageDto = new StageDto();
+		stageDto.getStagePoints().add(new StagePointDto(0.0, 0.0, 0.0, 0.0));
+		stageDto.getStagePoints().add(new StagePointDto(0.0, 0.0, 0.0, 0.0));
+		stageDto.getStagePoints().add(new StagePointDto(0.0, 0.0, 0.0, 0.0));
+		stageDto.getStagePoints().add(new StagePointDto(0.0, 0.0, 0.0, 0.0));
+		stageDto.getStagePoints().add(new StagePointDto(0.0, 0.0, 0.0, 0.0));
+		stageDto.getStagePoints().add(new StagePointDto(0.0, 0.0, 0.0, 0.0));
+		stageDto.getStagePoints().add(new StagePointDto(0.0, 0.0, 0.0, 0.0));
+		stageDto.getStagePoints().add(new StagePointDto(0.0, 0.0, 0.0, 0.0));
+		stageDto.getStagePoints().add(new StagePointDto(0.0, 0.0, 0.0, 0.0));
+		stageDto.getStagePoints().add(new StagePointDto(0.0, 0.0, 0.0, 0.0));
+		stageDto.getStagePoints().add(new StagePointDto(0.0, 0.0, 0.0, 0.0));
+		return stageDto;
 	}
 }
