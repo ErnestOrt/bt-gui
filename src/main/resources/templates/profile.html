@@ -70,7 +70,7 @@
 				          </div>
                        <div class="widget">
 							<div class="widget-header">
-								<i class="icon-bar-chart"></i>
+								<i class="icon-user"></i>
 								<h3>Personal Information</h3>
 								<a href="#modal-personal-information" role="button" class="btn" data-toggle="modal">Edit</a>
 
@@ -112,7 +112,7 @@
                         <!-- /widget -->
                         <div class="widget">
                             <div class="widget-header">
-                                <i class="icon-bar-chart"></i>
+                                <i class="icon-cog"></i>
                                 <h3>Bikes</h3>
                                 <a href="#modal-add-bike" role="button" class="btn" data-toggle="modal">Add</a>
                                
@@ -244,7 +244,7 @@
 
                             <div class="widget-header">
                                 <i class="icon-bar-chart"></i>
-                                <h3>Statges completed</h3>
+                                <h3>Statges Joinned</h3>
                             </div>
                             <!-- /widget-header -->
                             <div class="widget-content">
@@ -370,21 +370,84 @@
        
     
 
+    /*<![CDATA[*/
+     var currentMonth = /*[[${currentMonth }]]*/;
+     var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    
+     var stagesJoined = /*[[${stagesJoined}]]*/;
+     var dataArray = [];
+     
+     if(stagesJoined[(currentMonth + 8)%12] != null){
+    	 dataArray.push(stagesJoined[(currentMonth + 8)%12]);
+     }else{
+    	 dataArray.push(0);
+     }
+ 
+     
+     if(stagesJoined[(currentMonth + 9)%12] != null){
+    	 dataArray.push(stagesJoined[(currentMonth + 9)%12]);
+     }else{
+    	 dataArray.push(0);
+     }
+ 
+     
+     if(stagesJoined[(currentMonth + 10)%12] != null){
+    	 dataArray.push(stagesJoined[(currentMonth + 10)%12]);
+     }else{
+    	 dataArray.push(0);
+     }
+ 
+     
+     if(stagesJoined[(currentMonth + 11)%12] != null){
+    	 dataArray.push(stagesJoined[(currentMonth + 11)%12]);
+     }else{
+    	 dataArray.push(0);
+     }
+ 
+    	 
+     if(stagesJoined[(currentMonth)%12] != null){
+    	 dataArray.push(stagesJoined[(currentMonth)%12]);
+     }else{
+         dataArray.push(0);
 
-        var barChartData = {
-            labels: ["January", "February", "March", "April", "May", "June", "July"],
+     }
+     
+     if(stagesJoined[(currentMonth + 1)%12] != null){
+    	 dataArray.push(stagesJoined[(currentMonth + 1)%12]);
+     }else{
+    	 dataArray.push(0);
+     }
+ 
+     
+     if(stagesJoined[(currentMonth + 2)%12] != null){
+    	 dataArray.push(stagesJoined[(currentMonth + 2)%12]);
+     }else{
+    	 dataArray.push(0);
+     }
+ 
+     
+    	 var barChartData = {
+            labels: [months[(currentMonth + 8)%12],
+                     months[(currentMonth + 9)%12],
+                     months[(currentMonth + 10)%12],
+                     months[(currentMonth + 11)%12],
+                     months[(currentMonth + 0)%12],
+                     months[(currentMonth + 1)%12],
+                     months[(currentMonth + 2)%12]],
             datasets: [
-
         {
             fillColor: "rgba(151,187,205,0.5)",
             strokeColor: "rgba(151,187,205,1)",
-            data: [28, 48, 40, 19, 96, 27, 100]
-        }
+            highlightFill: "rgba(151,187,205,0.75)",
+            highlightStroke: "rgba(151,187,205,1)",
+            data: dataArray
+        },
       ]
 
         }
 
 	var myLine = new Chart(document.getElementById("bar-chart").getContext("2d")).Bar(barChartData);
+    /*]]>*/
 
         /*<![CDATA[*/
             var resistence = /*[[${statistics.resistence}]]*/;

@@ -1,6 +1,7 @@
-package org.ernest.applications.bt.gui.dtos;
+package org.ernest.applications.bt.gui.entities;
 
 import java.util.List;
+import java.util.Set;
 
 public class UserDto {
 
@@ -9,6 +10,7 @@ public class UserDto {
 	private String description;
 	private StatisticsDto statistics;
 	private List<BikeDto> bikesList;
+	private Set<String> stagesIdsJoined;
 	
 	
 	public String getId() {
@@ -40,5 +42,11 @@ public class UserDto {
 	}
 	public void setBikesList(List<BikeDto> bikesList) {
 		this.bikesList = bikesList;
+	}
+	public Set<String> getStagesIdsJoined() {
+		return stagesIdsJoined;
+	}
+	public void setStagesIdsJoined(Set<String> stagesIdsJoined) {
+		this.stagesIdsJoined = stagesIdsJoined;
 	}
 }

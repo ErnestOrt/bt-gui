@@ -1,6 +1,6 @@
 package org.ernest.applications.bt.gui.controllers;
 
-import org.ernest.applications.bt.gui.services.MembersDataService;
+import org.ernest.applications.bt.gui.services.TeamDataService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -14,12 +14,12 @@ public class MembersController {
 	private String teamIdStatic;
 	
 	@Autowired
-	MembersDataService membersDataService;
+	TeamDataService membersDataService;
 
 	@RequestMapping("/members")
 	public String getMembers(Model model) {
 		
-		model.addAttribute("members", membersDataService.getMembers(teamIdStatic).getMembers());
+		model.addAttribute("members", membersDataService.getTeamMembers(teamIdStatic));
 		return "members";
 	}
 }

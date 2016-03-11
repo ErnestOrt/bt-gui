@@ -1,9 +1,10 @@
-package org.ernest.applications.bt.gui.dtos;
+package org.ernest.applications.bt.gui.entities;
 
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
+import java.util.List;
 import java.util.Set;
 
 public class StageDto {
@@ -12,12 +13,12 @@ public class StageDto {
 	private String name;
 	private Date date;
 	private int kilomitersTotal;
-	private Map<Double, Double> altitudeByKilomiter;
+	private List<StagePointDto> stagePoints;
 	private Set<String> joinedMembers;
 	
 	public StageDto(){
 		joinedMembers = new HashSet<String>();
-		altitudeByKilomiter = new HashMap<Double, Double>();
+		stagePoints = new ArrayList<StagePointDto>();
 	}
 	public String getId() {
 		return id;
@@ -49,10 +50,10 @@ public class StageDto {
 	public void setKilomitersTotal(int kilomitersTotal) {
 		this.kilomitersTotal = kilomitersTotal;
 	}
-	public Map<Double, Double> getAltitudeByKilomiter() {
-		return altitudeByKilomiter;
+	public List<StagePointDto> getStagePoints() {
+		return stagePoints;
 	}
-	public void setAltitudeByKilomiter(Map<Double, Double> altitudeByKilomiter) {
-		this.altitudeByKilomiter = altitudeByKilomiter;
+	public void setStagePoints(List<StagePointDto> stagePoints) {
+		this.stagePoints = stagePoints;
 	}
 }

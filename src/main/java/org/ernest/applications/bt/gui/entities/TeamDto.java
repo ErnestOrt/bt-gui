@@ -1,4 +1,4 @@
-package org.ernest.applications.bt.gui.dtos;
+package org.ernest.applications.bt.gui.entities;
 
 import java.util.ArrayList;
 import java.util.List;

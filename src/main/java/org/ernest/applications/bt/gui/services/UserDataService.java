@@ -1,10 +1,11 @@
 package org.ernest.applications.bt.gui.services;
 
 import java.util.List;
+import java.util.Map;
 
-import org.ernest.applications.bt.gui.dtos.UserDto;
+import org.ernest.applications.bt.gui.entities.UserDto;
 
-public interface ProfileDataService {
+public interface UserDataService {
 
 	UserDto getUser(String userId);
 
@@ -18,4 +19,10 @@ public interface ProfileDataService {
 	void addBike(String userIdStatic, String name);
 
 	void deleteBikes(String userId, List<String> bikesIds);
+	
+	void joinStage(String userId, String stageId);
+
+	void unjoinStage(String userId, String stageId);
+
+	Map<Integer, Long> getUserStagesJoinnedMap(String userId);
 }

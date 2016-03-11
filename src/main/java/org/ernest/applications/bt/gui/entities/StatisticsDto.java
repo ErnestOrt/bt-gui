@@ -1,4 +1,4 @@
-package org.ernest.applications.bt.gui.dtos;
+package org.ernest.applications.bt.gui.entities;
 
 public class StatisticsDto {
 

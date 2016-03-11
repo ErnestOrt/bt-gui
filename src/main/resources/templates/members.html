@@ -75,13 +75,17 @@
                         <!-- /widget -->
                         <div class="widget" th:each="member : ${members}">
                             <div class="widget-header">
-                                <i class="icon-bar-chart"></i>
+                                <i class="icon-user"></i>
                                 <h3 th:text="${member.name}"></h3>
                             </div>
                             <!-- /widget-header -->
                             <div class="widget-content">
                                 <canvas th:id="'radar-chart-' + ${member.id}" class="chart-holder" width="538" height="250">
                                 </canvas>
+                                <div id="big_stats" class="cf">
+				                 <div class="stat"> <i class="icon-picture"></i> <span class="value" th:text="${member.stagesIdsJoined.size()}"></span> Stages </div>
+				                 <div class="stat"> <i class="icon-wrench"></i> <span class="value" th:text="${member.bikesList.size()}"></span> Bikes </div>
+				               </div>
                             </div>
                             <!-- /widget-content -->
                         </div>
