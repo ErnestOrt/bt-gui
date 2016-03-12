@@ -60,10 +60,10 @@
                           <!-- /widget-header -->
                            <div class="widget-content">
                             <div class="shortcuts"> 
-							<a href="./dashboard" class="shortcut"><i class="shortcut-icon icon-globe"></i><span class="shortcut-label">Team</span></a>
-			                <a href="./profile" class="shortcut"><i class="shortcut-icon icon-user"></i><span class="shortcut-label">Profile</span></a>
-			                <a href="./stages" class="shortcut"><i class="shortcut-icon icon-picture"></i><span class="shortcut-label">Stages</span></a>
-			                <a href="./members" class="shortcut shortcut-active"><i class="shortcut-icon icon-group"></i> <span class="shortcut-label">Members</span></a>
+							<a href="/dashboard" class="shortcut"><i class="shortcut-icon icon-globe"></i><span class="shortcut-label">Team</span></a>
+			                <a href="/profile" class="shortcut"><i class="shortcut-icon icon-user"></i><span class="shortcut-label">Profile</span></a>
+			                <a href="/stages" class="shortcut"><i class="shortcut-icon icon-picture"></i><span class="shortcut-label">Stages</span></a>
+			                <a href="/members" class="shortcut shortcut-active"><i class="shortcut-icon icon-group"></i> <span class="shortcut-label">Members</span></a>
 			              </div>
                             <!-- /shortcuts --> 
                           </div>
@@ -76,7 +76,7 @@
                         <div class="widget" th:each="member : ${members}">
                             <div class="widget-header">
                                 <i class="icon-user"></i>
-                                <h3 th:text="${member.name}"></h3>
+                                <h3><a th:href="'/member/' + ${member.id}" th:text="${member.name}"></a></h3>
                             </div>
                             <!-- /widget-header -->
                             <div class="widget-content">

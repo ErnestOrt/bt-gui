@@ -47,6 +47,7 @@ public class UserDataServiceImpl implements UserDataService{
 		User user = new RestTemplate().getForObject("http://localhost:" + usersPort + "/retrieve/"+userId, User.class);
 		
 		UserDto userDto = new UserDto();
+		userDto.setId(userId);
 		userDto.setName(user.getName() == null ? "name..." : user.getName());
 		userDto.setDescription(user.getDescription() == null ? "description..." : user.getDescription());
 		userDto.setStatistics(buildStatisticsDto(user.getStatistics()));
