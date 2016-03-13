@@ -18,4 +18,6 @@ public interface TeamDataService {
 
 	void addStageCompleted(String teamId, String stageId);
 
+	void addComment(String teamId, String commentId);
+
 }

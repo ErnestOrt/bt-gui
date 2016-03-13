@@ -100,17 +100,36 @@
 							<div class="widget-header">
 								<i class="icon-comments-alt"></i>
 								<h3>Comments</h3>
+								<a href="#modal-personal-information" role="button" class="btn" data-toggle="modal">Comment</a>
+
+								<!-- Modal -->
+								<div id="modal-personal-information" class="modal hide fade" tabindex="-1"
+									role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+										<h3 id="myModalLabel">Comment</h3>
+									</div>
+									<div class="modal-body">
+										<div class="control-group">											
+											<div class="controls">
+												<input type="text" class="span5" id="input-comment"></input>
+											</div>				
+										</div>
+									</div>
+									<div class="modal-footer">
+										<button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+										<button class="btn btn-primary" onclick="comment()">Comment</button>
+									</div>
+								</div>
 							</div>
 							<!-- /widget-header -->
 							<div class="widget-content">
 								<ul class="messages_layout">
-									<li class="from_user left"><a href="#" class="avatar"><img
-											th:src="@{/img/message_avatar1.png}" /></a>
+									<li class="from_user left" th:each="comment : ${comments}"><a href="#" class="avatar"><img width="50px" height="50px" th:src="@{'/img/avatar/avatar_' + ${comment.ownerIcon} + '.png'}" /></a>
 										<div class="message_wrap">
 											<span class="arrow"></span>
 											<div class="info">
-												<a class="name">Ernest Ortuño</a> <span class="time">1
-													hour ago</span>
+												<a class="name" th:href="'/member/' + ${comment.ownerId}" th:text="${comment.ownerName}"></a> <span class="time" th:text="${comment.creationDate}"></span>
 												<div class="options_arrow">
 													<div class="dropdown pull-right">
 														<a class="dropdown-toggle " id="dLabel" role="button"
@@ -119,75 +138,14 @@
 														</a>
 														<ul class="dropdown-menu " role="menu"
 															aria-labelledby="dLabel">
-															<li><a href="#"><i
-																	class=" icon-share-alt icon-large"></i> Reply</a></li>
-															<li><a href="#"><i
-																	class=" icon-trash icon-large"></i> Delete</a></li>
-															<li><a href="#"><i
-																	class=" icon-share icon-large"></i> Share</a></li>
+															<li><a href="#"><i class=" icon-share-alt icon-large"></i> Reply</a></li>
+															<li><a href="#"><i class=" icon-trash icon-large"></i> Delete</a></li>
+															<li><a href="#"><i class=" icon-share icon-large"></i> Share</a></li>
 														</ul>
 													</div>
 												</div>
 											</div>
-											<div class="text">Hey! Propogo hacer la ruta de los
-												Alpes italianos y ya que estmos no hacemos unas etapas para
-												Agosto así mi mujer prueba la canondale reolution! Que tal
-												Agosto?.</div>
-										</div></li>
-									<li class="by_myself right"><a href="#" class="avatar"><img
-											th:src="@{/img/message_avatar2.png}" /></a>
-										<div class="message_wrap">
-											<span class="arrow"></span>
-											<div class="info">
-												<a class="name">Veronica Vizacaino </a> <span class="time">4
-													hours ago</span>
-												<div class="options_arrow">
-													<div class="dropdown pull-right">
-														<a class="dropdown-toggle " id="dLabel" role="button"
-															data-toggle="dropdown" data-target="#" href="#"> <i
-															class=" icon-caret-down"></i>
-														</a>
-														<ul class="dropdown-menu " role="menu"
-															aria-labelledby="dLabel">
-															<li><a href="#"><i
-																	class=" icon-share-alt icon-large"></i> Reply</a></li>
-															<li><a href="#"><i
-																	class=" icon-trash icon-large"></i> Delete</a></li>
-															<li><a href="#"><i
-																	class=" icon-share icon-large"></i> Share</a></li>
-														</ul>
-													</div>
-												</div>
-											</div>
-											<div class="text">Gracias carinyo! a mi me gustaria
-												probar mi bici....</div>
-										</div></li>
-									<li class="from_user left"><a href="#" class="avatar"><img
-											th:src="@{/img/message_avatar1.png}" /></a>
-										<div class="message_wrap">
-											<span class="arrow"></span>
-											<div class="info">
-												<a class="name">Celeste Holm </a> <span class="time">1
-													Day ago</span>
-												<div class="options_arrow">
-													<div class="dropdown pull-right">
-														<a class="dropdown-toggle " id="dLabel" role="button"
-															data-toggle="dropdown" data-target="#" href="#"> <i
-															class=" icon-caret-down"></i>
-														</a>
-														<ul class="dropdown-menu " role="menu"
-															aria-labelledby="dLabel">
-															<li><a href="#"><i
-																	class=" icon-share-alt icon-large"></i> Reply</a></li>
-															<li><a href="#"><i
-																	class=" icon-trash icon-large"></i> Delete</a></li>
-															<li><a href="#"><i
-																	class=" icon-share icon-large"></i> Share</a></li>
-														</ul>
-													</div>
-												</div>
-											</div>
-											<div class="text">Valee.</div>
+											<div class="text" th:text="${comment.content}"></div>
 										</div></li>
 								</ul>
 							</div>
@@ -487,6 +445,17 @@
 			});
 		});
 		/*]]>*/
+		
+		function comment(){
+		if($("#input-comment").val() != ""){
+			$.ajax({
+	   		    url : "/dashboard/comment/create",
+	   		    type: "POST",
+	   		    data : {content: $("#input-comment").val()},
+	   		    success: function(data, textStatus, jqXHR) { location.reload(); }
+	   		});
+		}
+    }
 	</script>
 	<!-- /Calendar -->
 </body>

@@ -25,4 +25,6 @@ public interface UserDataService {
 	void unjoinStage(String userId, String stageId);
 
 	Map<Integer, Long> getUserStagesJoinnedMap(String userId);
+
+	void saveAvatarIcon(String userId, String icon);
 }

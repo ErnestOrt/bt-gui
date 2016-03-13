@@ -94,6 +94,12 @@
 												<input type="text" class="span6" id="input-description" th:value="${description}"></input>
 											</div>				
 										</div>
+										<div class="control-group">											
+											<label class="control-label" for="description">Avatar</label>
+											<div class="controls">
+												<input th:each="indexAvatar : ${#numbers.sequence( 1, 40)}" type="radio" class="radio-inline" name="input-avatar" th:id="'input-avatar-' + ${indexAvatar}" th:value="${indexAvatar}"><img width="50px" height="50px" th:src="@{'/img/avatar/avatar_' + ${indexAvatar} + '.png'}" /></input>
+											</div>				
+										</div>
 									</div>
 									<div class="modal-footer">
 										<button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
@@ -103,6 +109,7 @@
 							</div>
 							<!-- /widget-header -->
                             <div class="widget-content">
+                            	<img width="50px" height="50px" th:src="@{'/img/avatar/avatar_'+${avatarIcon}+'.png'}" />
                                 <h1 th:text="${name}"/>
                                 <p th:text="${description}"/>
                             </div>
@@ -332,11 +339,15 @@
     }
     
     function savePersonalInformation(){
+    	var iconAvatar = $('input[name=input-avatar]').filter(':checked').val();
+    	if(iconAvatar == null){
+    		iconAvatar='undefined';
+    	}
     	if($("#input-name").val() != '' || $("#input-description").val() != ''){
     		$.ajax({
     		    url : "/profile/savepersonalinformation",
     		    type: "POST",
-    		    data : {name: $("#input-name").val(), description: $("#input-description").val()},
+    		    data : {name: $("#input-name").val(), description: $("#input-description").val(), icon: iconAvatar},
     		    success: function(data, textStatus, jqXHR) { location.reload(); }
     		});
     	}

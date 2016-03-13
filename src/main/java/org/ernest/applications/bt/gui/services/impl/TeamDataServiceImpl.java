@@ -1,14 +1,17 @@
 package org.ernest.applications.bt.gui.services.impl;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
+import org.ernest.applications.bt.db.manager.teams.ct.UpdateAddCommentInput;
 import org.ernest.applications.bt.db.manager.teams.ct.UpdateAddStageCompletedInput;
 import org.ernest.applications.bt.db.manager.teams.ct.UpdateRemoveStageCompleteInput;
 import org.ernest.applications.bt.db.manager.teams.ct.entities.Team;
 import org.ernest.applications.bt.gui.entities.StageDto;
 import org.ernest.applications.bt.gui.entities.TeamDto;
 import org.ernest.applications.bt.gui.entities.UserDto;
+import org.ernest.applications.bt.gui.services.CommentDataService;
 import org.ernest.applications.bt.gui.services.StagesDataService;
 import org.ernest.applications.bt.gui.services.TeamDataService;
 import org.ernest.applications.bt.gui.services.UserDataService;
@@ -29,6 +32,9 @@ public class TeamDataServiceImpl implements TeamDataService {
 	@Autowired 
 	StagesDataService stagesDataService;
 	
+	@Autowired
+	CommentDataService commentDataService;
+	
 	@Override
 	public TeamDto getTeam(String teamId) {
 		Team team = new RestTemplate().getForObject("http://localhost:" + teamsPort + "/retrieve/"+teamId, Team.class);
@@ -38,6 +44,8 @@ public class TeamDataServiceImpl implements TeamDataService {
 		
 		team.getStagesCompletedIds().forEach(stageId -> { teamDto.getStages().add(stagesDataService.getStage(stageId)); });
 		team.getMembersIds().forEach(memberId -> { teamDto.getMembers().add(userDataService.getUser(memberId)); });
+		Collections.reverse(team.getCommentIds());
+		team.getCommentIds().stream().limit(50).forEach(commentId -> { teamDto.getComments().add(commentDataService.getComment(commentId, teamDto.getMembers())); });
 		return teamDto;
 	}
 	
@@ -76,5 +84,14 @@ public class TeamDataServiceImpl implements TeamDataService {
 		updateAddStageCompletedInput.setStageId(stageId);
 		
 		new RestTemplate().postForObject("http://localhost:" + teamsPort + "/update/addstagecompleted", updateAddStageCompletedInput, String.class);
+	}
+
+	@Override
+	public void addComment(String teamId, String commentId) {
+		UpdateAddCommentInput updateAddCommentInput = new UpdateAddCommentInput();
+		updateAddCommentInput.setCommentId(commentId);
+		updateAddCommentInput.setTeamId(teamId);
+		
+		new RestTemplate().postForObject("http://localhost:" + teamsPort + "/update/addcomment", updateAddCommentInput, String.class);
 	}
 }

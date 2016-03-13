@@ -30,6 +30,7 @@ public class ProfileController {
 		UserDto userDto = userDataService.getUser(userIdStatic);
 		
 		model.addAttribute("name", userDto.getName());
+		model.addAttribute("avatarIcon", userDto.getAvatarIcon());
 		model.addAttribute("description", userDto.getDescription());
 		model.addAttribute("statistics", userDto.getStatistics());
 		model.addAttribute("bikes", userDto.getBikesList());
@@ -41,9 +42,10 @@ public class ProfileController {
 
 	@RequestMapping(value= "/profile/savepersonalinformation", method = RequestMethod.POST)
 	@ResponseBody
-    public void savePersonalInformation(@RequestParam(value="name") String name, @RequestParam(value="description") String description) {
+    public void savePersonalInformation(@RequestParam(value="name") String name, @RequestParam(value="description") String description, @RequestParam(value="icon") String icon) {
 		if(!name.isEmpty()) userDataService.saveName(userIdStatic, name);
 		if(!description.isEmpty()) userDataService.saveDescription(userIdStatic, description);
+		userDataService.saveAvatarIcon(userIdStatic, icon);
 	}
 	
 	@RequestMapping(value= "/profile/saveskills", method = RequestMethod.POST)

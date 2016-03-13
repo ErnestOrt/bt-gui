@@ -6,12 +6,16 @@ import java.util.Date;
 import org.ernest.applications.bt.gui.entities.StageDto;
 import org.ernest.applications.bt.gui.entities.StagePointDto;
 import org.ernest.applications.bt.gui.entities.TeamDto;
+import org.ernest.applications.bt.gui.services.CommentDataService;
 import org.ernest.applications.bt.gui.services.TeamDataService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class DashboardController {
@@ -25,6 +29,9 @@ public class DashboardController {
 	@Autowired
 	TeamDataService teamDataService;
 	
+	@Autowired
+	CommentDataService commentDataService;
+	
 	@RequestMapping("/dashboard")
 	public String getDashboard(Model model) {
 		TeamDto team = teamDataService.getTeam(teamIdStatic);
@@ -36,6 +43,7 @@ public class DashboardController {
 		
 		model.addAttribute("memberId", userIdStatic);
 		model.addAttribute("members", team.getMembers());
+		model.addAttribute("comments", team.getComments());
 		model.addAttribute("stages", team.getStages());
 		model.addAttribute("stageCloser", team.getStages().stream()
 														  .sorted(Comparator.comparing(StageDto::getDate))
@@ -43,6 +51,13 @@ public class DashboardController {
 														  .findFirst()
 														  .orElse(buildEmptyStage()));
 		return "dashboard";
+	}
+	
+	@RequestMapping(value= "/dashboard/comment/create", method = RequestMethod.POST)
+	@ResponseBody
+    public void createComment(@RequestParam(value="content") String content) {
+		String commentId = commentDataService.create(userIdStatic, content);
+		teamDataService.addComment(teamIdStatic, commentId);
 	}
 
 	private StageDto buildEmptyStage() {

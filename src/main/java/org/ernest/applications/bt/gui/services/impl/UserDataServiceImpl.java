@@ -10,6 +10,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import org.ernest.applications.bt.db.manager.users.ct.UpdateAddBikeInput;
+import org.ernest.applications.bt.db.manager.users.ct.UpdateAvatarIconInput;
 import org.ernest.applications.bt.db.manager.users.ct.UpdateDescriptionInput;
 import org.ernest.applications.bt.db.manager.users.ct.UpdateJoinStageInput;
 import org.ernest.applications.bt.db.manager.users.ct.UpdateNameInput;
@@ -50,6 +51,7 @@ public class UserDataServiceImpl implements UserDataService{
 		userDto.setId(userId);
 		userDto.setName(user.getName() == null ? "name..." : user.getName());
 		userDto.setDescription(user.getDescription() == null ? "description..." : user.getDescription());
+		userDto.setAvatarIcon(user.getAvatarIcon());
 		userDto.setStatistics(buildStatisticsDto(user.getStatistics()));
 		userDto.setStagesIdsJoined(user.getStagesIdsJoined());
 		userDto.setBikesList(user.getBikesList().stream()
@@ -74,6 +76,17 @@ public class UserDataServiceImpl implements UserDataService{
 		updateDescriptionInput.setDescription(description);
 		
 		new RestTemplate().postForObject("http://localhost:" + usersPort + "/update/description", updateDescriptionInput, String.class);
+	}
+	
+	@Override
+	public void saveAvatarIcon(String userId, String icon) {
+		try{
+			UpdateAvatarIconInput updateAvatarIconInput = new UpdateAvatarIconInput();
+			updateAvatarIconInput.setUserId(userId);
+			updateAvatarIconInput.setIconId(Integer.parseInt(icon));
+			
+			new RestTemplate().postForObject("http://localhost:" + usersPort + "/update/icon", updateAvatarIconInput, String.class);
+		}catch(Exception e){ e.printStackTrace();}
 	}
 	
 	@Override
@@ -183,6 +196,4 @@ public class UserDataServiceImpl implements UserDataService{
 		
 		return statisticsDto;
 	}
-
-		
 }

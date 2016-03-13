@@ -8,10 +8,12 @@ public class TeamDto {
 	private String name;
 	private List<UserDto> members;
 	private List<StageDto> stages;
+	private List<CommentDto> comments;
 	
 	public TeamDto(){
 		members = new ArrayList<UserDto>();
 		stages = new ArrayList<StageDto>();
+		comments = new ArrayList<CommentDto>();
 	}
 	
 	public String getName() {
@@ -31,5 +33,11 @@ public class TeamDto {
 	}
 	public void setStages(List<StageDto> stages) {
 		this.stages = stages;
+	}
+	public List<CommentDto> getComments() {
+		return comments;
+	}
+	public void setComments(List<CommentDto> comments) {
+		this.comments = comments;
 	}
 }

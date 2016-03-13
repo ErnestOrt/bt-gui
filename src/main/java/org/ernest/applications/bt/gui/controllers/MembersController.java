@@ -38,6 +38,7 @@ public class MembersController {
 		
 		model.addAttribute("name", userDto.getName());
 		model.addAttribute("description", userDto.getDescription());
+		model.addAttribute("avatarIcon", userDto.getAvatarIcon());
 		model.addAttribute("statistics", userDto.getStatistics());
 		model.addAttribute("bikes", userDto.getBikesList());
 		model.addAttribute("stagesJoined", userDataService.getUserStagesJoinnedMap(memberId));

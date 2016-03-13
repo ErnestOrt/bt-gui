@@ -7,6 +7,7 @@ public class UserDto {
 
 	private String id;
 	private String name;
+	private int avatarIcon;
 	private String description;
 	private StatisticsDto statistics;
 	private List<BikeDto> bikesList;
@@ -24,6 +25,13 @@ public class UserDto {
 	}
 	public void setName(String name) {
 		this.name = name;
+	}
+	
+	public int getAvatarIcon() {
+		return avatarIcon;
+	}
+	public void setAvatarIcon(int avatarIcon) {
+		this.avatarIcon = avatarIcon;
 	}
 	public String getDescription() {
 		return description;
