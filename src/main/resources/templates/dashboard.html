@@ -241,60 +241,15 @@
 							<!-- /widget-header -->
 							<div class="widget-content">
 								<ul class="news-items">
-									<li>
-
+									<li th:each="article : ${articles}">
 										<div class="news-item-date">
-											<span class="news-item-day">19</span> <span
-												class="news-item-month">Nov</span>
+											<span class="news-item-day" th:text="${article.day}"></span> 
+											<span class="news-item-month" th:text="${article.month}"></span>
 										</div>
 										<div class="news-item-detail">
-											<a
-												href="http://www.cyclingnews.com/news/tour-of-oman-stage-4-video-highlights/"
-												class="news-item-title" target="_blank">Tour of Oman
-												stage 4 video highlights</a>
-											<p class="news-item-preview">n the final 2km, the lead
-												group of four is headed up by Dimension Data's Merhawi
-												Kudus, the 22-year-old Eritrean climbing sensation. He's
-												out-matched by Romain Bardet (AG2R La Mondiale) who...</p>
+											<a th:href="${article.url}" class="news-item-title" target="_blank" th:text="${article.title}"></a>
+											<p class="news-item-preview" th:text="${article.description}"></p>
 										</div>
-
-									</li>
-									<li>
-
-										<div class="news-item-date">
-											<span class="news-item-day">18</span> <span
-												class="news-item-month">Nov</span>
-										</div>
-										<div class="news-item-detail">
-											<a
-												href="http://www.cyclingnews.com/news/cancellara-surprised-by-algarve-time-trial-victory/"
-												class="news-item-title" target="_blank">Cancellara
-												surprised by Algarve time trial victory</a>
-											<p class="news-item-preview">App Landing is a retina
-												ready responsive app landing page website template perfect
-												for software and application developers and small business
-												owners looking to promote their iPhone, iPad, Android Apps
-												and software products...</p>
-										</div>
-
-									</li>
-									<li>
-
-										<div class="news-item-date">
-											<span class="news-item-day">18</span> <span
-												class="news-item-month">Nov</span>
-										</div>
-										<div class="news-item-detail">
-											<a
-												href="http://www.cyclingnews.com/news/cancellara-surprised-by-algarve-time-trial-victory/"
-												class="news-item-title" target="_blank">End of the line
-												for Horner?</a>
-											<p class="news-item-preview">Horner, who turned 44 last
-												week, raced this season with the Continental Airgas-Safeway
-												squad after facing a similarly unfruitful contract hunt last
-												year after he was not renewed with Lampre-Merida...</p>
-										</div>
-
 									</li>
 								</ul>
 							</div>

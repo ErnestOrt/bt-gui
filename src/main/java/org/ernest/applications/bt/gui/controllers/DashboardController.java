@@ -7,6 +7,7 @@ import org.ernest.applications.bt.gui.entities.StageDto;
 import org.ernest.applications.bt.gui.entities.StagePointDto;
 import org.ernest.applications.bt.gui.entities.TeamDto;
 import org.ernest.applications.bt.gui.services.CommentDataService;
+import org.ernest.applications.bt.gui.services.NewsDataService;
 import org.ernest.applications.bt.gui.services.TeamDataService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -32,6 +33,9 @@ public class DashboardController {
 	@Autowired
 	CommentDataService commentDataService;
 	
+	@Autowired
+	NewsDataService newsDataService;
+	
 	@RequestMapping("/dashboard")
 	public String getDashboard(Model model) {
 		TeamDto team = teamDataService.getTeam(teamIdStatic);
@@ -40,6 +44,8 @@ public class DashboardController {
 		model.addAttribute("totalStages", team.getStages().size());
 		model.addAttribute("totalKilomiters", team.getStages().stream().reduce(0, (sum, stage) -> sum += stage.getKilomitersTotal(), (sum1, sum2) -> sum1 + sum2));
 		model.addAttribute("totalBikes", team.getMembers().stream().reduce(0, (sum, member) -> sum += member.getBikesList().size(), (sum1, sum2) -> sum1 + sum2));
+		
+		model.addAttribute("articles", newsDataService.get());
 		
 		model.addAttribute("memberId", userIdStatic);
 		model.addAttribute("members", team.getMembers());

@@ -14,6 +14,7 @@
 		<ct.teams.version>0.0.1-SNAPSHOT</ct.teams.version>
 		<ct.stages.version>0.0.1-SNAPSHOT</ct.stages.version>
 		<ct.comments.version>0.0.1-SNAPSHOT</ct.comments.version>
+		<ct.news.version>0.0.1-SNAPSHOT</ct.news.version>
 	</properties>
 
 	<parent>
@@ -46,6 +47,11 @@
 			<groupId>org.ernest.applications</groupId>
 			<artifactId>bt-manager-comments-ct</artifactId>
 			<version>${ct.comments.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.ernest.applications</groupId>
+			<artifactId>bt-manager-news-ct</artifactId>
+			<version>${ct.news.version}</version>
 		</dependency>
 	</dependencies>
 
