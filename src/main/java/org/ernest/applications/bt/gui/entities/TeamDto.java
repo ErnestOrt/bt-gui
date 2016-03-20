@@ -5,6 +5,7 @@ import java.util.List;
 
 public class TeamDto {
 
+	private String id;
 	private String name;
 	private List<UserDto> members;
 	private List<StageDto> stages;
@@ -16,6 +17,12 @@ public class TeamDto {
 		comments = new ArrayList<CommentDto>();
 	}
 	
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
+	}
 	public String getName() {
 		return name;
 	}

@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<title>BikeTeam Profile</title>
+<title>BikeTeam Member</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
@@ -23,16 +23,15 @@
 				<a class="btn btn-navbar" data-toggle="collapse"
 					data-target=".nav-collapse"><span class="icon-bar"></span><span
 					class="icon-bar"></span><span class="icon-bar"></span> </a><a
-					class="brand" href="index.html">Teambike</a>
+					class="brand" href="#">BikeTeam</a>
 				<div class="nav-collapse">
 					<ul class="nav pull-right">
 						<li class="dropdown"><a href="#" class="dropdown-toggle"
 							data-toggle="dropdown"> Ernest Ortuño <b class="caret"></b></a>
-
 							<ul class="dropdown-menu">
-								<li><a href="javascript:;">Profile</a></li>
-								<li><a href="javascript:;">Logout</a></li>
-							</ul></li>
+								<li><a href="/logout">Logout</a></li>
+							</ul>
+						</li>
 					</ul>
 				</div>
 			</div>
@@ -60,10 +59,10 @@
 				            <!-- /widget-header -->
 				             <div class="widget-content">
 				              <div class="shortcuts"> 
-								<a href="/dashboard" class="shortcut"><i class="shortcut-icon icon-globe"></i><span class="shortcut-label">Team</span></a>
+				              	<a href="/home" class="shortcut"><i class="shortcut-icon icon-globe"></i><span class="shortcut-label">Home</span></a>
 				                <a href="/profile" class="shortcut"><i class="shortcut-icon icon-user"></i><span class="shortcut-label">Profile</span></a>
 				                <a href="/stages" class="shortcut"><i class="shortcut-icon icon-picture"></i><span class="shortcut-label">Stages</span></a>
-				                <a href="/members" class="shortcut shortcut-active"><i class="shortcut-icon icon-group"></i> <span class="shortcut-label">Members</span></a>
+				                <a href="/teams" class="shortcut shortcut-active"><i class="shortcut-icon icon-group"></i> <span class="shortcut-label">Teams</span></a>
 				              </div>
 				              <!-- /shortcuts --> 
 				            </div>

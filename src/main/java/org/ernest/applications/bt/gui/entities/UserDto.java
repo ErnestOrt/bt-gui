@@ -11,6 +11,7 @@ public class UserDto {
 	private String description;
 	private StatisticsDto statistics;
 	private List<BikeDto> bikesList;
+	private Set<String> teamsJoined;
 	private Set<String> stagesIdsJoined;
 	
 	
@@ -57,4 +58,11 @@ public class UserDto {
 	public void setStagesIdsJoined(Set<String> stagesIdsJoined) {
 		this.stagesIdsJoined = stagesIdsJoined;
 	}
+	public Set<String> getTeamsJoined() {
+		return teamsJoined;
+	}
+	public void setTeamsJoined(Set<String> teamsJoined) {
+		this.teamsJoined = teamsJoined;
+	}
+	
 }

@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<title>BikeTeam Team Dashboard</title>
+<title>BikeTeam Team</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
@@ -23,15 +23,14 @@
 				<a class="btn btn-navbar" data-toggle="collapse"
 					data-target=".nav-collapse"><span class="icon-bar"></span><span
 					class="icon-bar"></span><span class="icon-bar"></span> </a><a
-					class="brand" href="index.html">Teambike</a>
+					class="brand" href="#">BikeTeam</a>
 				<div class="nav-collapse">
 					<ul class="nav pull-right">
 						<li class="dropdown"><a href="#" class="dropdown-toggle"
 							data-toggle="dropdown"> Ernest Ortuño <b class="caret"></b></a>
 
 							<ul class="dropdown-menu">
-								<li><a href="javascript:;">Profile</a></li>
-								<li><a href="javascript:;">Logout</a></li>
+								<li><a href="/logout">Logout</a></li>
 							</ul></li>
 					</ul>
 				</div>
@@ -51,6 +50,7 @@
 	<div class="main">
 		<div class="main-inner">
 			<div class="container">
+
 				<div class="row">
 					<div class="span6">
 						<div class="widget">
@@ -61,29 +61,18 @@
 							<!-- /widget-header -->
 							<div class="widget-content">
 								<div class="shortcuts">
-									<a href="/dashboard;" class="shortcut shortcut-active"><i class="shortcut-icon icon-globe"></i><span class="shortcut-label">Team</span></a>
+									<a href="/home" class="shortcut"><i class="shortcut-icon icon-globe"></i><span class="shortcut-label">Home</span></a>
 					                <a href="/profile" class="shortcut"><i class="shortcut-icon icon-user"></i><span class="shortcut-label">Profile</span></a>
-					                <a href="/stages" class="shortcut"><i class="shortcut-icon icon-picture"></i><span class="shortcut-label">Statges</span></a>
-					                <a href="/members" class="shortcut"><i class="shortcut-icon icon-group"></i> <span class="shortcut-label">Members</span></a>
+					                <a href="/stages" class="shortcut"><i class="shortcut-icon icon-picture"></i><span class="shortcut-label">Stages</span></a>
+					                <a href="/teams" class="shortcut shortcut-active"><i class="shortcut-icon icon-group"></i> <span class="shortcut-label">Teams</span></a>
 								</div>
 								<!-- /shortcuts -->
 							</div>
 							<!-- /widget-content -->
 						</div>
 						<!-- /widget -->
-						<div class="widget">
-							<div class="widget-header">
-								<i class="icon-cloud"></i>
-								<h3>Weather</h3>
-							</div>
-							<!-- /widget-header -->
-							<div class="widget-content">
-								<iframe id="forecast_embed" type="text/html" frameborder="0" height="245" width="100%" th:src="'http://forecast.io/embed/#lat=' + ${stageCloser.stagePoints[0].latitude} + '&amp;lon=' + ${stageCloser.stagePoints[0].longitude} + '&amp;name=' + ${stageCloser.name} + '&amp;units=ca'"> </iframe>
+						
 
-							</div>
-							<!-- /widget-content -->
-						</div>
-						<!-- /widget -->
 						<div class="widget widget-nopad">
 							<div class="widget-header">
 								<i class="icon-calendar"></i>
@@ -95,14 +84,14 @@
 							</div>
 							<!-- /widget-content -->
 						</div>
-						<!-- /widget -->
+						
+						
 						<div class="widget">
 							<div class="widget-header">
 								<i class="icon-comments-alt"></i>
 								<h3>Comments</h3>
 								<a href="#modal-personal-information" role="button" class="btn" data-toggle="modal">Comment</a>
 
-								<!-- Modal -->
 								<div id="modal-personal-information" class="modal hide fade" tabindex="-1"
 									role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 									<div class="modal-header">
@@ -122,7 +111,6 @@
 									</div>
 								</div>
 							</div>
-							<!-- /widget-header -->
 							<div class="widget-content">
 								<ul class="messages_layout">
 									<li class="from_user left" th:each="comment : ${comments}"><a href="#" class="avatar"><img width="50px" height="50px" th:src="@{'/img/avatar/avatar_' + ${comment.ownerIcon} + '.png'}" /></a>
@@ -149,7 +137,6 @@
 										</div></li>
 								</ul>
 							</div>
-							<!-- /widget-content -->
 						</div>
 						<!-- /widget -->
 					</div>
@@ -159,7 +146,7 @@
 						<div class="widget widget-nopad">
 							<div class="widget-header">
 								<i class="icon-bookmark"></i>
-								<h3>Today's Stats</h3>
+								<h3>Team Stats</h3>
 							</div>
 							<!-- /widget-header -->
 							<div class="widget-content">
@@ -170,7 +157,7 @@
 										<div id="big_stats" class="cf">
 											<div class="stat">
 												<i class="icon-group"></i> <span class="value" th:text="${totalMembers}"></span>
-												Memebers
+												Members
 											</div>
 											<!-- .stat -->
 
@@ -197,58 +184,38 @@
 								</div>
 							</div>
 						</div>
-
-						<div class="widget">
-							<div class="widget-header">
-								<i class="icon-picture"></i>
-								<h3><a th:href="'/stage/' + ${stageCloser.id}" th:text="${stageCloser.name} + '[' + ${stageCloser.date} + ']'"></a></h3>
-							</div>
-							<!-- /widget-header -->
-							<div class="widget-content">
-								<canvas id="area-chart" class="chart-holder" height="250"
-									width="538"> </canvas>
-								<!-- /area-chart -->
-							</div>
-							<!-- /widget-content -->
-						</div>
-						<!-- /widget -->
-						<div class="widget" >
-				            <div class="widget-header"> <i class="icon-check"></i>
-				              <h3>Who is going?</h3> 
-				            </div>
-							<div class="widget-content">
-								<table class="table table-striped table-bordered">
-									<thead>
-										<tr>
-											<th>Member</th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr th:each="member : ${members}">
-											<td th:if="${#sets.contains(member.stagesIdsJoined, stageCloser.id)} == true" style="background-color: #ACFA58 !important" th:text="${member.name}"></td>
-											<td th:if="${#sets.contains(member.stagesIdsJoined, stageCloser.id)} == false" style="background-color: #F78181 !important" th:text="${member.name}"></td>
-										</tr>
-									</tbody>
-								</table>
-							</div>
-				          </div>
+						
 						<!-- /widget -->
 						<div class="widget widget-nopad">
 							<div class="widget-header">
 								<i class="icon-list-alt"></i>
-								<h3>Recent News</h3>
+								<h3>Members</h3>
 							</div>
 							<!-- /widget-header -->
 							<div class="widget-content">
 								<ul class="news-items">
-									<li th:each="article : ${articles}">
-										<div class="news-item-date">
-											<span class="news-item-day" th:text="${article.day}"></span> 
-											<span class="news-item-month" th:text="${article.month}"></span>
-										</div>
+									<li th:each="member : ${members}">
 										<div class="news-item-detail">
-											<a th:href="${article.url}" class="news-item-title" target="_blank" th:text="${article.title}"></a>
-											<p class="news-item-preview" th:text="${article.description}"></p>
+											<a th:href="'/member/' + ${member.id}" class="news-item-title" th:text="${member.name}"></a>
+											<p class="news-item-preview" th:text="${member.description}"></p>
+										</div>
+									</li>
+								</ul>
+							</div>
+							<!-- /widget-content -->
+						</div>
+						<div class="widget widget-nopad">
+							<div class="widget-header">
+								<i class="icon-list-alt"></i>
+								<h3>Stages</h3>
+							</div>
+							<!-- /widget-header -->
+							<div class="widget-content">
+								<ul class="news-items">
+									<li th:each="stage : ${stages}">
+										<div class="news-item-detail">
+											<a th:href="'/stage/' + ${stage.id}" class="news-item-title" th:text="${stage.name}"></a>
+											<p class="news-item-preview" th:text="${stage.date}"></p>
 										</div>
 									</li>
 								</ul>
@@ -314,55 +281,7 @@
 	<script language="javascript" type="text/javascript" th:src="@{/js/full-calendar/fullcalendar.min.js}"></script>
 
 	<script th:src="@{/js/base.js}"></script>
-	<script th:inline="javascript">
-	
-	/*<![CDATA[*/
-	var lineChartData
-	var valuesStage =[];
-	var valuesBackground =[];
-	var labelsKilomiters = [];
-    var stagePointsList = [[${stageCloser.stagePoints}]]
-    	
-   	valuesBackground.push(0);
-   	valuesBackground.push(1000);
-   	
-   	for(indexStagePoint = 0; indexStagePoint < stagePointsList.length; indexStagePoint++){
-   		labelsKilomiters.push(stagePointsList[indexStagePoint].kilomiter);
-   		valuesStage.push(stagePointsList[indexStagePoint].altitude);
-	    if(indexStagePoint>=2){
-			valuesBackground.push(0);
-	  	}
-
-   	}
-   	
-   	lineChartData = {
-               labels:  labelsKilomiters,
-               datasets: [
-				{
-				    fillColor: "rgba(255,255,255,0)",
-    				    strokeColor: "rgba(255,255,255,0)",
-    				    pointColor: "rgba(255,255,255,0)",
-    				    pointStrokeColor: "#FFFFFF",
-    				    pointHighlightFill: "#FFFFFF",
-    				    pointHighlightStroke: "rgba(255,255,255,0)",
-				    data: valuesBackground
-				},
-   				{
-   				    fillColor: "rgba(151,187,205,0.5)",
-   				    strokeColor: "rgba(151,187,205,1)",
-   				    pointColor: "rgba(151,187,205,1)",
-   				    pointStrokeColor: "#fff",
-   				    data: valuesStage
-   				}
-   			]
-
-           }
-   	new Chart(document.getElementById("area-chart").getContext("2d")).Line(lineChartData);
-    
-    
-	/*]]>*/
-		
-		
+	<script th:inline="javascript">	
 		
 		
 		/*<![CDATA[*/
@@ -399,17 +318,18 @@
 				events : eventsArray
 			});
 		});
-		/*]]>*/
+		
 		
 		function comment(){
 		if($("#input-comment").val() != ""){
 			$.ajax({
 	   		    url : "/dashboard/comment/create",
 	   		    type: "POST",
-	   		    data : {content: $("#input-comment").val()},
+	   		    data : {content: $("#input-comment").val(), teamId: [[${teamId}]]},
 	   		    success: function(data, textStatus, jqXHR) { location.reload(); }
 	   		});
 		}
+		/*]]>*/
     }
 	</script>
 	<!-- /Calendar -->

@@ -1,0 +1,120 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>BikeTeam Sign Up</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+
+<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
+<link th:href="@{/css/bootstrap-responsive.min.css}" rel="stylesheet"/>
+<link href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,600" rel="stylesheet"/>
+<link th:href="@{/css/font-awesome.css}" rel="stylesheet"/>
+<link th:href="@{/css/style.css}" rel="stylesheet"/>
+<link th:href="@{/css/pages/signin.css}" rel="stylesheet"/>
+
+</head>
+
+<body>
+	
+	<div class="navbar navbar-fixed-top">
+	
+	<div class="navbar-inner">
+		
+		<div class="container">
+			
+			<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</a>
+			<a class="brand" href="#">BikeTeam</a>	
+	
+		</div> <!-- /container -->
+		
+	</div> <!-- /navbar-inner -->
+	
+</div> <!-- /navbar -->
+
+
+
+<div class="account-container register">
+	
+	<div class="content clearfix">
+		
+		
+			<h1>Signup for Free Account</h1>			
+			
+			<div class="login-fields">
+				
+				<p>Create your account:</p>
+				
+				<div class="field">
+					<label for="firstname">Name:</label>
+					<input type="text" id="firstname" name="firstname" value="" placeholder="Name" class="login" />
+				</div> <!-- /field -->
+				
+				<div class="field">
+					<label for="email">Email Address:</label>
+					<input type="text" id="email" name="email" value="" placeholder="Email" class="login"/>
+				</div> <!-- /field -->
+				
+				<div class="field">
+					<label for="password">Password:</label>
+					<input type="password" id="password" name="password" value="" placeholder="Password" class="login"/>
+				</div> <!-- /field -->
+				
+				<div class="field">
+					<label for="confirm_password">Confirm Password:</label>
+					<input type="password" id="confirm_password" name="confirm_password" value="" placeholder="Confirm Password" class="login"/>
+				</div> <!-- /field -->
+				
+				<div class="alert-succes">
+					
+				</div> <!-- /field -->
+				
+			</div> <!-- /login-fields -->
+			
+			<div class="login-actions">									
+				<button class="button btn btn-primary btn-large" onclick="confirmSignUp();">Sign Up</button>
+				
+			</div> <!-- .actions -->
+
+		
+	</div> <!-- /content -->
+	
+</div> <!-- /account-container -->
+
+
+<!-- Text Under Box -->
+<div class="login-extra">
+	Already have an account? <a href="/login">Login to your account</a>
+</div> <!-- /login-extra -->
+
+<script th:src="@{/js/jquery-1.7.2.min.js}"></script>
+<script th:src="@{/js/bootstrap.js}"></script>
+<script th:src="@{/js/signin.js}"></script>
+
+ <script type="text/javascript">
+		
+        function confirmSignUp() {		
+        		$.ajax({
+           		    url : "/registration",
+           		    type: "POST",
+           		    data : {name: $( "#firstname" ).val(),
+        	   		    	email: $("#email").val(),
+        	   		    	pass: $("#password").val(),
+        	   		    	passRepeated: $("#confirm_password").val()},
+           		    success: function(data, textStatus, jqXHR) { 
+           		    	$(".alert-success").html("<b>Welcome to Writerland</b>!! A user called <b>"+$( "#firstname" ).val() +"</b> has been created. <b>Remmember to verify the account thanks to the email recieved.</b>");
+
+           		    }
+           		});
+        	
+		}
+        </script>
+
+</body>
+
+ </html>

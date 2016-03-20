@@ -5,7 +5,10 @@ import java.util.Collections;
 import java.util.List;
 
 import org.ernest.applications.bt.db.manager.teams.ct.UpdateAddCommentInput;
+import org.ernest.applications.bt.db.manager.teams.ct.UpdateAddMemberInput;
 import org.ernest.applications.bt.db.manager.teams.ct.UpdateAddStageCompletedInput;
+import org.ernest.applications.bt.db.manager.teams.ct.UpdateNameInput;
+import org.ernest.applications.bt.db.manager.teams.ct.UpdateRemoveMemberInput;
 import org.ernest.applications.bt.db.manager.teams.ct.UpdateRemoveStageCompleteInput;
 import org.ernest.applications.bt.db.manager.teams.ct.entities.Team;
 import org.ernest.applications.bt.gui.entities.StageDto;
@@ -40,6 +43,7 @@ public class TeamDataServiceImpl implements TeamDataService {
 		Team team = new RestTemplate().getForObject("http://localhost:" + teamsPort + "/retrieve/"+teamId, Team.class);
 		
 		TeamDto teamDto = new TeamDto();
+		teamDto.setId(team.get_id());
 		teamDto.setName(team.getName());
 		
 		team.getStagesCompletedIds().forEach(stageId -> { teamDto.getStages().add(stagesDataService.getStage(stageId)); });
@@ -93,5 +97,40 @@ public class TeamDataServiceImpl implements TeamDataService {
 		updateAddCommentInput.setTeamId(teamId);
 		
 		new RestTemplate().postForObject("http://localhost:" + teamsPort + "/update/addcomment", updateAddCommentInput, String.class);
+	}
+
+	@Override
+	public String create(String name, String userId) {
+		String teamId = new RestTemplate().getForObject("http://localhost:" + teamsPort + "/create", String.class);
+		
+		UpdateNameInput updateNameInput = new UpdateNameInput();
+		updateNameInput.setTeamId(teamId);
+		updateNameInput.setName(name);
+		new RestTemplate().postForObject("http://localhost:" + teamsPort + "/update/name", updateNameInput, String.class);
+		
+		UpdateAddMemberInput updateAddMemberInput = new UpdateAddMemberInput();
+		updateAddMemberInput.setTeamId(teamId);
+		updateAddMemberInput.setMemberId(userId);
+		new RestTemplate().postForObject("http://localhost:" + teamsPort + "/update/addmember", updateAddMemberInput, String.class);
+		
+		return teamId;
+	}
+	
+	@Override
+	public void unjoinTeam(String teamId, String userId) {
+		UpdateRemoveMemberInput updateRemoveMemberInput = new UpdateRemoveMemberInput();
+		updateRemoveMemberInput.setTeamId(teamId);
+		updateRemoveMemberInput.setMemberId(userId);
+		
+		new RestTemplate().postForObject("http://localhost:" + teamsPort + "/update/removemember", updateRemoveMemberInput, String.class);
+	}
+
+	@Override
+	public void joinTeam(String teamId, String userId) {
+		UpdateAddMemberInput updateAddMemberInput = new UpdateAddMemberInput();
+		updateAddMemberInput.setTeamId(teamId);
+		updateAddMemberInput.setMemberId(userId);
+		
+		new RestTemplate().postForObject("http://localhost:" + teamsPort + "/update/addmember", updateAddMemberInput, String.class);
 	}
 }

@@ -1,6 +1,7 @@
 package org.ernest.applications.bt.gui.services;
 
 import java.util.List;
+import java.util.Set;
 
 import org.ernest.applications.bt.gui.entities.StageDto;
 import org.ernest.applications.bt.gui.entities.TeamDto;
@@ -19,5 +20,11 @@ public interface TeamDataService {
 	void addStageCompleted(String teamId, String stageId);
 
 	void addComment(String teamId, String commentId);
+
+	String create(String name, String userId);
+
+	void unjoinTeam(String teamId, String userId);
+
+	void joinTeam(String teamId, String userId);
 
 }

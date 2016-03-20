@@ -13,10 +13,9 @@ public interface UserDataService {
 	
 	void saveDescription(String userId, String description);
 
-	void saveSkills(String userIdTest, int resistence, int sprint,
-			int montain, int flat, int btt, int road);
+	void saveSkills(String userIdTest, int resistence, int sprint, int montain, int flat, int btt, int road);
 
-	void addBike(String userIdStatic, String name);
+	void addBike(String userId, String name);
 
 	void deleteBikes(String userId, List<String> bikesIds);
 	
@@ -27,4 +26,10 @@ public interface UserDataService {
 	Map<Integer, Long> getUserStagesJoinnedMap(String userId);
 
 	void saveAvatarIcon(String userId, String icon);
+
+	void create(String token);
+
+	void joinTeam(String teamId, String userId);
+
+	void unjoinTeam(String teamId, String userId);
 }

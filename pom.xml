@@ -15,6 +15,8 @@
 		<ct.stages.version>0.0.1-SNAPSHOT</ct.stages.version>
 		<ct.comments.version>0.0.1-SNAPSHOT</ct.comments.version>
 		<ct.news.version>0.0.1-SNAPSHOT</ct.news.version>
+		<ct.credentials.version>0.0.1-SNAPSHOT</ct.credentials.version>
+		<ct.mails.version>0.0.1-SNAPSHOT</ct.mails.version>
 	</properties>
 
 	<parent>
@@ -28,6 +30,10 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-thymeleaf</artifactId>
 		</dependency>
+		 <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
 		<dependency>
 			<groupId>org.ernest.applications</groupId>
 			<artifactId>bt-manager-users-ct</artifactId>
@@ -52,6 +58,16 @@
 			<groupId>org.ernest.applications</groupId>
 			<artifactId>bt-manager-news-ct</artifactId>
 			<version>${ct.news.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.ernest.applications</groupId>
+			<artifactId>bt-manager-credentials-ct</artifactId>
+			<version>${ct.credentials.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.ernest.applications</groupId>
+			<artifactId>bt-manager-mails-ct</artifactId>
+			<version>${ct.mails.version}</version>
 		</dependency>
 	</dependencies>
 

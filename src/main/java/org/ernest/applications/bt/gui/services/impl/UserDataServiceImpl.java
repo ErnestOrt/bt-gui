@@ -42,6 +42,11 @@ public class UserDataServiceImpl implements UserDataService{
 	
 	@Autowired 
 	StagesDataService stagesDataService;
+	
+	@Override
+	public void create(String token) {
+		new RestTemplate().getForObject("http://localhost:" + usersPort + "/create/"+token, String.class);
+	}
 
 	@Override
 	public UserDto getUser(String userId) { 
@@ -54,6 +59,7 @@ public class UserDataServiceImpl implements UserDataService{
 		userDto.setAvatarIcon(user.getAvatarIcon());
 		userDto.setStatistics(buildStatisticsDto(user.getStatistics()));
 		userDto.setStagesIdsJoined(user.getStagesIdsJoined());
+		userDto.setTeamsJoined(user.getTeamsJoined());
 		userDto.setBikesList(user.getBikesList().stream()
 												.map(bike -> new BikeDto(bike.getId(), bike.getName()))
 												.collect(Collectors.toList()));
@@ -169,6 +175,16 @@ public class UserDataServiceImpl implements UserDataService{
 								calendar.setTime(stage.getDate());
 								return calendar.get(Calendar.MONTH);})
 					 .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
+	}
+	
+	@Override
+	public void joinTeam(String teamId, String userId) {
+		new RestTemplate().getForObject("http://localhost:" + usersPort + "/update/jointeam/"+ userId +"/"+ teamId, String.class);
+	}
+	
+	@Override
+	public void unjoinTeam(String teamId, String userId) {
+		new RestTemplate().getForObject("http://localhost:" + usersPort + "/update/unjointeam/"+ userId +"/"+ teamId, String.class);
 	}
 
 	private Date getDateOffsetMonth(int offset) {
