@@ -16,6 +16,7 @@
 <link th:href="@{/css/jquery.datetimepicker.css}" rel="stylesheet"/>
 <link rel="stylesheet" href="http://twitter.github.com/bootstrap/1.3.0/bootstrap.min.css" />
 <link th:href="@{/css/map.css}" rel="stylesheet"/>
+<link th:href="@{/css/loading.css}" rel="stylesheet"/>
 
 <style type="text/css">
 
@@ -117,6 +118,12 @@
 
 </head>
 <body>
+	<div class="front-loading">
+		<div class="spinner">
+			  <div class="dot1"></div>
+			  <div class="dot2"></div>
+		</div>
+    </div>
 	<div class="navbar navbar-fixed-top">
 		<div class="navbar-inner">
 			<div class="container">
@@ -331,7 +338,8 @@
 	
     
     <script th:inline="javascript">
-    
+    $(".front-loading").hide();
+    $(".front-loading").height($("body").height());
     
     /*<![CDATA[*/
 	var lineChartData
@@ -412,7 +420,9 @@
        		    type: "POST",
        		    data : {stageId: /*[[${stageId}]]*/ 
        		    	},
-       		    success: function(data, textStatus, jqXHR) { location.reload(); }
+       		    	beforeSend: function(){$('.front-loading').show();},
+        	   		error: function(){$('.front-loading').hide();},
+           		    success: function(data, textStatus, jqXHR) { setTimeout(function(){ location.reload(); }, 3000);}
        		});	
             
             $button.removeClass('following');
@@ -425,7 +435,9 @@
        		    type: "POST",
        		 	data : {stageId: /*[[${stageId}]]*/ 
        		 		},
-       		    success: function(data, textStatus, jqXHR) { location.reload(); }
+       		 	beforeSend: function(){$('.front-loading').show();},
+    	   		error: function(){$('.front-loading').hide();},
+       		    success: function(data, textStatus, jqXHR) { setTimeout(function(){ location.reload(); }, 3000);}
        		});	
             
             $button.addClass('following');
@@ -434,12 +446,15 @@
     });
 	
     function deleteStage(){
+    	$('#modal-remove-stage').modal('hide');
   		$.ajax({
 			url : "/stages/delete",
      		type: "POST",
      		data : {stageId: /*[[${stageId}]]*/ 
      			},
-     		success: function(data, textStatus, jqXHR) { window.location.href="/stages"; }
+     			beforeSend: function(){$('.front-loading').show();},
+    	   		error: function(){$('.front-loading').hide();},
+       		    success: function(data, textStatus, jqXHR) { setTimeout(function(){ location.reload(); }, 3000);}
      	});
     }
     /*]]>*/

@@ -13,10 +13,17 @@
 <link th:href="@{/css/font-awesome.css}" rel="stylesheet"/>
 <link th:href="@{/css/style.css}" rel="stylesheet"/>
 <link th:href="@{/css/pages/dashboard.css}" rel="stylesheet"/>
+<link th:href="@{/css/loading.css}" rel="stylesheet"/>
 
 
 </head>
 <body>
+	<div class="front-loading">
+		<div class="spinner">
+			  <div class="dot1"></div>
+			  <div class="dot2"></div>
+		</div>
+    </div>
 	<div class="navbar navbar-fixed-top">
 		<div class="navbar-inner">
 			<div class="container">
@@ -90,9 +97,9 @@
 							<div class="widget-header">
 								<i class="icon-comments-alt"></i>
 								<h3>Comments</h3>
-								<a href="#modal-personal-information" role="button" class="btn" data-toggle="modal">Comment</a>
+								<a href="#modal-comment" role="button" class="btn" data-toggle="modal">Comment</a>
 
-								<div id="modal-personal-information" class="modal hide fade" tabindex="-1"
+								<div id="modal-comment" class="modal hide fade" tabindex="-1"
 									role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 									<div class="modal-header">
 										<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
@@ -321,16 +328,32 @@
 		
 		
 		function comment(){
-		if($("#input-comment").val() != ""){
-			$.ajax({
-	   		    url : "/dashboard/comment/create",
-	   		    type: "POST",
-	   		    data : {content: $("#input-comment").val(), teamId: [[${teamId}]]},
-	   		    success: function(data, textStatus, jqXHR) { location.reload(); }
-	   		});
-		}
-		/*]]>*/
-    }
+			if(validateField('input-comment', true)){
+				$('#modal-comment').modal('hide');
+				$.ajax({
+		   		    url : "/dashboard/comment/create",
+		   		    type: "POST",
+		   		    data : {content: $("#input-comment").val(), teamId: [[${teamId}]]},
+		   		 	beforeSend: function(){$('.front-loading').show();},
+	    	   		error: function(){$('.front-loading').hide();},
+	       		    success: function(data, textStatus, jqXHR) { setTimeout(function(){ location.reload(); }, 3000);}
+		   		});
+			}
+			/*]]>*/
+    	}
+		 function validateField(fieldId, previosResult){
+		    	var result = true;
+		    	if($('#' + fieldId).val()==""){
+		    		$('#' + fieldId).removeClass("invalid").removeClass("valid").addClass("invalid");
+		     		result = false;
+		     	}else{
+		     		$('#' + fieldId).removeClass("invalid").removeClass("valid").addClass("valid");
+		     	}
+		    	if(previosResult == false){
+		    		result = false;
+		    	}
+		    	return result;
+		    }
 	</script>
 	<!-- /Calendar -->
 </body>

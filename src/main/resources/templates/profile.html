@@ -13,10 +13,16 @@
 <link th:href="@{/css/font-awesome.css}" rel="stylesheet"/>
 <link th:href="@{/css/style.css}" rel="stylesheet"/>
 <link th:href="@{/css/pages/dashboard.css}" rel="stylesheet"/>
-
+<link th:href="@{/css/loading.css}" rel="stylesheet"/>
 
 </head>
 <body>
+	<div class="front-loading">
+		<div class="spinner">
+			  <div class="dot1"></div>
+			  <div class="dot2"></div>
+		</div>
+    </div>
 	<div class="navbar navbar-fixed-top">
 		<div class="navbar-inner">
 			<div class="container">
@@ -381,14 +387,21 @@
 	<script th:src="@{/js/base.js}"></script>
 
     <script th:inline="javascript">
+    $(".front-loading").hide();
+    $(".front-loading").height($("body").height());
     
     function createTeam(){
-   		$.ajax({
-   		    url : "/profile/createteam",
-   		    type: "POST",
-   		    data : {name: $("#input-team-name").val()},
-   		    success: function(data, textStatus, jqXHR) { location.reload(); }
-   		});	
+    	if(validateField('input-team-name', true)){
+    		$('#modal-create-team').modal('hide');
+	   		$.ajax({
+	   		    url : "/profile/createteam",
+	   		    type: "POST",
+	   		    data : {name: $("#input-team-name").val()},
+	   		 	beforeSend: function(){$('.front-loading').show();},
+		   		error: function(){$('.front-loading').hide();},
+			    success: function(data, textStatus, jqXHR) { setTimeout(function(){ location.reload(); }, 3000);}
+	   		});	
+    	}
     }
     
     function unjoinTeam(teamIdValue){
@@ -396,32 +409,41 @@
    		    url : "/profile/unjointeam",
    		    type: "POST",
    		    data : {teamId: teamIdValue},
-   		    success: function(data, textStatus, jqXHR) { location.reload(); }
+   		    beforeSend: function(){$('.front-loading').show();},
+	   		error: function(){$('.front-loading').hide();},
+		    success: function(data, textStatus, jqXHR) { setTimeout(function(){ location.reload(); }, 3000);}
    		});	
     }
     
     function joinTeam(){
-   		$.ajax({
-   		    url : "/profile/jointeam",
-   		    type: "POST",
-   		    data : {teamId: $("#input-team-code").val()},
-   		    success: function(data, textStatus, jqXHR) { location.reload(); }
-   		});	
+    	if(validateField('input-team-code', true)){
+    		$('#modal-join-team').modal('hide');
+	   		$.ajax({
+	   		    url : "/profile/jointeam",
+	   		    type: "POST",
+	   		    data : {teamId: $("#input-team-code").val()},
+	   		 	beforeSend: function(){$('.front-loading').show();},
+		   		error: function(){$('.front-loading').hide();},
+			    success: function(data, textStatus, jqXHR) { setTimeout(function(){ location.reload(); }, 3000);}
+	   		});	
+    	}
     }
     
 function deleteBikes(){
-    	
     	var bikes = [];
     	
     	$('input[name=input-delete-bike]:checked').each(function(){
     		bikes.push($(this).attr("value"));
     	});
     	if(bikes.length > 0){
+    		$('#modal-remove-bike').modal('hide');
     		$.ajax({
     		    url : "/profile/deltebikes",
     		    type: "POST",
     		    data : {ids: bikes.toString()},
-    		    success: function(data, textStatus, jqXHR) { location.reload(); }
+    		    beforeSend: function(){$('.front-loading').show();},
+		   		error: function(){$('.front-loading').hide();},
+			    success: function(data, textStatus, jqXHR) { setTimeout(function(){ location.reload(); }, 3000);}
     		});	
     	}
     }
@@ -431,17 +453,21 @@ function deleteBikes(){
     	if(iconAvatar == null){
     		iconAvatar='undefined';
     	}
-    	if($("#input-name").val() != '' || $("#input-description").val() != ''){
+    	if(validateField('input-name', true)){
+    		$('#modal-personal-information').modal('hide');
     		$.ajax({
     		    url : "/profile/savepersonalinformation",
     		    type: "POST",
     		    data : {name: $("#input-name").val(), description: $("#input-description").val(), icon: iconAvatar},
-    		    success: function(data, textStatus, jqXHR) { location.reload(); }
+    		    beforeSend: function(){$('.front-loading').show();},
+		   		error: function(){$('.front-loading').hide();},
+			    success: function(data, textStatus, jqXHR) { setTimeout(function(){ location.reload(); }, 3000);}
     		});
     	}
     }
     
     function saveSkills(){
+    	$('#modal-skills').modal('hide');
    		$.ajax({
    		    url : "/profile/saveskills",
    		    type: "POST",
@@ -451,17 +477,22 @@ function deleteBikes(){
 	   		    	flat: $("#input-flat").val(),
 	   		    	btt: $("#input-btt").val(),
    		    		road: $("#input-road").val()},
-   		    success: function(data, textStatus, jqXHR) { location.reload(); }
+ 		   	beforeSend: function(){$('.front-loading').show();},
+ 			error: function(){$('.front-loading').hide();},
+ 			success: function(data, textStatus, jqXHR) { setTimeout(function(){ location.reload(); }, 3000);}
    		});
     }
     
     function addBike(){
-    	if($("#input-name").val() != ''){
+    	if(validateField('input-bike-name', true)){
+    		$('#modal-add-bike').modal('hide');
     		$.ajax({
        		    url : "/profile/addbike",
        		    type: "POST",
        		    data : {name: $("#input-bike-name").val()},
-       		    success: function(data, textStatus, jqXHR) { location.reload(); }
+       		 	beforeSend: function(){$('.front-loading').show();},
+  				error: function(){$('.front-loading').hide();},
+  				success: function(data, textStatus, jqXHR) { setTimeout(function(){ location.reload(); }, 3000);}
        		});
     	}
     }
@@ -580,6 +611,20 @@ function deleteBikes(){
         
         new Chart(document.getElementById("line-chart").getContext("2d")).Radar(data);
     
+        
+        function validateField(fieldId, previosResult){
+        	var result = true;
+        	if($('#' + fieldId).val()==""){
+        		$('#' + fieldId).removeClass("invalid").removeClass("valid").addClass("invalid");
+         		result = false;
+         	}else{
+         		$('#' + fieldId).removeClass("invalid").removeClass("valid").addClass("valid");
+         	}
+        	if(previosResult == false){
+        		result = false;
+        	}
+        	return result;
+        }
   </script>
 </body>
 </html>
