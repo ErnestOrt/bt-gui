@@ -26,6 +26,11 @@ public class AuthenticationController {
 		return "signup";
 	}
 	
+	@RequestMapping("/404")
+	public String error(Model model) {
+		return "404";
+	}
+	
 	@RequestMapping("/recovery")
 	public String recovery(Model model) {
 		return "recovery";
