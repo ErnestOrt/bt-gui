@@ -17,6 +17,7 @@
 <link rel="stylesheet" href="http://twitter.github.com/bootstrap/1.3.0/bootstrap.min.css" />
 <link th:href="@{/css/map.css}" rel="stylesheet"/>
 <link th:href="@{/css/loading.css}" rel="stylesheet"/>
+<link th:href="@{/js/guidely/guidely.css}" rel="stylesheet"/> 
 
 </head>
 <body>
@@ -67,7 +68,7 @@
 	            </div>
 	            <!-- /widget-header -->
 	            <div class="widget-content">
-		          <div class="shortcuts"> 
+		          <div id="div-menu" class="shortcuts"> 
 		              	<a href="/home" class="shortcut"><i class="shortcut-icon icon-globe"></i><span class="shortcut-label">Home</span></a>
 		                <a href="/profile" class="shortcut"><i class="shortcut-icon icon-user"></i><span class="shortcut-label">Profile</span></a>
 		                <a href="/stages" class="shortcut shortcut-active"><i class="shortcut-icon icon-picture"></i><span class="shortcut-label">Stages</span></a>
@@ -77,40 +78,40 @@
 	            </div>
 	        </div>
 	        
-	        <div class="widget">
+	        <div id="div-new-stage" class="widget">
             <div class="widget-header"> <i class="icon-picture"></i>
               <h3>New Stage</h3>
             </div>
 				<!-- /widget-header -->
 				<div class="widget-content">
-					<div class="control-group">
+					<div id="div-stage-name" class="control-group">
 						<label class="control-label" for="firstname">Name</label>
 						<div class="controls">
 							<input type="text" class="span2" id="input-stage-name" placeholder="Bcn-Tarragona-Valls"></input>
 						</div>
 						<!-- /controls -->
 					</div>
-					<div class="control-group">											
+					<div id="div-stage-team" class="control-group">											
 						<label for="sel1">Select list (select one):</label>
 					      <select class="form-control span2" id="input-stage-team">
 					        <option value="">Select a team...</option>
 					        <option th:each="team : ${teams}" th:text="${team.name}" th:value="${team.id}"></option>
 					      </select>				
 					</div>
-					<div class="control-group">											
+					<div id="div-stage-kilomiters-total" class="control-group">											
 						<label class="control-label" for="name">Total Km</label>
 						<div class="controls">
 							<input type="number" min="1" max="1000" class="span2" id="input-stage-kilomiters-total" placeholder="200" onchange="setIntervalsAltitude()"></input>
 						</div>				
 					</div>
-					<div class="control-group">
+					<div id="div-stage-datetimepicker" class="control-group">
 						<label class="control-label" for="firstname">Date</label>
 						<div class="controls">
 							<input type="text" class="span2" id="datetimepicker"></input>
 						</div>
 						<!-- /controls -->
 					</div>
-					<div class="control-group">											
+					<div id="div-stage-altitudes" class="control-group">											
 						<label class="control-label" for="name">Altitudes</label>
 						<div class="controls">
 							<span>Km:&nbsp;&nbsp;&nbsp;</span>
@@ -352,7 +353,7 @@
   </script>
     
     <script th:src="@{/js/bootstrap.js}"></script>
-
+<script th:src="@{/js/guidely/guidely.min.js}"></script>
 	
     <script th:inline="javascript">
     $(".front-loading").hide();
@@ -516,6 +517,60 @@
     	}
     	return result;
     }
+    
+    $(function () {
+		
+		guidely.add ({
+			attachTo: '#div-menu'
+			, anchor: 'top-left'
+			, title: 'Guide 1/7'
+			, text: 'This is the menu, use it to travel through the platform'
+		});
+		
+		guidely.add ({
+			attachTo: '#div-new-stage'
+			, anchor: 'top-left'
+			, title: 'Guide 2/7'
+			, text: 'Once you have joinned a team, you will be able to create a stage!'
+		});
+		
+		guidely.add ({
+			attachTo: '#div-stage-name'
+			, anchor: 'top-left'
+			, title: 'Guide 3/7'
+			, text: 'a. Set a stage name.'
+		});
+		
+		guidely.add ({
+			attachTo: '#div-stage-team'
+			, anchor: 'top-left'
+			, title: 'Guide 4/7'
+			, text: 'b. Choose the team which will do it.'
+		});
+		
+		guidely.add ({
+			attachTo: '#div-stage-kilomiters-total'
+			, anchor: 'top-left'
+			, title: 'Guide 5/7'
+			, text: 'c. Set the total amount of kilomiters.'
+		});
+		
+		guidely.add ({
+			attachTo: '#div-stage-datetimepicker'
+			, anchor: 'top-left'
+			, title: 'Guide 6/7'
+			, text: 'd. Choose date and time.'
+		});
+		
+		guidely.add ({
+			attachTo: '#div-stage-altitudes'
+			, anchor: 'top-left'
+			, title: 'Guide 7/7'
+			, text: 'e. Select the exact position into the map in order to get the altitude.'
+		});
+		
+		guidely.init ({ welcome: false, startTrigger: true });
+	});
    
   </script>
 </body>
