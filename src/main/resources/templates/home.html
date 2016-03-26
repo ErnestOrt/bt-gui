@@ -13,7 +13,6 @@
 <link th:href="@{/css/font-awesome.css}" rel="stylesheet"/>
 <link th:href="@{/css/style.css}" rel="stylesheet"/>
 <link th:href="@{/css/pages/dashboard.css}" rel="stylesheet"/>
-<link th:href="@{/css/pages/dashboard.css}" rel="stylesheet"/>
 <link th:href="@{/js/guidely/guidely.css}" rel="stylesheet"/> 
 
 
@@ -254,150 +253,18 @@
 	<script th:src="@{/js/excanvas.min.js}"></script>
 	<script th:src="@{/js/chart.min.js}" type="text/javascript"></script>
 	<script th:src="@{/js/bootstrap.js}"></script>
-	<script language="javascript" type="text/javascript" th:src="@{/js/full-calendar/fullcalendar.min.js}"></script>
-
+	<script th:src="@{/js/full-calendar/fullcalendar.min.js}"></script>
 	<script th:src="@{/js/base.js}"></script>
 	<script th:src="@{/js/guidely/guidely.min.js}"></script>
+	<script th:src="@{/js/peers/components.js}"></script>
+	<script th:src="@{/js/peers/home.js}"></script>
 	<script th:inline="javascript">
-	
-	/*<![CDATA[*/
-	var lineChartData
-	var valuesStage =[];
-	var valuesBackground =[];
-	var labelsKilomiters = [];
-    var stagePointsList = [[${stageCloser.stagePoints}]]
-    	
-   	valuesBackground.push(0);
-   	valuesBackground.push(1000);
-   	
-   	for(indexStagePoint = 0; indexStagePoint < stagePointsList.length; indexStagePoint++){
-   		labelsKilomiters.push(stagePointsList[indexStagePoint].kilomiter);
-   		valuesStage.push(stagePointsList[indexStagePoint].altitude);
-	    if(indexStagePoint>=2){
-			valuesBackground.push(0);
-	  	}
-
-   	}
-   	
-   	lineChartData = {
-               labels:  labelsKilomiters,
-               datasets: [
-				{
-				    fillColor: "rgba(255,255,255,0)",
-    				    strokeColor: "rgba(255,255,255,0)",
-    				    pointColor: "rgba(255,255,255,0)",
-    				    pointStrokeColor: "#FFFFFF",
-    				    pointHighlightFill: "#FFFFFF",
-    				    pointHighlightStroke: "rgba(255,255,255,0)",
-				    data: valuesBackground
-				},
-   				{
-   				    fillColor: "rgba(151,187,205,0.5)",
-   				    strokeColor: "rgba(151,187,205,1)",
-   				    pointColor: "rgba(151,187,205,1)",
-   				    pointStrokeColor: "#fff",
-   				    data: valuesStage
-   				}
-   			]
-
-           }
-   	new Chart(document.getElementById("area-chart").getContext("2d")).Line(lineChartData);
-    
-    
-	/*]]>*/
-		
-		
-		
-		
 		/*<![CDATA[*/
 		$(document).ready(function() {
-			var date = new Date();
-			var d = date.getDate();
-			var m = date.getMonth();
-			var y = date.getFullYear();
-
-			var eventsArray = [];
-			var stagesList = [[${stages}]];
-			var colorEvent;
-			var userId = [[${memberId}]]
-			
-			for (i = 0; i < stagesList.length; i++) {
-				if(stagesList[i].joinedMembers.indexOf(userId) != -1){
-					colorEvent='#67FA67';
-				}else{
-					colorEvent='#F78181';
-				}
-				
-				eventsArray.push({title : stagesList[i].name, start : new Date(stagesList[i].date), url: "./stage/"+stagesList[i].id, color: colorEvent});
-			}
-			
-			var calendar = $('#calendar').fullCalendar({
-				header : {
-					left : 'prev,next today',
-					center : 'title',
-					right : 'month,agendaWeek,agendaDay'
-				},
-				selectable : false,
-				selectHelper : true,
-				editable : false,
-				events : eventsArray
-			});
+			createStageGraph([[${stageCloser.stagePoints}]], "area-chart");
+			fillCalendar([[${stages}]], [[${memberId}]]);
 		});
 		/*]]>*/
-		
-		function comment(){
-		if($("#input-comment").val() != ""){
-			$.ajax({
-	   		    url : "/dashboard/comment/create",
-	   		    type: "POST",
-	   		    data : {content: $("#input-comment").val()},
-	   		    success: function(data, textStatus, jqXHR) { location.reload(); }
-	   		});
-		}
-    }
-		
-		
-		$(function () {
-			
-			guidely.add ({
-				attachTo: '#div-menu'
-				, anchor: 'top-left'
-				, title: 'Guide 1/5'
-				, text: 'This is the menu, use it to travel through the platform.'
-			});
-			
-			guidely.add ({
-				attachTo: '#div-stats'
-				, anchor: 'top-left'
-				, title: 'Guide 2/5'
-				, text: 'How many teams have I joined? How many stages or kilometers have I completed? How many bikes do I have?'
-			});
-			
-			guidely.add ({
-				attachTo: '#div-stage'
-				, anchor: 'top-left'
-				, title: 'Guide 3/5'
-				, text: 'Here is your next stage, the current weather for it and the members joined. If there is no stage, create one!'
-			});
-			
-			guidely.add ({
-				attachTo: '#div-calendar'
-				, anchor: 'top-left'
-				, title: 'Guide 4/5'
-				, text: 'Here is the calendar where all stages apear. Mark with red, those you will not take part. Mark with green, you are in! Click on them to visit them.'
-			});
-			
-			guidely.add ({
-				attachTo: '#div-news'
-				, anchor: 'top-left'
-				, title: 'Guide 5/5'
-				, text: 'Check those fresh news.'
-			});
-			
-			guidely.init ({welcome: false, startTrigger: true, showOnStart:false});
-
-
-		});
 	</script>
 	<!-- /Calendar -->
 </body>
