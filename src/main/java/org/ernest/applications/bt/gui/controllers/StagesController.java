@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 import org.ernest.applications.bt.gui.entities.StageDto;
 import org.ernest.applications.bt.gui.entities.TeamDto;
 import org.ernest.applications.bt.gui.entities.UserDto;
+import org.ernest.applications.bt.gui.entities.ValidationInfo;
 import org.ernest.applications.bt.gui.services.StagesDataService;
 import org.ernest.applications.bt.gui.services.TeamDataService;
 import org.ernest.applications.bt.gui.services.UserDataService;
@@ -38,8 +39,10 @@ public class StagesController {
 
 	@RequestMapping("/stages")
 	public String getStages(Model model) {
-		UserDto userDto = userDataService.getUser((String)SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+		UserDto userDto = userDataService.getUser(((ValidationInfo)SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUserId());
 		List<TeamDto> teams = userDto.getTeamsJoined().stream().map(teamId -> {return teamDataService.getTeam(teamId);}).collect(Collectors.toList());
+		
+		model.addAttribute("memberName", ((ValidationInfo)SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUserName());
 		model.addAttribute("teams", teams);
 		model.addAttribute("stages", teams.stream()
 										  .map(team -> team.getStages())
@@ -69,13 +72,14 @@ public class StagesController {
 		StageDto stageDto = stagesDataService.getStage(stageId);
 		
 		model.addAttribute("stageId", stageId);
-		model.addAttribute("userJoinedStage", stageDto.getJoinedMembers().contains((String)SecurityContextHolder.getContext().getAuthentication().getPrincipal()));
+		model.addAttribute("memberName", ((ValidationInfo)SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUserName());
+		model.addAttribute("userJoinedStage", stageDto.getJoinedMembers().contains(((ValidationInfo)SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUserId()));
 		model.addAttribute("stageNameAndDate", stageDto.getName() + " ["+ stageDto.getDate() +"]");
 		model.addAttribute("membersJoined", stageDto.getJoinedMembers().size());
 		model.addAttribute("stageKilomitersTotal", stageDto.getKilomitersTotal());
 		model.addAttribute("stagePoints", stageDto.getStagePoints());
 		
-		UserDto userDto = userDataService.getUser((String)SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+		UserDto userDto = userDataService.getUser(((ValidationInfo)SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUserId());
 		List<TeamDto> teams = userDto.getTeamsJoined().stream().map(teamId -> {return teamDataService.getTeam(teamId);}).collect(Collectors.toList());
 		
 		model.addAttribute("members", teams.stream()
@@ -90,24 +94,24 @@ public class StagesController {
 	@RequestMapping(value= "/stages/join", method = RequestMethod.POST)
 	@ResponseBody
     public void joinStage(@RequestParam(value="stageId") String stageId) throws ParseException {
-		stagesDataService.joinStage((String)SecurityContextHolder.getContext().getAuthentication().getPrincipal(), stageId);
-		userDataService.joinStage((String)SecurityContextHolder.getContext().getAuthentication().getPrincipal(), stageId);
+		stagesDataService.joinStage(((ValidationInfo)SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUserId(), stageId);
+		userDataService.joinStage(((ValidationInfo)SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUserId(), stageId);
 	}
 	
 	@RequestMapping(value= "/stages/unjoin", method = RequestMethod.POST)
 	@ResponseBody
     public void unjoinStage(@RequestParam(value="stageId") String stageId) throws ParseException {
-		stagesDataService.unjoinStage((String)SecurityContextHolder.getContext().getAuthentication().getPrincipal(), stageId);
-		userDataService.unjoinStage((String)SecurityContextHolder.getContext().getAuthentication().getPrincipal(), stageId);
+		stagesDataService.unjoinStage(((ValidationInfo)SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUserId(), stageId);
+		userDataService.unjoinStage(((ValidationInfo)SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUserId(), stageId);
 	}
 	
 	@RequestMapping(value= "/stages/delete", method = RequestMethod.POST)
 	@ResponseBody
     public void deleteStage(@RequestParam(value="stageId") String stageId) throws ParseException {
-		UserDto userDto = userDataService.getUser((String)SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+		UserDto userDto = userDataService.getUser(((ValidationInfo)SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUserId());
 		List<TeamDto> teams = userDto.getTeamsJoined().stream().map(teamId -> {return teamDataService.getTeam(teamId);}).collect(Collectors.toList());
 		String teamId = teams.stream().filter(team-> team.getStages().stream().anyMatch(stage -> stage.getId().equals(stageId))).findAny().get().getId();
-		userDataService.unjoinStage((String)SecurityContextHolder.getContext().getAuthentication().getPrincipal(), stageId);
+		userDataService.unjoinStage(((ValidationInfo)SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUserId(), stageId);
 		teamDataService.deleteStageCompleted(teamId, stageId);
 		stagesDataService.delete(stageId);
 	}

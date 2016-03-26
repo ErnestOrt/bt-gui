@@ -8,6 +8,7 @@ import org.ernest.applications.bt.gui.entities.StageDto;
 import org.ernest.applications.bt.gui.entities.StagePointDto;
 import org.ernest.applications.bt.gui.entities.TeamDto;
 import org.ernest.applications.bt.gui.entities.UserDto;
+import org.ernest.applications.bt.gui.entities.ValidationInfo;
 import org.ernest.applications.bt.gui.services.CommentDataService;
 import org.ernest.applications.bt.gui.services.TeamDataService;
 import org.ernest.applications.bt.gui.services.UserDataService;
@@ -35,16 +36,17 @@ public class TeamsController {
 	
 	@RequestMapping("/teams")
 	public String getTeams(Model model) {
-		UserDto userDto = userDataService.getUser((String)SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+		UserDto userDto = userDataService.getUser(((ValidationInfo)SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUserId());
 		model.addAttribute("teams", userDto.getTeamsJoined().stream().map(teamId -> {return teamDataService.getTeam(teamId);}).collect(Collectors.toList()));
-		  
+		model.addAttribute("memberName", ((ValidationInfo)SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUserName());
+
 		return "teams";
 	}
 	
 	@RequestMapping(value= "/dashboard/comment/create", method = RequestMethod.POST)
 	@ResponseBody
     public void createComment(@RequestParam(value="content") String content, @RequestParam(value="teamId") String teamId) {
-		String commentId = commentDataService.create((String)SecurityContextHolder.getContext().getAuthentication().getPrincipal(), content);
+		String commentId = commentDataService.create(((ValidationInfo)SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUserId(), content);
 		teamDataService.addComment(teamId, commentId);
 	}
 	
@@ -57,8 +59,8 @@ public class TeamsController {
 		model.addAttribute("totalStages", teamDto.getStages().size());
 		model.addAttribute("totalKilomiters", teamDto.getStages().stream().reduce(0, (sum, stage) -> sum += stage.getKilomitersTotal(), (sum1, sum2) -> sum1 + sum2));
 		model.addAttribute("totalBikes", teamDto.getMembers().stream().reduce(0, (sum, member) -> sum += member.getBikesList().size(), (sum1, sum2) -> sum1 + sum2));
-		
-		model.addAttribute("memberId", (String)SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+		model.addAttribute("memberName", ((ValidationInfo)SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUserName());
+		model.addAttribute("memberId", ((ValidationInfo)SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUserId());
 		model.addAttribute("stages", teamDto.getStages().stream().sorted(Comparator.comparing(StageDto::getDate)).collect(Collectors.toList()));
 		StageDto stageCloser = teamDto.getStages().stream()
 									  .sorted(Comparator.comparing(StageDto::getDate))

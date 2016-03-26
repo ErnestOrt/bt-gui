@@ -10,6 +10,7 @@ import org.ernest.applications.bt.gui.entities.StageDto;
 import org.ernest.applications.bt.gui.entities.StagePointDto;
 import org.ernest.applications.bt.gui.entities.TeamDto;
 import org.ernest.applications.bt.gui.entities.UserDto;
+import org.ernest.applications.bt.gui.entities.ValidationInfo;
 import org.ernest.applications.bt.gui.services.CommentDataService;
 import org.ernest.applications.bt.gui.services.NewsDataService;
 import org.ernest.applications.bt.gui.services.TeamDataService;
@@ -38,7 +39,7 @@ public class HomeController {
 	
 	@RequestMapping("/home")
 	public String getDashboard(Model model) {
-		UserDto userDto = userDataService.getUser((String)SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+		UserDto userDto = userDataService.getUser(((ValidationInfo)SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUserId());
 		List<TeamDto> teams = userDto.getTeamsJoined().stream().map(teamId -> {return teamDataService.getTeam(teamId);}).collect(Collectors.toList());
 		
 		List<StageDto> stages = teams.stream()
@@ -53,8 +54,8 @@ public class HomeController {
 		model.addAttribute("totalBikes", userDto.getBikesList().size()); //team.getMembers().stream().reduce(0, (sum, member) -> sum += member.getBikesList().size(), (sum1, sum2) -> sum1 + sum2));
 		
 		model.addAttribute("articles", newsDataService.get());
-		
-		model.addAttribute("memberId", (String)SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+		model.addAttribute("memberName", ((ValidationInfo)SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUserName());
+		model.addAttribute("memberId", ((ValidationInfo)SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUserId());
 		model.addAttribute("stages", stages);
 		StageDto stageCloser = teams.stream()
 									  .map(team -> team.getStages())
