@@ -37,7 +37,7 @@ public class HomeController {
 	@Autowired
 	UserDataService userDataService;
 	
-	@RequestMapping("/home")
+	@RequestMapping({ "/home", "/" })
 	public String getDashboard(Model model) {
 		UserDto userDto = userDataService.getUser(((ValidationInfo)SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUserId());
 		List<TeamDto> teams = userDto.getTeamsJoined().stream().map(teamId -> {return teamDataService.getTeam(teamId);}).collect(Collectors.toList());
