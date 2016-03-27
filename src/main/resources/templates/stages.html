@@ -38,8 +38,12 @@
 					<ul class="nav pull-right">
 						<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" th:text="${memberName}"><b class="caret"></b></a>
 							<ul class="dropdown-menu">
-								<li><a href="/logout">Logout</a></li>
-							</ul></li>
+								<li><a href="/logout" th:text="#{logout}"></a></li>
+								<li><a href="/home/?lang=cat"><img th:src="@{/img/lang/cat.gif}" style="width:16px;height:11px;border:0"/></a></li>
+								<li><a href="/home/?lang=es"><img th:src="@{/img/lang/es.png}" style="width:16px;height:11px;border:0"/></a></li>
+								<li><a href="/home/?lang=en"><img th:src="@{/img/lang/en.png}" style="width:16px;height:11px;border:0"/></a></li>
+							</ul>
+						</li>
 					</ul>
 				</div>
 			</div>
@@ -67,10 +71,10 @@
 	            <!-- /widget-header -->
 	            <div class="widget-content">
 		          <div id="div-menu" class="shortcuts"> 
-		              	<a href="/home" class="shortcut"><i class="shortcut-icon icon-globe"></i><span class="shortcut-label">Home</span></a>
-		                <a href="/profile" class="shortcut"><i class="shortcut-icon icon-user"></i><span class="shortcut-label">Profile</span></a>
-		                <a href="/stages" class="shortcut shortcut-active"><i class="shortcut-icon icon-picture"></i><span class="shortcut-label">Stages</span></a>
-		                <a href="/teams" class="shortcut"><i class="shortcut-icon icon-group"></i> <span class="shortcut-label">Teams</span></a>
+		              	<a href="/home" class="shortcut"><i class="shortcut-icon icon-globe"></i><span class="shortcut-label" th:text="#{home}"></span></a>
+		                <a href="/profile" class="shortcut"><i class="shortcut-icon icon-user"></i><span class="shortcut-label" th:text="#{profile}"></span></a>
+		                <a href="/stages" class="shortcut shortcut-active"><i class="shortcut-icon icon-picture"></i><span class="shortcut-label" th:text="#{stages}"></span></a>
+		                <a href="/teams" class="shortcut"><i class="shortcut-icon icon-group"></i> <span class="shortcut-label" th:text="#{teams}"></span></a>
 	              	</div>
 	              <!-- /shortcuts --> 
 	            </div>
@@ -78,43 +82,43 @@
 	        
 	        <div id="div-new-stage" class="widget">
             <div class="widget-header"> <i class="icon-picture"></i>
-              <h3>New Stage</h3>
+              <h3 th:text="#{stagenew}"></h3>
             </div>
 				<!-- /widget-header -->
 				<div class="widget-content">
 					<div id="div-stage-name" class="control-group">
-						<label class="control-label" for="firstname">Name</label>
+						<label class="control-label" for="firstname" th:text="#{name}"></label>
 						<div class="controls">
 							<input type="text" class="span2" id="input-stage-name" placeholder="Bcn-Tarragona-Valls"></input>
 						</div>
 						<!-- /controls -->
 					</div>
 					<div id="div-stage-team" class="control-group">											
-						<label for="sel1">Select list (select one):</label>
+						<label for="sel1" th:text="#{selectteam}"></label>
 					      <select class="form-control span2" id="input-stage-team">
-					        <option value="">Select a team...</option>
+					        <option value="" th:text="#{selecttteamvaluezero}"></option>
 					        <option th:each="team : ${teams}" th:text="${team.name}" th:value="${team.id}"></option>
 					      </select>				
 					</div>
 					<div id="div-stage-kilomiters-total" class="control-group">											
-						<label class="control-label" for="name">Total Km</label>
+						<label class="control-label" for="name" th:text="#{totalkm}"></label>
 						<div class="controls">
 							<input type="number" min="1" max="1000" class="span2" id="input-stage-kilomiters-total" placeholder="200" onchange="setIntervalsAltitude()"></input>
 						</div>				
 					</div>
 					<div id="div-stage-datetimepicker" class="control-group">
-						<label class="control-label" for="firstname">Date</label>
+						<label class="control-label" for="firstname" th:text="#{date}"></label>
 						<div class="controls">
 							<input type="text" class="span2" id="datetimepicker"></input>
 						</div>
 						<!-- /controls -->
 					</div>
 					<div id="div-stage-altitudes" class="control-group">											
-						<label class="control-label" for="name">Altitudes</label>
+						<label class="control-label" for="name" th:text="#{altitudes}"></label>
 						<div class="controls">
 							<span>Km:&nbsp;&nbsp;&nbsp;</span>
 							<input type="text" min="1" max="10" class="span2" id="input-stage-kilomiters-0"></input>
-							<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Elevation:&nbsp;&nbsp;&nbsp;</span>
+							<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MoS:&nbsp;&nbsp;&nbsp;</span>
 							<input type="number" min="1" max="10" class="span2" id="input-stage-altitude-0" onfocus="getAltitude('0')"></input>
 							<input type="hidden" id="input-stage-latitude-0"></input>
 							<input type="hidden" id="input-stage-longitude-0"></input>
@@ -122,7 +126,7 @@
 						<div class="controls">
 							<span>Km:&nbsp;&nbsp;&nbsp;</span>
 							<input type="text" min="1" max="10" class="span2" id="input-stage-kilomiters-1"></input>
-							<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Elevation:&nbsp;&nbsp;&nbsp;</span>
+							<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MoS:&nbsp;&nbsp;&nbsp;</span>
 							<input type="number" min="1" max="10" class="span2" id="input-stage-altitude-1" onfocus="getAltitude('1')"></input>
 							<input type="hidden" id="input-stage-latitude-1"></input>
 							<input type="hidden" id="input-stage-longitude-1"></input>
@@ -130,7 +134,7 @@
 						<div class="controls">
 							<span>Km:&nbsp;&nbsp;&nbsp;</span>
 							<input type="text" min="1" max="10" class="span2" id="input-stage-kilomiters-2"></input>
-							<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Elevation:&nbsp;&nbsp;&nbsp;</span>
+							<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MoS:&nbsp;&nbsp;&nbsp;</span>
 							<input type="number" min="1" max="10" class="span2" id="input-stage-altitude-2" onfocus="getAltitude('2')"></input>
 							<input type="hidden" id="input-stage-latitude-2"></input>
 							<input type="hidden" id="input-stage-longitude-2"></input>
@@ -138,7 +142,7 @@
 						<div class="controls">
 							<span>Km:&nbsp;&nbsp;&nbsp;</span>
 							<input type="text" min="1" max="10" class="span2" id="input-stage-kilomiters-3"></input>
-							<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Elevation:&nbsp;&nbsp;&nbsp;</span>
+							<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MoS:&nbsp;&nbsp;&nbsp;</span>
 							<input type="number" min="1" max="10" class="span2" id="input-stage-altitude-3" onfocus="getAltitude('3')"></input>
 							<input type="hidden" id="input-stage-latitude-3"></input>
 							<input type="hidden" id="input-stage-longitude-3"></input>
@@ -146,7 +150,7 @@
 						<div class="controls">
 							<span>Km:&nbsp;&nbsp;&nbsp;</span>
 							<input type="text" min="1" max="10" class="span2" id="input-stage-kilomiters-4"></input>
-							<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Elevation:&nbsp;&nbsp;&nbsp;</span>
+							<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MoS:&nbsp;&nbsp;&nbsp;</span>
 							<input type="number" min="1" max="10" class="span2" id="input-stage-altitude-4" onfocus="getAltitude('4')"></input>
 							<input type="hidden" id="input-stage-latitude-4"></input>
 							<input type="hidden" id="input-stage-longitude-4"></input>
@@ -154,7 +158,7 @@
 						<div class="controls">
 							<span>Km:&nbsp;&nbsp;&nbsp;</span>
 							<input type="text" min="1" max="10" class="span2" id="input-stage-kilomiters-5"></input>
-							<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Elevation:&nbsp;&nbsp;&nbsp;</span>
+							<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MoS:&nbsp;&nbsp;&nbsp;</span>
 							<input type="number" min="1" max="10" class="span2" id="input-stage-altitude-5" onfocus="getAltitude('5')"></input>
 							<input type="hidden" id="input-stage-latitude-5"></input>
 							<input type="hidden" id="input-stage-longitude-5"></input>
@@ -162,7 +166,7 @@
 						<div class="controls">
 							<span>Km:&nbsp;&nbsp;&nbsp;</span>
 							<input type="text" min="1" max="10" class="span2" id="input-stage-kilomiters-6"></input>
-							<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Elevation:&nbsp;&nbsp;&nbsp;</span>
+							<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MoS:&nbsp;&nbsp;&nbsp;</span>
 							<input type="number" min="1" max="10" class="span2" id="input-stage-altitude-6" onfocus="getAltitude('6')"></input>
 							<input type="hidden" id="input-stage-latitude-6"></input>
 							<input type="hidden" id="input-stage-longitude-6"></input>
@@ -170,7 +174,7 @@
 						<div class="controls">
 							<span>Km:&nbsp;&nbsp;&nbsp;</span>
 							<input type="text" min="1" max="10" class="span2" id="input-stage-kilomiters-7"></input>
-							<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Elevation:&nbsp;&nbsp;&nbsp;</span>
+							<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MoS:&nbsp;&nbsp;&nbsp;</span>
 							<input type="number" min="1" max="10" class="span2" id="input-stage-altitude-7" onfocus="getAltitude('7')"></input>
 							<input type="hidden" id="input-stage-latitude-7"></input>
 							<input type="hidden" id="input-stage-longitude-7"></input>
@@ -178,7 +182,7 @@
 						<div class="controls">
 							<span>Km:&nbsp;&nbsp;&nbsp;</span>
 							<input type="text" min="1" max="10" class="span2" id="input-stage-kilomiters-8"></input>
-							<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Elevation:&nbsp;&nbsp;&nbsp;</span>
+							<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MoS:&nbsp;&nbsp;&nbsp;</span>
 							<input type="number" min="1" max="10" class="span2" id="input-stage-altitude-8" onfocus="getAltitude('8')"></input>
 							<input type="hidden" id="input-stage-latitude-8"></input>
 							<input type="hidden" id="input-stage-longitude-8"></input>
@@ -186,7 +190,7 @@
 						<div class="controls">
 							<span>Km:&nbsp;&nbsp;&nbsp;</span>
 							<input type="text" min="1" max="10" class="span2" id="input-stage-kilomiters-9"></input>
-							<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Elevation:&nbsp;&nbsp;&nbsp;</span>
+							<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MoS:&nbsp;&nbsp;&nbsp;</span>
 							<input type="number" min="1" max="10" class="span2" id="input-stage-altitude-9" onfocus="getAltitude('9')"></input>
 							<input type="hidden" id="input-stage-latitude-9"></input>
 							<input type="hidden" id="input-stage-longitude-9"></input>
@@ -194,13 +198,13 @@
 						<div class="controls">
 							<span>Km:&nbsp;&nbsp;&nbsp;</span>
 							<input type="text" min="1" max="10" class="span2" id="input-stage-kilomiters-10"></input>
-							<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Elevation:&nbsp;&nbsp;&nbsp;</span>
+							<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MoS:&nbsp;&nbsp;&nbsp;</span>
 							<input type="number" min="1" max="10" class="span2" id="input-stage-altitude-10" onfocus="getAltitude('10')"></input>
 							<input type="hidden" id="input-stage-latitude-10"></input>
 							<input type="hidden" id="input-stage-longitude-10"></input>
 						</div>
 						<div class="form-actions">
-	                        <button class="btn btn-success" onclick="createStage()">Create</button>
+	                        <button class="btn btn-success" onclick="createStage()" th:text="#{create}"></button>
 						</div>		
 					</div>
 					<div id="modal-elevation" class="modal hide fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
@@ -212,7 +216,7 @@
 							<div id="map" style="height:400px;"></div>				
 						</div>
 						<div class="modal-footer">
-							<button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+							<button class="btn" data-dismiss="modal" aria-hidden="true" th:text="#{close}"></button>
 						</div>
 					</div>
 				</div>
@@ -229,8 +233,16 @@
             <div class="widget-content">
                <canvas th:id="'area-chart-' + ${stage.id}" class="chart-holder" height="250" width="538"> </canvas>
                <div id="big_stats" class="cf">
-                 <div class="stat"> <i class="icon-group"></i> <span class="value" th:text="${stage.joinedMembers.size()}"></span> Memebers </div>
-                 <div class="stat"> <i class="icon-road"></i> <span class="value" th:text="${stage.kilomitersTotal}"></span> Km </div>
+                 <div class="stat"> 
+                 	<i class="icon-group"></i> 
+                 	<span class="value" th:text="${stage.joinedMembers.size()}"></span> 
+                 	<span th:text="#{members}"></span>
+                 </div>
+                 <div class="stat"> 
+                 	<i class="icon-road"></i> 
+                 	<span class="value" th:text="${stage.kilomitersTotal}"></span> 
+                 	<span> Km</span>
+                 </div>
                </div>
             </div>
             <!-- /widget-content --> 
@@ -256,10 +268,7 @@
 					<div class="span3">
 						<h4>Support</h4>
 						<ul>
-							<li><a href="javascript:;">Frequently Asked Questions</a></li>
-							<li><a href="javascript:;">Ask a Question</a></li>
-							<li><a href="javascript:;">Video Tutorial</a></li>
-							<li><a href="javascript:;">Feedback</a></li>
+							<li><a href="mailto:ernest.ort.tor@gmail.com">Feedback</a></li>
 						</ul>
 					</div>
 					<!-- /span3 -->
@@ -304,6 +313,8 @@
 	<script th:src="@{/js/peers/components.js}"></script>
     <script th:inline="javascript">
 	    /*<![CDATA[*/
+	    guide([[#{guidely.menu}]], [[#{guidely.stages.newstage}]], [[#{guidely.stages.name}]], [[#{guidely.stages.team}]], [[#{guidely.stages.kmtotal}]], [[#{guidely.stages.datel}]], [[#{guidely.stages.altitudes}]])
+
 	    var stagesList = [[${stages}]]
 	    for (indexStage = 0; indexStage < stagesList.length; indexStage++) {
 	    	createStageGraph(stagesList[indexStage].stagePoints, "area-chart-" + stagesList[indexStage].id);

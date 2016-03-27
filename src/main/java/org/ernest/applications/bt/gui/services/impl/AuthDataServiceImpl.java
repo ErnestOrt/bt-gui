@@ -4,6 +4,7 @@ import org.ernest.applications.bt.db.manager.credentials.ct.CreateCredentialsInp
 import org.ernest.applications.bt.db.manager.credentials.ct.ValidateInput;
 import org.ernest.applications.bt.db.manager.credentials.ct.ValidateOutput;
 import org.ernest.applications.bt.gui.services.AuthDataService;
+import org.ernest.applications.bt.gui.services.MailService;
 import org.ernest.applications.bt.gui.services.UserDataService;
 import org.ernest.applications.bt.manager.mails.ct.SendActivateInput;
 import org.ernest.applications.bt.manager.mails.ct.SendRecoverInput;
@@ -18,11 +19,11 @@ public class AuthDataServiceImpl implements AuthDataService {
 	@Value("${service.credentials.port}")
 	String credentialsPort;
 	
-	@Value("${service.mails.port}")
-	String mailsPort;
-	
 	@Autowired
 	UserDataService userDataService;
+	
+	@Autowired
+	MailService mailService;
 	
 	@Override
 	public String validate(String name, String password) {
@@ -41,13 +42,7 @@ public class AuthDataServiceImpl implements AuthDataService {
 		input.setPass(pass);
 		
 		String token = new RestTemplate().postForObject("http://localhost:" + credentialsPort + "/create", input, String.class);
-		
-		SendActivateInput sendActivateInput = new SendActivateInput();
-		sendActivateInput.setToken(token);
-		sendActivateInput.setUsermail(email);
-		sendActivateInput.setUserName(name);
-		
-		new RestTemplate().postForObject("http://localhost:" + mailsPort + "/sendactivate", sendActivateInput, String.class);
+		mailService.activate(token, name, email);
 	}
 
 	@Override
@@ -59,13 +54,7 @@ public class AuthDataServiceImpl implements AuthDataService {
 
 	@Override
 	public void recover(String email) {
-		
 		String pass = new RestTemplate().postForObject("http://localhost:" + credentialsPort + "/recover", email, String.class);
-		
-		SendRecoverInput sendRecoverInput = new SendRecoverInput();
-		sendRecoverInput.setEmail(email);
-		sendRecoverInput.setPass(pass);
-		
-		new RestTemplate().postForObject("http://localhost:" + mailsPort + "/sendrecover", sendRecoverInput, String.class);
+		mailService.recover(email, pass);
 	}
 }

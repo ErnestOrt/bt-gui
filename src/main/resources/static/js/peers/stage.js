@@ -30,42 +30,14 @@ function fillRute(stagePointsList){
 	}
 } 
     
-$(function () {
-		
-		guidely.add ({
-			attachTo: '#div-menu'
-			, anchor: 'top-left'
-			, title: 'Guide 1/5'
-			, text: 'This is the menu, use it to travel through the platform'
-		});
-		
-		guidely.add ({
-			attachTo: '#div-stats'
-			, anchor: 'top-left'
-			, title: 'Guide 2/5'
-			, text: 'Stage statistics and delete button.'
-		});
-		
-		guidely.add ({
-			attachTo: '#div-members'
-			, anchor: 'top-left'
-			, title: 'Guide 3/5'
-			, text: 'See who will come and also join and unjoin yourself.'
-		});
-		
-		guidely.add ({
-			attachTo: '#div-altitude'
-			, anchor: 'top-left'
-			, title: 'Guide 4/5'
-			, text: 'Here is the altitude map of the stages.'
-		});
-		
-		guidely.add ({
-			attachTo: '#div-route'
-			, anchor: 'top-left'
-			, title: 'Guide 5/5'
-			, text: 'See the route you will follow.'
-		});
-		
-		guidely.init ({ welcome: false, startTrigger: true, showOnStart:false });
-	});
+
+function guide(menu, stats, members, altitude, route) {
+	
+	guidely.add ({attachTo: '#div-menu', anchor: 'top-left', title: 'Guide 1/5', text: menu});
+	guidely.add ({attachTo: '#div-stats', anchor: 'top-left', title: 'Guide 2/5', text: stats});
+	guidely.add ({attachTo: '#div-members', anchor: 'top-left', title: 'Guide 3/5', text: members});
+	guidely.add ({attachTo: '#div-altitude', anchor: 'top-left', title: 'Guide 4/5', text: altitude});
+	guidely.add ({attachTo: '#div-route', anchor: 'top-left', title: 'Guide 5/5', text: route});
+	
+	guidely.init ({welcome: false, startTrigger: true, showOnStart:false});	
+}

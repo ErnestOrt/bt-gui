@@ -44,29 +44,26 @@
 	<div class="content clearfix">
 		
 		
-			<h1>Signup for Free Account</h1>			
+			<h1 th:text="#{signup.title}"></h1>			
 			
-			<div class="login-fields">
-				
-				<p>Create your account:</p>
-				
+			<div class="login-fields">				
 				<div class="field">
-					<label for="firstname">Name:</label>
+					<label for="firstname" th:text="#{signup.name}"></label>
 					<input type="text" id="firstname" name="firstname" value="" placeholder="Name" class="login" />
 				</div> <!-- /field -->
 				
 				<div class="field">
-					<label for="email">Email Address:</label>
+					<label for="email" th:text="#{signup.email}"></label>
 					<input type="text" id="email" name="email" value="" placeholder="Email" class="login"/>
 				</div> <!-- /field -->
 				
 				<div class="field">
-					<label for="password">Password:</label>
+					<label for="password" th:text="#{signup.pass}"></label>
 					<input type="password" id="password" name="password" value="" placeholder="Password" class="login"/>
 				</div> <!-- /field -->
 				
 				<div class="field">
-					<label for="confirm_password">Confirm Password:</label>
+					<label for="confirm_password" th:text="#{signup.passconf}"></label>
 					<input type="password" id="confirm_password" name="confirm_password" value="" placeholder="Confirm Password" class="login"/>
 				</div> <!-- /field -->
 				
@@ -77,7 +74,7 @@
 			</div> <!-- /login-fields -->
 			
 			<div class="login-actions">									
-				<button class="button btn btn-primary btn-large" onclick="confirmSignUp();">Sign Up</button>
+				<button class="button btn btn-primary btn-large" onclick="confirmSignUp();" th:text="#{signup}"></button>
 				
 			</div> <!-- .actions -->
 
@@ -89,7 +86,7 @@
 
 <!-- Text Under Box -->
 <div class="login-extra">
-	Already have an account? <a href="/login">Login to your account</a>
+	 <span th:text="#{alreadyacount.message}"></span><a href="/login" th:text="#{login.message=}"></a>
 </div> <!-- /login-extra -->
 
 <script th:src="@{/js/jquery-1.7.2.min.js}"></script>

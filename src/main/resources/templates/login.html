@@ -30,8 +30,7 @@
 				<span class="icon-bar"></span>
 			</a>
 			
-			<a class="brand" href="#">BikeTeam</a>			
-	
+			<a class="brand" href="#">BikeTeam</a>		
 		</div> <!-- /container -->
 		
 	</div> <!-- /navbar-inner -->
@@ -49,12 +48,9 @@
 			<h1>Login</h1>		
 			
 			<div class="login-fields">
-				
-				<p>Please provide your details</p>
-				
 				<div class="field">
-					<label for="username">Username</label>
-					<input type="text" id="username" name="username" value="" placeholder="Username" class="login username-field"></input>
+					<label for="username">Email:</label>
+					<input type="text" id="username" name="username" value="" placeholder="Email" class="login username-field"></input>
 				</div> <!-- /field -->
 				
 				<div class="field">
@@ -79,11 +75,11 @@
 </div> <!-- /account-container -->
 
 <div class="login-extra">
-	Don't you have an account? <a href="/signup">Sign up for free!</a>
+	<span th:text="#{gotoregister.message.span}"></span> <a href="/signup" th:text="#{gotoregister.message.link}"></a>
 </div> <!-- /login-extra -->
 
 <div class="login-extra">
-	<a href="/recovery">Recover Password</a>
+	<a href="/recovery" th:text="#{gotorecover.message.link}"></a>
 </div> <!-- /login-extra -->
 
 

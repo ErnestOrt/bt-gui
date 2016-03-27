@@ -53,7 +53,7 @@ function createStageGraph(stagePointsList, chartName){
 
            }
    	
-   	new Chart(document.getElementById(chartName).getContext("2d")).Line(lineChartData);
+   	new Chart(document.getElementById(chartName).getContext("2d")).Line(lineChartData, {responsive: false});
 }
 
 function fillCalendar(stagesList, userId){
@@ -154,7 +154,7 @@ function stagesJoined(currentMonth, stagesJoined){
        },
      ]
        }
-	var myLine = new Chart(document.getElementById("bar-chart").getContext("2d")).Bar(barChartData);
+	var myLine = new Chart(document.getElementById("bar-chart").getContext("2d")).Bar(barChartData, {responsive: false});
 }
 
 function createSkills(resistence, sprint, montain, flat, btt, road){
@@ -184,5 +184,5 @@ function createSkills(resistence, sprint, montain, flat, btt, road){
     	    ]
     	};
     
-    new Chart(document.getElementById("line-chart").getContext("2d")).Radar(data);
+    new Chart(document.getElementById("line-chart").getContext("2d")).Radar(data, {responsive: false});
 }

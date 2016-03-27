@@ -124,56 +124,16 @@
 	    return result;
     }
 	
-	 $(function () {
-			
-			guidely.add ({
-				attachTo: '#div-menu'
-				, anchor: 'top-left'
-				, title: 'Guide 1/7'
-				, text: 'This is the menu, use it to travel through the platform'
-			});
-			
-			guidely.add ({
-				attachTo: '#div-new-stage'
-				, anchor: 'top-left'
-				, title: 'Guide 2/7'
-				, text: 'Once you have joinned a team, you will be able to create a stage!'
-			});
-			
-			guidely.add ({
-				attachTo: '#div-stage-name'
-				, anchor: 'top-left'
-				, title: 'Guide 3/7'
-				, text: 'a. Set a stage name.'
-			});
-			
-			guidely.add ({
-				attachTo: '#div-stage-team'
-				, anchor: 'top-left'
-				, title: 'Guide 4/7'
-				, text: 'b. Choose the team which will do it.'
-			});
-			
-			guidely.add ({
-				attachTo: '#div-stage-kilomiters-total'
-				, anchor: 'top-left'
-				, title: 'Guide 5/7'
-				, text: 'c. Set the total amount of kilomiters.'
-			});
-			
-			guidely.add ({
-				attachTo: '#div-stage-datetimepicker'
-				, anchor: 'top-left'
-				, title: 'Guide 6/7'
-				, text: 'd. Choose date and time.'
-			});
-			
-			guidely.add ({
-				attachTo: '#div-stage-altitudes'
-				, anchor: 'top-left'
-				, title: 'Guide 7/7'
-				, text: 'e. Select the exact position into the map in order to get the altitude.'
-			});
-			
-			guidely.init ({ welcome: false, startTrigger: true, showOnStart:false });
-		});
+    function guide(menu, newstage, name, team, kmtotal, date, altitudes) {
+    	
+    	guidely.add ({attachTo: '#div-menu', anchor: 'top-left', title: 'Guide 1/7', text: menu});
+    	guidely.add ({attachTo: '#div-new-stage', anchor: 'top-left', title: 'Guide 2/7', text: newstage});
+    	guidely.add ({attachTo: '#div-stage-name', anchor: 'top-left', title: 'Guide 3/7', text: name});
+    	guidely.add ({attachTo: '#div-stage-team', anchor: 'top-left', title: 'Guide 4/7', text: team});
+    	guidely.add ({attachTo: '#div-stage-kilomiters-total', anchor: 'top-left', title: 'Guide 5/7', text: kmtotal});
+    	guidely.add ({attachTo: '#div-stage-datetimepicker', anchor: 'top-left', title: 'Guide 6/7', text: date});
+    	guidely.add ({attachTo: '#div-stage-altitudes', anchor: 'top-left', title: 'Guide 7/7', text: altitudes});
+
+    	
+    	guidely.init ({welcome: false, startTrigger: true, showOnStart:false});	
+    }

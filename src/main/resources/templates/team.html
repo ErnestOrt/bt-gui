@@ -35,10 +35,13 @@
 				<div class="nav-collapse">
 					<ul class="nav pull-right">
 						<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" th:text="${memberName}"><b class="caret"></b></a>
-					
 							<ul class="dropdown-menu">
-								<li><a href="/logout">Logout</a></li>
-							</ul></li>
+								<li><a href="/logout" th:text="#{logout}"></a></li>
+								<li><a href="/home/?lang=cat"><img th:src="@{/img/lang/cat.gif}" style="width:16px;height:11px;border:0"/></a></li>
+								<li><a href="/home/?lang=es"><img th:src="@{/img/lang/es.png}" style="width:16px;height:11px;border:0"/></a></li>
+								<li><a href="/home/?lang=en"><img th:src="@{/img/lang/en.png}" style="width:16px;height:11px;border:0"/></a></li>
+							</ul>
+						</li>
 					</ul>
 				</div>
 			</div>
@@ -63,15 +66,15 @@
 						<div id="div-menu" class="widget">
 							<div class="widget-header">
 								<i class="icon-bookmark"></i>
-								<h3>What to see</h3>
+								<h3 th:text="#{menu}"></h3>
 							</div>
 							<!-- /widget-header -->
 							<div class="widget-content">
 								<div class="shortcuts">
-									<a href="/home" class="shortcut"><i class="shortcut-icon icon-globe"></i><span class="shortcut-label">Home</span></a>
-					                <a href="/profile" class="shortcut"><i class="shortcut-icon icon-user"></i><span class="shortcut-label">Profile</span></a>
-					                <a href="/stages" class="shortcut"><i class="shortcut-icon icon-picture"></i><span class="shortcut-label">Stages</span></a>
-					                <a href="/teams" class="shortcut shortcut-active"><i class="shortcut-icon icon-group"></i> <span class="shortcut-label">Teams</span></a>
+									<a href="/home" class="shortcut"><i class="shortcut-icon icon-globe"></i><span class="shortcut-label" th:text="#{home}"></span></a>
+					                <a href="/profile" class="shortcut"><i class="shortcut-icon icon-user"></i><span class="shortcut-label" th:text="#{profile}"></span></a>
+					                <a href="/stages" class="shortcut"><i class="shortcut-icon icon-picture"></i><span class="shortcut-label" th:text="#{stages}"></span></a>
+					                <a href="/teams" class="shortcut shortcut-active"><i class="shortcut-icon icon-group"></i> <span class="shortcut-label" th:text="#{teams}"></span></a>
 								</div>
 								<!-- /shortcuts -->
 							</div>
@@ -83,7 +86,7 @@
 						<div id="div-calendar" class="widget widget-nopad">
 							<div class="widget-header">
 								<i class="icon-calendar"></i>
-								<h3>Calendar</h3>
+								<h3 th:text="#{calendar}"></h3>
 							</div>
 							<!-- /widget-header -->
 							<div class="widget-content">
@@ -96,14 +99,14 @@
 						<div id="div-comments" class="widget">
 							<div class="widget-header">
 								<i class="icon-comments-alt"></i>
-								<h3>Comments</h3>
-								<a href="#modal-comment" role="button" class="btn" data-toggle="modal">Comment</a>
+								<h3 th:text="#{comments}"></h3>
+								<a href="#modal-comment" role="button" class="btn" data-toggle="modal" th:text="#{comment}"></a>
 
 								<div id="modal-comment" class="modal hide fade" tabindex="-1"
 									role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 									<div class="modal-header">
 										<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-										<h3 id="myModalLabel">Comment</h3>
+										<h3 id="myModalLabel" th:text="#{comment}"></h3>
 									</div>
 									<div class="modal-body">
 										<div class="control-group">											
@@ -113,8 +116,8 @@
 										</div>
 									</div>
 									<div class="modal-footer">
-										<button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-										<button class="btn btn-primary" onclick="comment()">Comment</button>
+										<button class="btn" data-dismiss="modal" aria-hidden="true" th:text="#{close}"></button>
+										<button class="btn btn-primary" onclick="comment()" th:text="#{comment}"></button>
 									</div>
 								</div>
 							</div>
@@ -125,20 +128,6 @@
 											<span class="arrow"></span>
 											<div class="info">
 												<a class="name" th:href="'/member/' + ${comment.ownerId}" th:text="${comment.ownerName}"></a> <span class="time" th:text="${comment.creationDate}"></span>
-												<div class="options_arrow">
-													<div class="dropdown pull-right">
-														<a class="dropdown-toggle " id="dLabel" role="button"
-															data-toggle="dropdown" data-target="#" href="#"> <i
-															class=" icon-caret-down"></i>
-														</a>
-														<ul class="dropdown-menu " role="menu"
-															aria-labelledby="dLabel">
-															<li><a href="#"><i class=" icon-share-alt icon-large"></i> Reply</a></li>
-															<li><a href="#"><i class=" icon-trash icon-large"></i> Delete</a></li>
-															<li><a href="#"><i class=" icon-share icon-large"></i> Share</a></li>
-														</ul>
-													</div>
-												</div>
 											</div>
 											<div class="text" th:text="${comment.content}"></div>
 										</div></li>
@@ -153,24 +142,23 @@
 						<div class="widget widget-nopad">
 							<div class="widget-header">
 								<i class="icon-bookmark"></i>
-								<h3>Team Stats</h3>
+								<h3 th:text="#{teamstats}"></h3>
 							</div>
 							<!-- /widget-header -->
 							<div class="widget-content">
 								<div class="widget big-stats-container">
 									<div class="widget-content">
-										<h6 class="bigstats">This numbers define you team so make
-											them grows as much as posible! And remember, keep riding!</h6>
+										<h6 class="bigstats" th:text="#{teamstats.message}"></h6>
 										<div id="big_stats" class="cf">
 											<div class="stat">
 												<i class="icon-group"></i> <span class="value" th:text="${totalMembers}"></span>
-												Members
+												<span th:text="#{members}"></span>
 											</div>
 											<!-- .stat -->
 
 											<div class="stat">
 												<i class="icon-picture"></i> <span class="value" th:text="${totalStages}"></span>
-												Statges
+												<span th:text="#{stages}"></span>
 											</div>
 											<!-- .stat -->
 
@@ -181,7 +169,7 @@
 
 											<div class="stat">
 												<i class="icon-cog"></i> <span class="value" th:text="${totalBikes}"></span>
-												Bikes
+												<span th:text="#{bikes}"></span>
 											</div>
 											<!-- .stat -->
 										</div>
@@ -196,7 +184,7 @@
 						<div id="div-members" class="widget widget-nopad">
 							<div class="widget-header">
 								<i class="icon-list-alt"></i>
-								<h3>Members</h3>
+								<h3 th:text="#{members}"></h3>
 							</div>
 							<!-- /widget-header -->
 							<div class="widget-content">
@@ -214,7 +202,7 @@
 						<div id="div-stages" class="widget widget-nopad">
 							<div class="widget-header">
 								<i class="icon-list-alt"></i>
-								<h3>Stages</h3>
+								<h3 th:text="#{stages}"></h3>
 							</div>
 							<!-- /widget-header -->
 							<div class="widget-content">
@@ -247,10 +235,7 @@
 					<div class="span3">
 						<h4>Support</h4>
 						<ul>
-							<li><a href="javascript:;">Frequently Asked Questions</a></li>
-							<li><a href="javascript:;">Ask a Question</a></li>
-							<li><a href="javascript:;">Video Tutorial</a></li>
-							<li><a href="javascript:;">Feedback</a></li>
+							<li><a href="mailto:ernest.ort.tor@gmail.com">Feedback</a></li>
 						</ul>
 					</div>
 					<!-- /span3 -->
@@ -293,8 +278,10 @@
 	<script th:inline="javascript">	
 		
 		/*<![CDATA[*/
+		
 		$(document).ready(function() {
 			fillCalendar([[${stages}]], [[${memberId}]]);
+		    guide([[#{guidely.menu}]], [[#{guidely.team.stats}]], [[#{guidely.team.calendar}]],[[#{guidely.team.members}]],[[#{guidely.team.comments}]],[[#{guidely.team.stages}]])
 		});
 		
 		function comment(){
