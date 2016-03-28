@@ -66,29 +66,12 @@ public class TeamsController {
 									  .sorted(Comparator.comparing(StageDto::getDate))
 									  .filter(stage -> stage.getDate().compareTo(new Date()) >= 0)
 									  .findFirst()
-									  .orElse(buildEmptyStage());
+									  .orElse(ControllersUtils.buildEmptyStage());
 		model.addAttribute("stageCloser", stageCloser); 
 		model.addAttribute("members", teamDto.getMembers());
 		model.addAttribute("comments", teamDto.getComments());
 		
 		  
 		return "team";
-	}
-	
-	private StageDto buildEmptyStage() {
-		StageDto stageDto = new StageDto();
-		stageDto.setName("Join a team or create a stage...");
-		stageDto.getStagePoints().add(new StagePointDto(0.0, 0.0, 0.0, 0.0));
-		stageDto.getStagePoints().add(new StagePointDto(0.0, 0.0, 0.0, 0.0));
-		stageDto.getStagePoints().add(new StagePointDto(0.0, 0.0, 0.0, 0.0));
-		stageDto.getStagePoints().add(new StagePointDto(0.0, 0.0, 0.0, 0.0));
-		stageDto.getStagePoints().add(new StagePointDto(0.0, 0.0, 0.0, 0.0));
-		stageDto.getStagePoints().add(new StagePointDto(0.0, 0.0, 0.0, 0.0));
-		stageDto.getStagePoints().add(new StagePointDto(0.0, 0.0, 0.0, 0.0));
-		stageDto.getStagePoints().add(new StagePointDto(0.0, 0.0, 0.0, 0.0));
-		stageDto.getStagePoints().add(new StagePointDto(0.0, 0.0, 0.0, 0.0));
-		stageDto.getStagePoints().add(new StagePointDto(0.0, 0.0, 0.0, 0.0));
-		stageDto.getStagePoints().add(new StagePointDto(0.0, 0.0, 0.0, 0.0));
-		return stageDto;
 	}
 }

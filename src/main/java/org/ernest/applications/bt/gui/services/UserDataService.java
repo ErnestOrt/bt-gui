@@ -27,7 +27,7 @@ public interface UserDataService {
 
 	void saveAvatarIcon(String userId, String icon);
 
-	void create(String token);
+	void create(String token, String mail);
 
 	void joinTeam(String teamId, String userId);
 

@@ -20,6 +20,7 @@ public class WebSecurityConfig  extends WebSecurityConfigurerAdapter {
     	
     	
         http.authorizeRequests()
+        		.antMatchers("/").authenticated()
             	.antMatchers("/profile/**").authenticated()
             	.antMatchers("/members/**").authenticated()
             	.antMatchers("/member/**").authenticated()
@@ -33,7 +34,7 @@ public class WebSecurityConfig  extends WebSecurityConfigurerAdapter {
             .formLogin()
                 .loginPage("/login")
                 .permitAll()
-                .defaultSuccessUrl("/home")
+                .defaultSuccessUrl("/")
                 .and()
             .logout()
                 .permitAll();

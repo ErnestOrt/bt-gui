@@ -9,6 +9,7 @@ import java.util.UUID;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+import org.ernest.applications.bt.db.manager.users.ct.CreateUserInput;
 import org.ernest.applications.bt.db.manager.users.ct.UpdateAddBikeInput;
 import org.ernest.applications.bt.db.manager.users.ct.UpdateAvatarIconInput;
 import org.ernest.applications.bt.db.manager.users.ct.UpdateDescriptionInput;
@@ -44,8 +45,11 @@ public class UserDataServiceImpl implements UserDataService{
 	StagesDataService stagesDataService;
 	
 	@Override
-	public void create(String token) {
-		new RestTemplate().getForObject("http://localhost:" + usersPort + "/create/"+token, String.class);
+	public void create(String token, String mail) {
+		CreateUserInput input = new CreateUserInput();
+		input.setToken(token);
+		input.setEmail(mail);
+		new RestTemplate().postForObject("http://localhost:" + usersPort + "/create", input, String.class);
 	}
 
 	@Override
@@ -55,6 +59,7 @@ public class UserDataServiceImpl implements UserDataService{
 		UserDto userDto = new UserDto();
 		userDto.setId(userId);
 		userDto.setName(user.getName() == null ? "name..." : user.getName());
+		userDto.setEmail(user.getEmail());
 		userDto.setDescription(user.getDescription() == null ? "description..." : user.getDescription());
 		userDto.setAvatarIcon(user.getAvatarIcon());
 		userDto.setStatistics(buildStatisticsDto(user.getStatistics()));
