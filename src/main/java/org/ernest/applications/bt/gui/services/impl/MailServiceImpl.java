@@ -1,7 +1,9 @@
 package org.ernest.applications.bt.gui.services.impl;
 
+import org.ernest.applications.bt.gui.entities.TeamDto;
 import org.ernest.applications.bt.gui.services.MailService;
 import org.ernest.applications.bt.manager.mails.ct.SendActivateInput;
+import org.ernest.applications.bt.manager.mails.ct.SendNewStageInput;
 import org.ernest.applications.bt.manager.mails.ct.SendRecoverInput;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -30,5 +32,22 @@ public class MailServiceImpl implements MailService {
 		sendRecoverInput.setPass(pass);
 		
 		new RestTemplate().postForObject("http://localhost:" + mailsPort + "/sendrecover", sendRecoverInput, String.class);
+	}
+
+	@Override
+	public void sendNewStage(TeamDto team, String stageId, String date, String stageName, String userId) {
+		
+		team.getMembers().forEach(user -> {
+			if(!userId.equals(user.getId())){
+				SendNewStageInput input = new SendNewStageInput();
+				input.setStageId(stageId);
+				input.setStageDate(date);
+				input.setStageName(stageName);
+				input.setTeamName(team.getName());
+				input.setUserMail(user.getEmail());
+				input.setUserName(user.getName());
+				new RestTemplate().postForObject("http://localhost:" + mailsPort + "/sendnewstage", input, String.class);
+			}
+		});
 	}
 }

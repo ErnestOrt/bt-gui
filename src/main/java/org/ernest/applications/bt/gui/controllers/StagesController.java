@@ -10,6 +10,7 @@ import org.ernest.applications.bt.gui.entities.StageDto;
 import org.ernest.applications.bt.gui.entities.TeamDto;
 import org.ernest.applications.bt.gui.entities.UserDto;
 import org.ernest.applications.bt.gui.entities.ValidationInfo;
+import org.ernest.applications.bt.gui.services.MailService;
 import org.ernest.applications.bt.gui.services.StagesDataService;
 import org.ernest.applications.bt.gui.services.TeamDataService;
 import org.ernest.applications.bt.gui.services.UserDataService;
@@ -35,6 +36,9 @@ public class StagesController {
 	
 	@Autowired
 	UserDataService userDataService;
+	
+	@Autowired
+	MailService mailService;
 
 
 	@RequestMapping("/stages")
@@ -65,6 +69,7 @@ public class StagesController {
 		
 		String stageId = stagesDataService.create(name, date, kilomitersTotal, kilomiters, elevation, longitude, latitude);
 		teamDataService.addStageCompleted(teamId, stageId);
+		mailService.sendNewStage(teamDataService.getTeam(teamId), stageId, date, name, ((ValidationInfo)SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUserId());
 	}
 	
 	@RequestMapping("/stage/{stageId}")
