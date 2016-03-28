@@ -220,10 +220,10 @@
 			</div>
 	        <div id="div-members" class="widget" >
             <div th:if="${userJoinedStage}==false" class="widget-header"> <i class="icon-check"></i>
-              <h3 th:text="#{whoisgoing}"></h3> <button class="btn followButton" rel="6" >Join</button>
+              <h3 th:text="#{whoisgoing}"></h3> <button class="btn followButton" rel="6" th:text="#{join}"></button>
             </div>
             <div th:if="${userJoinedStage}==true" class="widget-header"> <i class="icon-check"></i>
-              <h3 th:text="#{whoisgoing}"></h3> <button class="btn followButton following" rel="6">I'm in</button>
+              <h3 th:text="#{whoisgoing}"></h3> <button class="btn followButton following" rel="6" th:text="#{iamin}"></button>
             </div>
             
 
@@ -340,6 +340,19 @@
     fillRute([[${stagePoints}]]);
 	guide([[#{guidely.menu}]], [[#{guidely.stage.stats}]], [[#{guidely.stage.members}]], [[#{guidely.stage.altitude}]], [[#{guidely.stage.route}]])
 
+	  $('button.followButton').hover(function(){
+         $button = $(this);
+        if($button.hasClass('following')){
+            $button.addClass('unfollow');
+            $button.text(/*[[#{unjoin}]]*/);
+        }
+    }, function(){
+        if($button.hasClass('following')){
+            $button.removeClass('unfollow');
+            $button.text(/*[[#{iamin}]]*/);
+        }
+    });
+	
     $('button.followButton').live('click', function(e){
         e.preventDefault();
         $button = $(this);
@@ -357,7 +370,7 @@
             
             $button.removeClass('following');
             $button.removeClass('unfollow');
-            $button.text('Join');
+            $button.text(/*[[#{join}]]*/);
         } else {
             
         	$.ajax({
@@ -371,7 +384,7 @@
        		});	
             
             $button.addClass('following');
-            $button.text("I'm in");
+            $button.text(/*[[#{iamin}]]*/);
         }
     });
 	
@@ -384,15 +397,12 @@
      			},
      			beforeSend: function(){$('.front-loading').show();},
     	   		error: function(){$('.front-loading').hide();},
-       		    success: function(data, textStatus, jqXHR) { setTimeout(function(){ location.reload(); }, 3000);}
+       		    success: function(data, textStatus, jqXHR) { setTimeout(function(){ window.location.href="/stages"; }, 3000);}
      	});
     }
     /*]]>*/
  
   </script>
-    
-   
-
 
 </body>
 </html>

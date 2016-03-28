@@ -7,7 +7,7 @@ public class ControllersUtils {
 
 	public static StageDto buildEmptyStage() {
 		StageDto stageDto = new StageDto();
-		stageDto.setName("Join a team or create a stage...");
+		stageDto.setId("");
 		stageDto.getStagePoints().add(new StagePointDto(0.0, 0.0, 0.0, 0.0));
 		stageDto.getStagePoints().add(new StagePointDto(0.0, 0.0, 0.0, 0.0));
 		stageDto.getStagePoints().add(new StagePointDto(0.0, 0.0, 0.0, 0.0));

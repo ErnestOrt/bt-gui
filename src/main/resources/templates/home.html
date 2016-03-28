@@ -87,9 +87,10 @@
 							<!-- /widget-content -->
 						</div>
 						<div class="widget">
-							<div class="widget-header">
+							<div class="widget-header" th:switch="${stageCloser.id}">
 								<i class="icon-picture"></i>
-								<h3><a th:href="'/stage/' + ${stageCloser.id}" th:text="${stageCloser.name} + '[' + ${stageCloser.date} + ']'"></a></h3>
+								<h3 th:case="''"><a href="/stages" th:text="#{createstage.message}"></a></h3>
+								<h3 th:case="*"><a th:href="'/stage/' + ${stageCloser.id}" th:text="${stageCloser.name} + '[' + ${stageCloser.date} + ']'"></a></h3>
 							</div>
 							<!-- /widget-header -->
 							<div id="div-stage" class="widget-content">

@@ -66,7 +66,7 @@ public class HomeController {
 									  .orElse(ControllersUtils.buildEmptyStage());
 		model.addAttribute("stageCloser", stageCloser); 
 		
-		if(stageCloser.getId() != null){
+		if(stageCloser.getId() != ""){
 			model.addAttribute("members", teams.stream()
 											 .filter(team -> team.getStages().stream().anyMatch(stage -> stage.getId().equals(stageCloser.getId())))
 											 .findFirst().get()

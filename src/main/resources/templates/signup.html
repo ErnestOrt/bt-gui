@@ -13,6 +13,7 @@
 <link th:href="@{/css/font-awesome.css}" rel="stylesheet"/>
 <link th:href="@{/css/style.css}" rel="stylesheet"/>
 <link th:href="@{/css/pages/signin.css}" rel="stylesheet"/>
+<link th:href="@{/css/loading.css}" rel="stylesheet"/>
 
 </head>
 
@@ -67,9 +68,7 @@
 					<input type="password" id="confirm_password" name="confirm_password" value="" placeholder="Confirm Password" class="login"/>
 				</div> <!-- /field -->
 				
-				<div class="alert-succes">
-					
-				</div> <!-- /field -->
+				
 				
 			</div> <!-- /login-fields -->
 			
@@ -77,7 +76,7 @@
 				<button class="button btn btn-primary btn-large" onclick="confirmSignUp();" th:text="#{signup}"></button>
 				
 			</div> <!-- .actions -->
-
+			<div><p id="alert-succes" th:text="#{register.message}"></p></div> <!-- /field -->
 		
 	</div> <!-- /content -->
 	
@@ -92,10 +91,22 @@
 <script th:src="@{/js/jquery-1.7.2.min.js}"></script>
 <script th:src="@{/js/bootstrap.js}"></script>
 <script th:src="@{/js/signin.js}"></script>
+<script th:src="@{/js/peers/components.js}"></script>
 
  <script type="text/javascript">
-		
-        function confirmSignUp() {		
+ 		$("p").hide();
+ 		
+        function confirmSignUp() {
+        	var result = true;
+        		
+        	result = validateField('firstname', result);
+        	result = validateField('email', result);
+        	result = validateField('password', result);
+        	result = validateField('confirm_password', result);
+        	
+        	if(result==true){
+        		
+        		$("p").show();
         		$.ajax({
            		    url : "/registration",
            		    type: "POST",
@@ -104,11 +115,11 @@
         	   		    	pass: $("#password").val(),
         	   		    	passRepeated: $("#confirm_password").val()},
            		    success: function(data, textStatus, jqXHR) { 
-           		    	$(".alert-success").html("<b>Welcome to Writerland</b>!! A user called <b>"+$( "#firstname" ).val() +"</b> has been created. <b>Remmember to verify the account thanks to the email recieved.</b>");
-
            		    }
            		});
-        	
+        		$("#password").val("");
+        		$("#confirm_password").val("");
+        	}
 		}
         </script>
 

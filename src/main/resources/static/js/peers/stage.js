@@ -1,19 +1,6 @@
 
   $(".front-loading").hide();
   $(".front-loading").height($("body").height());    
-
-  $('button.followButton').hover(function(){
-         $button = $(this);
-        if($button.hasClass('following')){
-            $button.addClass('unfollow');
-            $button.text('Giving up');
-        }
-    }, function(){
-        if($button.hasClass('following')){
-            $button.removeClass('unfollow');
-            $button.text("I'm in");
-        }
-    });
     
 
 	var map = new GMaps(

@@ -72,7 +72,7 @@ function fillCalendar(stagesList, userId){
 			colorEvent='#F78181';
 		}
 		
-		eventsArray.push({title : stagesList[i].name, start : new Date(stagesList[i].date), url: "./stage/"+stagesList[i].id, color: colorEvent});
+		eventsArray.push({title : stagesList[i].name, start : new Date(stagesList[i].date), url: "/stage/"+stagesList[i].id, color: colorEvent});
 	}
 	
 	var calendar = $('#calendar').fullCalendar({
