@@ -10,4 +10,6 @@ public interface AuthDataService {
 
 	void recover(String email);
 
+	String recieveId(String email);
+
 }

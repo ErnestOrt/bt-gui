@@ -185,6 +185,28 @@
 							<div class="widget-header">
 								<i class="icon-list-alt"></i>
 								<h3 th:text="#{members}"></h3>
+								<a href="#modal-add-member" role="button" class="btn" data-toggle="modal" th:text="#{add}"></a>
+                               
+								<!-- Modal -->
+								<div id="modal-add-member" class="modal hide fade" tabindex="-1"
+									role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+										<h3 id="myModalLabel" th:text="#{add}"></h3>
+									</div>
+									<div class="modal-body">
+										<div class="control-group">											
+											<label class="control-label" for="name" th:text="#{signup.email}"></label>
+											<div class="controls">
+												<input type="text" class="span4" id="input-member"></input>
+											</div>				
+										</div>
+									</div>
+									<div class="modal-footer">
+										<button class="btn" data-dismiss="modal" aria-hidden="true" th:text="#{close}"></button>
+										<button class="btn btn-primary" onclick="addMember()" th:text="#{add}"></button>
+									</div>									
+								</div>
 							</div>
 							<!-- /widget-header -->
 							<div class="widget-content">
@@ -297,6 +319,19 @@
 		   		});
 			}
     	}
+		function addMember(){
+	    	if(validateField('input-member', true)){
+	    		$('#modal-add-member').modal('hide');
+		   		$.ajax({
+		   		    url : "/team/addmember",
+		   		    type: "POST",
+		   		    data : {email: $("#input-member").val(), teamId: [[${teamId}]]},
+		   		 	beforeSend: function(){$('.front-loading').show();},
+			   		error: function(){$('.front-loading').hide();},
+				    success: function(data, textStatus, jqXHR) { setTimeout(function(){ location.reload(); }, 3000);}
+		   		});	
+	    	}
+	    }
 		/*]]>*/		 
 		 
 	</script>

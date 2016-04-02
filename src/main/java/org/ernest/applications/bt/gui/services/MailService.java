@@ -9,4 +9,6 @@ public interface MailService {
 	 void recover(String email, String pass);
 
 	void sendNewStage(TeamDto team, String stageId, String date, String stageName, String userId);
+
+	void addMember(String teamId, String teamName, String userMailInvited, String userNameInvited, String userNameSender);
 }

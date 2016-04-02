@@ -14,6 +14,7 @@ import org.ernest.applications.bt.db.manager.teams.ct.entities.Team;
 import org.ernest.applications.bt.gui.entities.StageDto;
 import org.ernest.applications.bt.gui.entities.TeamDto;
 import org.ernest.applications.bt.gui.entities.UserDto;
+import org.ernest.applications.bt.gui.services.AuthDataService;
 import org.ernest.applications.bt.gui.services.CommentDataService;
 import org.ernest.applications.bt.gui.services.StagesDataService;
 import org.ernest.applications.bt.gui.services.TeamDataService;
@@ -37,6 +38,9 @@ public class TeamDataServiceImpl implements TeamDataService {
 	
 	@Autowired
 	CommentDataService commentDataService;
+	
+	@Autowired
+	AuthDataService authDataService;
 	
 	@Override
 	public TeamDto getTeam(String teamId) {
@@ -132,5 +136,12 @@ public class TeamDataServiceImpl implements TeamDataService {
 		updateAddMemberInput.setMemberId(userId);
 		
 		new RestTemplate().postForObject("http://localhost:" + teamsPort + "/update/addmember", updateAddMemberInput, String.class);
+	}
+
+	@Override
+	public void addMember(String teamId, String email) {
+		String userId = authDataService.recieveId(email);
+		joinTeam(teamId, userId);
+		userDataService.joinTeam(teamId, userId);
 	}
 }

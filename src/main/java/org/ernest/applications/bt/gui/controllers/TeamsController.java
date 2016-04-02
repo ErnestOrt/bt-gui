@@ -10,6 +10,7 @@ import org.ernest.applications.bt.gui.entities.TeamDto;
 import org.ernest.applications.bt.gui.entities.UserDto;
 import org.ernest.applications.bt.gui.entities.ValidationInfo;
 import org.ernest.applications.bt.gui.services.CommentDataService;
+import org.ernest.applications.bt.gui.services.MailService;
 import org.ernest.applications.bt.gui.services.TeamDataService;
 import org.ernest.applications.bt.gui.services.UserDataService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,9 @@ public class TeamsController {
 	
 	@Autowired
 	TeamDataService teamDataService;
+	
+	@Autowired
+	MailService mailService;
 	
 	@RequestMapping("/teams")
 	public String getTeams(Model model) {
@@ -73,5 +77,13 @@ public class TeamsController {
 		
 		  
 		return "team";
+	}
+	
+	@RequestMapping(value= "/team/addmember", method = RequestMethod.POST)
+	@ResponseBody
+    public void addMember(@RequestParam(value="email") String email, @RequestParam("teamId") String teamId) {
+		TeamDto teamDto = teamDataService.getTeam(teamId);
+		teamDataService.addMember(teamId, email);
+		mailService.addMember(teamId, teamDto.getName(), email, email, ((ValidationInfo)SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUserName());
 	}
 }

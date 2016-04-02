@@ -27,4 +27,6 @@ public interface TeamDataService {
 
 	void joinTeam(String teamId, String userId);
 
+	void addMember(String teamId, String email);
+
 }

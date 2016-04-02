@@ -56,4 +56,9 @@ public class AuthDataServiceImpl implements AuthDataService {
 		String pass = new RestTemplate().postForObject("http://localhost:" + credentialsPort + "/recover", email, String.class);
 		mailService.recover(email, pass);
 	}
+	
+	@Override
+	public String recieveId(String email) {
+		return new RestTemplate().postForObject("http://localhost:" + credentialsPort + "/retrieveid", email, String.class);
+	}
 }

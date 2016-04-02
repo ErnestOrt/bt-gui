@@ -3,6 +3,7 @@ package org.ernest.applications.bt.gui.services.impl;
 import org.ernest.applications.bt.gui.entities.TeamDto;
 import org.ernest.applications.bt.gui.services.MailService;
 import org.ernest.applications.bt.manager.mails.ct.SendActivateInput;
+import org.ernest.applications.bt.manager.mails.ct.SendAddMembersInput;
 import org.ernest.applications.bt.manager.mails.ct.SendNewStageInput;
 import org.ernest.applications.bt.manager.mails.ct.SendRecoverInput;
 import org.springframework.beans.factory.annotation.Value;
@@ -49,5 +50,17 @@ public class MailServiceImpl implements MailService {
 				new RestTemplate().postForObject("http://localhost:" + mailsPort + "/sendnewstage", input, String.class);
 			}
 		});
+	}
+
+	@Override
+	public void addMember(String teamId, String teamName, String userMailInvited, String userNameInvited, String userNameSender) {
+		SendAddMembersInput input = new SendAddMembersInput();
+		input.setTeamId(teamId);
+		input.setTeamName(teamName);
+		input.setUserMailInvited(userMailInvited);
+		input.setUserNameInvited(userNameInvited);
+		input.setUserNameSender(userNameSender);
+		
+		new RestTemplate().postForObject("http://localhost:" + mailsPort + "/sendaddmembers", input, String.class);
 	}
 }

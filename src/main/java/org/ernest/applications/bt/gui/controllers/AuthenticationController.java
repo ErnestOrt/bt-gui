@@ -39,7 +39,6 @@ public class AuthenticationController {
 	@RequestMapping(value= "/recover", method = RequestMethod.POST)
 	@ResponseBody
     public void recover(@RequestParam(value="email") String email) {
-		System.out.println(email);
 		authDataService.recover(email);	
 	}
 	
