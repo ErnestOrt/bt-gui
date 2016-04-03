@@ -58,8 +58,9 @@ public class TeamDataServiceImpl implements TeamDataService {
 		team.getStagesCompletedIds().forEach(stageId -> { teamDto.getStages().add(stagesDataService.getStage(stageId)); });
 		team.getMembersIds().forEach(memberId -> { teamDto.getMembers().add(userDataService.getUser(memberId)); });
 		Collections.reverse(team.getCommentIds());
-		team.getCommentIds().stream().forEach(commentId -> { teamDto.getComments().add(commentDataService.getComment(commentId, teamDto.getMembers())); });
-		team.getNoticeIds().stream().forEach(noticeId -> { teamDto.getNotices().add(noticeDataService.getNotice(noticeId)); });
+		team.getCommentIds().stream().limit(20).forEach(commentId -> { teamDto.getComments().add(commentDataService.getComment(commentId, teamDto.getMembers())); });
+		Collections.reverse(team.getNoticeIds());
+		team.getNoticeIds().stream().limit(10).forEach(noticeId -> { teamDto.getNotices().add(noticeDataService.getNotice(noticeId)); });
 		return teamDto;
 	}
 	
