@@ -11,6 +11,7 @@ import org.ernest.applications.bt.gui.entities.UserDto;
 import org.ernest.applications.bt.gui.entities.ValidationInfo;
 import org.ernest.applications.bt.gui.services.CommentDataService;
 import org.ernest.applications.bt.gui.services.MailService;
+import org.ernest.applications.bt.gui.services.NoticeDataService;
 import org.ernest.applications.bt.gui.services.TeamDataService;
 import org.ernest.applications.bt.gui.services.UserDataService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,9 @@ public class TeamsController {
 	CommentDataService commentDataService;
 	
 	@Autowired
+	NoticeDataService noticeDataService;
+	
+	@Autowired
 	UserDataService userDataService;
 	
 	@Autowired
@@ -47,11 +51,19 @@ public class TeamsController {
 		return "teams";
 	}
 	
-	@RequestMapping(value= "/dashboard/comment/create", method = RequestMethod.POST)
+	@RequestMapping(value= "/team/comment/create", method = RequestMethod.POST)
 	@ResponseBody
     public void createComment(@RequestParam(value="content") String content, @RequestParam(value="teamId") String teamId) {
 		String commentId = commentDataService.create(((ValidationInfo)SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUserId(), content);
 		teamDataService.addComment(teamId, commentId);
+	}
+	
+	@RequestMapping(value= "/team/notice/create", method = RequestMethod.POST)
+	@ResponseBody
+    public void createNotice(@RequestParam(value="content") String content, @RequestParam(value="teamId") String teamId, @RequestParam(value="title") String title) {
+		TeamDto teamDto = teamDataService.getTeam(teamId);
+		teamDataService.addNotice(teamId, noticeDataService.create(content, title));
+		mailService.addNotice(teamDto, title, content, ((ValidationInfo)SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUserId());
 	}
 	
 	@RequestMapping(path = "/team/{teamId}", method = RequestMethod.GET)
@@ -74,6 +86,7 @@ public class TeamsController {
 		model.addAttribute("stageCloser", stageCloser); 
 		model.addAttribute("members", teamDto.getMembers());
 		model.addAttribute("comments", teamDto.getComments());
+		model.addAttribute("notices", teamDto.getNotices());
 		
 		  
 		return "team";

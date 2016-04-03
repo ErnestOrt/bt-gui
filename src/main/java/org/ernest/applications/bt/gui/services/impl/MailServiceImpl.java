@@ -4,6 +4,7 @@ import org.ernest.applications.bt.gui.entities.TeamDto;
 import org.ernest.applications.bt.gui.services.MailService;
 import org.ernest.applications.bt.manager.mails.ct.SendActivateInput;
 import org.ernest.applications.bt.manager.mails.ct.SendAddMembersInput;
+import org.ernest.applications.bt.manager.mails.ct.SendAddNoticeInput;
 import org.ernest.applications.bt.manager.mails.ct.SendNewStageInput;
 import org.ernest.applications.bt.manager.mails.ct.SendRecoverInput;
 import org.springframework.beans.factory.annotation.Value;
@@ -62,5 +63,21 @@ public class MailServiceImpl implements MailService {
 		input.setUserNameSender(userNameSender);
 		
 		new RestTemplate().postForObject("http://localhost:" + mailsPort + "/sendaddmembers", input, String.class);
+	}
+
+	@Override
+	public void addNotice(TeamDto team, String title, String content, String userId) {
+		team.getMembers().forEach(user -> {
+			if(!userId.equals(user.getId())){
+				SendAddNoticeInput input = new SendAddNoticeInput();
+				input.setTitle(title); 
+				input.setContent(content);
+				input.setTeamId(team.getId());
+				input.setTeamName(team.getName());
+				input.setUserMail(user.getEmail());
+				input.setUserName(user.getName());
+				new RestTemplate().postForObject("http://localhost:" + mailsPort + "/sendaddnotice", input, String.class);
+			}
+		});
 	}
 }

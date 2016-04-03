@@ -11,4 +11,6 @@ public interface MailService {
 	void sendNewStage(TeamDto team, String stageId, String date, String stageName, String userId);
 
 	void addMember(String teamId, String teamName, String userMailInvited, String userNameInvited, String userNameSender);
+
+	void addNotice(TeamDto team, String title, String content, String userId);
 }

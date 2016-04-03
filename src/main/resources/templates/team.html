@@ -15,6 +15,7 @@
 <link th:href="@{/css/pages/dashboard.css}" rel="stylesheet"/>
 <link th:href="@{/css/loading.css}" rel="stylesheet"/>
 <link th:href="@{/js/guidely/guidely.css}" rel="stylesheet"/> 
+<link th:href="@{/css/redactor.css}" rel="stylesheet"/> 
 
 
 </head>
@@ -72,9 +73,9 @@
 							<div class="widget-content">
 								<div class="shortcuts">
 									<a href="/home" class="shortcut"><i class="shortcut-icon icon-globe"></i><span class="shortcut-label" th:text="#{home}"></span></a>
-					                <a href="/profile" class="shortcut"><i class="shortcut-icon icon-user"></i><span class="shortcut-label" th:text="#{profile}"></span></a>
+									<a href="/teams" class="shortcut shortcut-active"><i class="shortcut-icon icon-group"></i> <span class="shortcut-label" th:text="#{teams}"></span></a>
 					                <a href="/stages" class="shortcut"><i class="shortcut-icon icon-picture"></i><span class="shortcut-label" th:text="#{stages}"></span></a>
-					                <a href="/teams" class="shortcut shortcut-active"><i class="shortcut-icon icon-group"></i> <span class="shortcut-label" th:text="#{teams}"></span></a>
+					                <a href="/profile" class="shortcut"><i class="shortcut-icon icon-user"></i><span class="shortcut-label" th:text="#{profile}"></span></a>
 								</div>
 								<!-- /shortcuts -->
 							</div>
@@ -178,6 +179,67 @@
 
 								</div>
 							</div>
+						</div>
+						
+						<!-- /widget -->
+						<div id="div-notices" class="widget widget-nopad">
+							<div class="widget-header">
+								<i class="icon-list-alt"></i>
+								<h3 th:text="#{notices}"></h3>
+								<a href="#modal-add-notice" role="button" class="btn" data-toggle="modal" th:text="#{create}"></a>
+                               
+								<!-- Modal -->
+								<div id="modal-add-notice" class="modal hide fade" tabindex="-1"
+									role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+										<h3 id="myModalLabel" th:text="#{create}"></h3>
+									</div>
+									<div class="modal-body">
+										<div class="control-group">											
+											<label class="control-label" for="name" th:text="#{title}"></label>
+											<div class="controls">
+												<input type="text" class="span4" id="input-notice-title"></input>
+											</div>				
+										</div>
+										<div class="control-group">											
+											<div class="my-editor" spellcheck="true"></div>			
+										</div>
+										
+									</div>
+									<div class="modal-footer">
+										<button class="btn" data-dismiss="modal" aria-hidden="true" th:text="#{close}"></button>
+										<button class="btn btn-primary" onclick="createNotice()" th:text="#{create}"></button>
+									</div>									
+								</div>
+							</div>
+							<!-- /widget-header -->
+							<div class="widget-content">
+								<ul class="news-items">
+									<li th:each="notice : ${notices}">
+										<div class="news-item-date">
+											<span class="news-item-day" th:text="${notice.day}"></span> 
+											<span class="news-item-month" th:text="${notice.month}"></span>
+										</div>
+										<div class="news-item-detail">
+											<a th:href="'#modal-notice' + ${notice.id}" data-toggle="modal" class="news-item-title" target="_blank" th:text="${notice.title}"></a>										
+										</div>
+										<div th:id="'modal-notice' + ${notice.id}" class="modal hide fade" tabindex="-1"
+											role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+											<div class="modal-header">
+												<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+												<h3 id="myModalLabel" th:text="${notice.title}"></h3>
+											</div>
+											<div class="modal-body" th:utext="${notice.content}">
+											</div>
+											<div class="modal-footer">
+												<button class="btn" data-dismiss="modal" aria-hidden="true" th:text="#{close}"></button>
+											</div>									
+										</div>
+									</li>
+								</ul>
+							</div>
+							<!-- /widget-content -->
 						</div>
 						
 						<!-- /widget -->
@@ -296,21 +358,23 @@
 	<script th:src="@{/js/guidely/guidely.min.js}"></script>
 	<script th:src="@{/js/peers/components.js}"></script>
 	<script th:src="@{/js/peers/team.js}"></script>
+	<script th:src="@{/js/redactor/redactor.min.js}"></script>
 	<script th:src="@{/js/base.js}"></script>
 	<script th:inline="javascript">	
 		
 		/*<![CDATA[*/
 		
 		$(document).ready(function() {
+			$('.my-editor').redactor();
 			fillCalendar([[${stages}]], [[${memberId}]]);
-		    guide([[#{guidely.menu}]], [[#{guidely.team.stats}]], [[#{guidely.team.calendar}]],[[#{guidely.team.members}]],[[#{guidely.team.comments}]],[[#{guidely.team.stages}]])
+		    guide([[#{guidely.menu}]], [[#{guidely.team.stats}]], [[#{guidely.team.calendar}]],[[#{guidely.team.members}]],[[#{guidely.team.comments}]],[[#{guidely.team.stages}], [[#{guidely.team.notices}]])
 		});
 		
 		function comment(){
 			if(validateField('input-comment', true)){
 				$('#modal-comment').modal('hide');
 				$.ajax({
-		   		    url : "/dashboard/comment/create",
+		   		    url : "/team/comment/create",
 		   		    type: "POST",
 		   		    data : {content: $("#input-comment").val(), teamId: [[${teamId}]]},
 		   		 	beforeSend: function(){$('.front-loading').show();},
@@ -319,6 +383,21 @@
 		   		});
 			}
     	}
+		
+		function createNotice(){
+			if($('.my-editor').html() != "" && validateField('input-notice-title', true)){
+				$('#modal-add-notice').modal('hide');
+				$.ajax({
+		   		    url : "/team/notice/create",
+		   		    type: "POST",
+		   		    data : {content: $('.my-editor').html(), teamId: [[${teamId}]], title: $("#input-notice-title").val()},
+		   		 	beforeSend: function(){$('.front-loading').show();},
+	    	   		error: function(){$('.front-loading').hide();},
+	       		    success: function(data, textStatus, jqXHR) { setTimeout(function(){ location.reload(); }, 3000);}
+		   		});
+			}
+    	}
+		
 		function addMember(){
 	    	if(validateField('input-member', true)){
 	    		$('#modal-add-member').modal('hide');
@@ -333,7 +412,7 @@
 	    	}
 	    }
 		/*]]>*/		 
-		 
+		
 	</script>
 </body>
 </html>

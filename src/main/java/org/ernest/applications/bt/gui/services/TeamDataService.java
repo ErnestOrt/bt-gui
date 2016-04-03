@@ -29,4 +29,6 @@ public interface TeamDataService {
 
 	void addMember(String teamId, String email);
 
+	void addNotice(String teamId, String create);
+
 }

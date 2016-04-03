@@ -10,11 +10,13 @@ public class TeamDto {
 	private List<UserDto> members;
 	private List<StageDto> stages;
 	private List<CommentDto> comments;
+	private List<NoticeDto> notices;
 	
 	public TeamDto(){
 		members = new ArrayList<UserDto>();
 		stages = new ArrayList<StageDto>();
 		comments = new ArrayList<CommentDto>();
+		notices = new ArrayList<NoticeDto>();
 	}
 	
 	public String getId() {
@@ -46,5 +48,11 @@ public class TeamDto {
 	}
 	public void setComments(List<CommentDto> comments) {
 		this.comments = comments;
+	}
+	public List<NoticeDto> getNotices() {
+		return notices;
+	}
+	public void setNotices(List<NoticeDto> notices) {
+		this.notices = notices;
 	}
 }

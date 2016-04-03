@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.ernest.applications.bt.db.manager.teams.ct.UpdateAddCommentInput;
 import org.ernest.applications.bt.db.manager.teams.ct.UpdateAddMemberInput;
+import org.ernest.applications.bt.db.manager.teams.ct.UpdateAddNoticeInput;
 import org.ernest.applications.bt.db.manager.teams.ct.UpdateAddStageCompletedInput;
 import org.ernest.applications.bt.db.manager.teams.ct.UpdateNameInput;
 import org.ernest.applications.bt.db.manager.teams.ct.UpdateRemoveMemberInput;
@@ -16,6 +17,7 @@ import org.ernest.applications.bt.gui.entities.TeamDto;
 import org.ernest.applications.bt.gui.entities.UserDto;
 import org.ernest.applications.bt.gui.services.AuthDataService;
 import org.ernest.applications.bt.gui.services.CommentDataService;
+import org.ernest.applications.bt.gui.services.NoticeDataService;
 import org.ernest.applications.bt.gui.services.StagesDataService;
 import org.ernest.applications.bt.gui.services.TeamDataService;
 import org.ernest.applications.bt.gui.services.UserDataService;
@@ -42,6 +44,9 @@ public class TeamDataServiceImpl implements TeamDataService {
 	@Autowired
 	AuthDataService authDataService;
 	
+	@Autowired
+	NoticeDataService noticeDataService;
+	
 	@Override
 	public TeamDto getTeam(String teamId) {
 		Team team = new RestTemplate().getForObject("http://localhost:" + teamsPort + "/retrieve/"+teamId, Team.class);
@@ -53,7 +58,8 @@ public class TeamDataServiceImpl implements TeamDataService {
 		team.getStagesCompletedIds().forEach(stageId -> { teamDto.getStages().add(stagesDataService.getStage(stageId)); });
 		team.getMembersIds().forEach(memberId -> { teamDto.getMembers().add(userDataService.getUser(memberId)); });
 		Collections.reverse(team.getCommentIds());
-		team.getCommentIds().stream().limit(50).forEach(commentId -> { teamDto.getComments().add(commentDataService.getComment(commentId, teamDto.getMembers())); });
+		team.getCommentIds().stream().forEach(commentId -> { teamDto.getComments().add(commentDataService.getComment(commentId, teamDto.getMembers())); });
+		team.getNoticeIds().stream().forEach(noticeId -> { teamDto.getNotices().add(noticeDataService.getNotice(noticeId)); });
 		return teamDto;
 	}
 	
@@ -143,5 +149,14 @@ public class TeamDataServiceImpl implements TeamDataService {
 		String userId = authDataService.recieveId(email);
 		joinTeam(teamId, userId);
 		userDataService.joinTeam(teamId, userId);
+	}
+
+	@Override
+	public void addNotice(String teamId, String noticeId) {
+		UpdateAddNoticeInput updateAddNoticeInput = new UpdateAddNoticeInput();
+		updateAddNoticeInput.setTeamId(teamId);
+		updateAddNoticeInput.setNoticeId(noticeId);
+		
+		new RestTemplate().postForObject("http://localhost:" + teamsPort + "/update/addnotice", updateAddNoticeInput, String.class);
 	}
 }
