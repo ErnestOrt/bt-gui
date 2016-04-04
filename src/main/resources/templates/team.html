@@ -379,7 +379,7 @@
 		   		    data : {content: $("#input-comment").val(), teamId: [[${teamId}]]},
 		   		 	beforeSend: function(){$('.front-loading').show();},
 	    	   		error: function(){$('.front-loading').hide();},
-	       		    success: function(data, textStatus, jqXHR) { setTimeout(function(){ location.reload(); }, 3000);}
+	       		    success: function(data, textStatus, jqXHR) { location.reload(); }
 		   		});
 			}
     	}
@@ -393,7 +393,7 @@
 		   		    data : {content: $('.my-editor').html(), teamId: [[${teamId}]], title: $("#input-notice-title").val()},
 		   		 	beforeSend: function(){$('.front-loading').show();},
 	    	   		error: function(){$('.front-loading').hide();},
-	       		    success: function(data, textStatus, jqXHR) { setTimeout(function(){ location.reload(); }, 3000);}
+	       		    success: function(data, textStatus, jqXHR) { location.reload(); }
 		   		});
 			}
     	}
@@ -407,7 +407,7 @@
 		   		    data : {email: $("#input-member").val(), teamId: [[${teamId}]]},
 		   		 	beforeSend: function(){$('.front-loading').show();},
 			   		error: function(){$('.front-loading').hide();},
-				    success: function(data, textStatus, jqXHR) { setTimeout(function(){ location.reload(); }, 3000);}
+				    success: function(data, textStatus, jqXHR) { location.reload(); }
 		   		});	
 	    	}
 	    }

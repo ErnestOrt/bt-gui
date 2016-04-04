@@ -10,7 +10,7 @@
 	   		    data : {name: $("#input-team-name").val()},
 	   		 	beforeSend: function(){$('.front-loading').show();},
 		   		error: function(){$('.front-loading').hide();},
-			    success: function(data, textStatus, jqXHR) { setTimeout(function(){ location.reload(); }, 3000);}
+			    success: function(data, textStatus, jqXHR) { location.reload();}
 	   		});	
     	}
     }
@@ -22,7 +22,7 @@
    		    data : {teamId: teamIdValue},
    		    beforeSend: function(){$('.front-loading').show();},
 	   		error: function(){$('.front-loading').hide();},
-		    success: function(data, textStatus, jqXHR) { setTimeout(function(){ location.reload(); }, 3000);}
+		    success: function(data, textStatus, jqXHR) { location.reload();}
    		});	
     }
     
@@ -35,7 +35,7 @@
 	   		    data : {teamId: $("#input-team-code").val()},
 	   		 	beforeSend: function(){$('.front-loading').show();},
 		   		error: function(){$('.front-loading').hide();},
-			    success: function(data, textStatus, jqXHR) { setTimeout(function(){ location.reload(); }, 3000);}
+			    success: function(data, textStatus, jqXHR) { location.reload();}
 	   		});	
     	}
     }
@@ -54,7 +54,7 @@
     		    data : {ids: bikes.toString()},
     		    beforeSend: function(){$('.front-loading').show();},
 		   		error: function(){$('.front-loading').hide();},
-			    success: function(data, textStatus, jqXHR) { setTimeout(function(){ location.reload(); }, 3000);}
+			    success: function(data, textStatus, jqXHR) { location.reload();}
     		});	
     	}
     }
@@ -72,7 +72,7 @@
     		    data : {name: $("#input-name").val(), description: $("#input-description").val(), icon: iconAvatar},
     		    beforeSend: function(){$('.front-loading').show();},
 		   		error: function(){$('.front-loading').hide();},
-			    success: function(data, textStatus, jqXHR) { setTimeout(function(){ location.reload(); }, 3000);}
+			    success: function(data, textStatus, jqXHR) { location.reload();}
     		});
     	}
     }
@@ -90,7 +90,7 @@
    		    		road: $("#input-road").val()},
  		   	beforeSend: function(){$('.front-loading').show();},
  			error: function(){$('.front-loading').hide();},
- 			success: function(data, textStatus, jqXHR) { setTimeout(function(){ location.reload(); }, 3000);}
+ 			success: function(data, textStatus, jqXHR) { location.reload();}
    		});
     }
     
@@ -103,7 +103,7 @@
        		    data : {name: $("#input-bike-name").val()},
        		 	beforeSend: function(){$('.front-loading').show();},
   				error: function(){$('.front-loading').hide();},
-  				success: function(data, textStatus, jqXHR) { setTimeout(function(){ location.reload(); }, 3000);}
+  				success: function(data, textStatus, jqXHR) { location.reload();}
        		});
     	}
     }

@@ -104,7 +104,7 @@
     	   		    	latitude: latitudeArray.toString()},
     	   		beforeSend: function(){$('.front-loading').show();},
     	   		error: function(){$('.front-loading').hide();},
-       		    success: function(data, textStatus, jqXHR) { setTimeout(function(){ location.reload(); }, 3000);}
+       		    success: function(data, textStatus, jqXHR) { location.reload();}
        		});	
     	}
     }
