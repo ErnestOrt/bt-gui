@@ -13,6 +13,7 @@
 <link th:href="@{/css/font-awesome.css}" rel="stylesheet"/>
 <link th:href="@{/css/style.css}" rel="stylesheet"/>
 <link th:href="@{/css/pages/signin.css}" rel="stylesheet"/>
+<link th:href="@{/css/full-slider.css}" rel="stylesheet"/>
 
 </head>
 
@@ -36,8 +37,6 @@
 	</div> <!-- /navbar-inner -->
 	
 </div> <!-- /navbar -->
-
-
 
 <div class="account-container">
 	
@@ -83,11 +82,56 @@
 </div> <!-- /login-extra -->
 
 
+ <header id="myCarousel" class="carousel slide">
+        <!-- Wrapper for Slides -->
+        <div class="carousel-inner">
+            <div class="item active">
+                <!-- Set the first background image using inline CSS below. -->
+                <div class="fill" th:style="'background:url(' + @{/img/screen2.png} + ');'"></div>
+                <div class="carousel-caption">
+                    <h2>Home</h2>
+                </div>
+            </div>
+            <div class="item">
+                <!-- Set the second background image using inline CSS below. -->
+                <div class="fill" th:style="'background:url(' + @{/img/screen1.png} + ');'"></div>
+                <div class="carousel-caption">
+                    <h2>Routes</h2>
+                </div>
+            </div>
+            <div class="item">
+                <!-- Set the third background image using inline CSS below. -->
+                <div class="fill" th:style="'background:url(' + @{/img/screen3.png} + ');'"></div>
+                <div class="carousel-caption">
+                    <h2>Profile</h2>
+                </div>
+            </div>
+        </div>
+
+        <!-- Controls -->
+        <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+            <span class="icon-prev"></span>
+        </a>
+        <a class="right carousel-control" href="#myCarousel" data-slide="next">
+            <span class="icon-next"></span>
+        </a>
+
+    </header>
+
+
+
+
+
 
 <script th:src="@{/js/jquery-1.7.2.min.js}"></script>
 <script th:src="@{/js/bootstrap.js}"></script>
 <script th:src="@{/js/signin.js}"></script>
 
+ <script>
+    $('.carousel').carousel({
+        interval: 4000 //changes the speed
+    })
+    </script>
 	
 </body>
 
