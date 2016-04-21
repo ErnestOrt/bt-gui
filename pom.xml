@@ -18,6 +18,7 @@
 		<ct.credentials.version>0.0.1-SNAPSHOT</ct.credentials.version>
 		<ct.mails.version>0.0.1-SNAPSHOT</ct.mails.version>
 		<ct.notices.version>0.0.1-SNAPSHOT</ct.notices.version>
+		<ct.blog.version>0.0.1-SNAPSHOT</ct.blog.version>
 	</properties>
 
 	<parent>
@@ -74,6 +75,11 @@
 			<groupId>org.ernest.applications</groupId>
 			<artifactId>bt-manager-notices-ct</artifactId>
 			<version>${ct.notices.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.ernest.applications</groupId>
+			<artifactId>bt-manager-blog-ct</artifactId>
+			<version>${ct.blog.version}</version>
 		</dependency>
 	</dependencies>
 

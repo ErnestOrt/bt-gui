@@ -60,4 +60,16 @@ public class AuthenticationController {
 		authDataService.activate(token);
 		return "activated";
 	}
+	
+	@RequestMapping(value="/plataforma-cliclista/ciclismo/sobre-ciclismo-sabati",method = RequestMethod.GET)
+	public String aboutSabati(){
+		return "sobre-ciclismo-sabati";
+	}
+	
+	@RequestMapping(value="/plataforma-cliclista/ciclismo/sabati-aplicacion-ciclista-contact",method = RequestMethod.GET)
+	public String contactSabati(){
+		return "sabati-aplicacion-ciclista-contact";
+	}
+	
+	
 }
