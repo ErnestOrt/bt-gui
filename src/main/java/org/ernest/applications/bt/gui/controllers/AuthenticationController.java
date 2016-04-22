@@ -58,7 +58,7 @@ public class AuthenticationController {
 	public String activateAccount(@PathVariable("token") String token){
 		
 		authDataService.activate(token);
-		return "sabati-aplicacion-ciclista-activated.html";
+		return "sabati-aplicacion-ciclista-activated";
 	}
 	
 	@RequestMapping(value="/plataforma-cliclista/ciclismo/sobre-ciclismo-sabati",method = RequestMethod.GET)
