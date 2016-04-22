@@ -26,7 +26,7 @@ public class BlogServiceImpl implements BlogService{
 														PostDto postInfoDto = new PostDto();
 														postInfoDto.setId(info.get_id());
 														postInfoDto.setTitle(info.getTitle());
-														postInfoDto.setDescription(info.getTitle());
+														postInfoDto.setDescription(info.getDescription());
 														postInfoDto.setDate(info.getCreationDate());
 														return postInfoDto;})
 											.collect(Collectors.toList());
