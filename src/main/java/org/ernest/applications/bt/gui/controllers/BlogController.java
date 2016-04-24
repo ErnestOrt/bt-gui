@@ -1,5 +1,6 @@
 package org.ernest.applications.bt.gui.controllers;
 
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -24,6 +25,7 @@ public class BlogController {
 																				.sorted(Comparator.comparing(PostDto::getDate))
 																				.limit(70)
 																				.collect(Collectors.toList());
+		Collections.reverse(postInfoDtoList);
 		model.addAttribute("posts", postInfoDtoList);
 		return "sabati-aplicacion-ciclista-blog";
 	}
